@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="type"
+            type="net.roeia.proctive.models.enums.TodoType" />
+        <import type="net.roeia.proctive.models.enums.TodoType" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primaryColor"
+        tools:context=".ui.views.fragments.todo.ManageTodoFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/back"
+                style="@style/ImageButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/section_margin"
+                android:layout_marginTop="@dimen/section_margin"
+                android:src="@drawable/back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/page_title"
+                style="@style/TextSubTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/section_margin"
+                android:text="Add Goal"
+                app:layout_constraintBottom_toBottomOf="@id/back"
+                app:layout_constraintStart_toEndOf="@id/back"
+                app:layout_constraintTop_toTopOf="@id/back" />
+
+            <ImageButton
+                android:id="@+id/delete_todo"
+                style="@style/ImageButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/section_margin"
+                android:src="@drawable/delete"
+                app:layout_constraintBottom_toBottomOf="@id/back"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/back" />
+
+            <net.roeia.proctive.ui.custom.LabeledInputView
+                android:id="@+id/todo_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/section_margin"
+                android:layout_marginEnd="@dimen/section_margin"
+                app:hint="New Todo"
+                app:inputBackgroundColor="@{type == TodoType.Goal || type == TodoType.SubGoal ? @color/cardSuccessColor : type == TodoType.WeeklyGoal ? @color/cardPrimaryColor : @color/cardWhiteColor}"
+                app:inputType="text"
+                app:labelIcon="@drawable/edit"
+                app:labelText="Name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/back"
+                app:layout_constraintTop_toBottomOf="@id/back" />
+
+            <net.roeia.proctive.ui.custom.LabeledInputView
+                android:id="@+id/todo_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/section_margin"
+                app:hint="Labels"
+                app:inputBackgroundColor="@{type == TodoType.Goal || type == TodoType.SubGoal ? @color/cardSuccessColor : type == TodoType.WeeklyGoal ? @color/cardPrimaryColor : @color/cardWhiteColor}"
+                app:inputType="addable"
+                app:labelIcon="@drawable/label"
+                app:labelText="Labels"
+                app:layout_constraintEnd_toEndOf="@id/todo_name"
+                app:layout_constraintStart_toStartOf="@id/back"
+                app:layout_constraintTop_toBottomOf="@id/todo_name" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/labels"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@id/delete_todo"
+                app:layout_constraintStart_toStartOf="@id/back"
+                app:layout_constraintTop_toBottomOf="@id/todo_label" />
+
+            <net.roeia.proctive.ui.custom.LabeledInputView
+                android:id="@+id/todo_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/section_margin"
+                app:hint="Description"
+                app:inputBackgroundColor="@{type == TodoType.Goal || type == TodoType.SubGoal ? @color/cardSuccessColor : type == TodoType.WeeklyGoal ? @color/cardPrimaryColor : @color/cardWhiteColor}"
+                app:inputType="textarea"
+                app:labelIcon="@drawable/description"
+                app:labelText="Description"
+                app:layout_constraintEnd_toEndOf="@id/todo_name"
+                app:layout_constraintStart_toStartOf="@id/back"
+                app:layout_constraintTop_toBottomOf="@id/labels" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/due_date_label"
+                style="@style/LabelStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/date"
+                android:text="Due Date"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@id/todo_due_date"
+                app:layout_constraintStart_toStartOf="@id/back"
+                app:layout_constraintTop_toTopOf="@id/todo_due_date" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/todo_due_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/section_margin"
+                android:layout_marginTop="@dimen/section_margin"
+                android:tag="0"
+                android:text="Add Date, Time"
+                android:textAppearance="@style/ChipStatusStyle"
+                android:textColor="@color/white"
+                app:chipBackgroundColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@id/due_date_label"
+                app:layout_constraintStart_toEndOf="@id/due_date_label"
+                app:layout_constraintTop_toBottomOf="@id/todo_description" />
+
+            <net.roeia.proctive.ui.custom.LabeledInputView
+                android:id="@+id/subtasks_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/section_margin"
+                app:hint="Subtasks"
+                app:inputBackgroundColor="@{type == TodoType.Goal || type == TodoType.SubGoal ? @color/cardSuccessColor : type == TodoType.WeeklyGoal ? @color/cardPrimaryColor : @color/cardWhiteColor}"
+                app:inputType="addable"
+                app:labelIcon="@drawable/list"
+                app:labelText="Subtasks"
+                app:layout_constraintEnd_toEndOf="@id/todo_name"
+                app:layout_constraintStart_toStartOf="@id/back"
+                app:layout_constraintTop_toBottomOf="@id/todo_due_date" />
+
+            <net.roeia.proctive.ui.custom.UnScrollableListView
+                android:id="@+id/todo_subtasks"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content_margin"
+                app:layout_constraintEnd_toEndOf="@id/delete_todo"
+                app:layout_constraintStart_toStartOf="@id/back"
+                app:layout_constraintTop_toBottomOf="@id/subtasks_label" />
+
+            <!-- TODO (Frontend): Add Goal Reference -->
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/done_todo"
+                style="@style/ButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Done"
+                app:layout_constraintBottom_toBottomOf="@id/back"
+                app:layout_constraintEnd_toStartOf="@id/delete_todo"
+                app:layout_constraintTop_toTopOf="@id/back"
+                app:layout_goneMarginEnd="16dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</layout>

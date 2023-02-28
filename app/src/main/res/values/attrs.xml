@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LabeledInputView">
+        <attr name="labelIcon" format="reference" />
+        <attr name="labelText" format="string" />
+        <attr name="hint" format="string" />
+        <attr name="inputStyle" format="reference" />
+        <attr name="inputBackgroundColor" format="reference" />
+        <attr name="inputType" format="enum">
+            <enum name="text" value="0"/>
+            <enum name="number" value="1"/>
+            <enum name="textarea" value="2"/>
+            <enum name="addable" value="3"/>
+        </attr>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/input_container"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/input_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        style="@style/LabelStyle"
+        android:text="Name" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:errorTextColor="@color/black"
+            android:layout_marginTop="4dp"
+            app:errorIconTint="@color/black"
+            app:errorTextAppearance="@style/ChipStatusStyle"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            android:textColorHint="@color/black"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxBackgroundColor="#eebf3d"
+            android:layout_height="wrap_content"
+            android:hint="Name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="16dp"
+                android:textAppearance="@style/PrimaryTextStyle"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:background="@null"
+                tools:ignore="RtlSymmetry" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageButton
+            android:id="@+id/add_value"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            style="@style/ImageButtonStyle"
+            android:src="@drawable/add"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/section_margin"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+
+</LinearLayout>

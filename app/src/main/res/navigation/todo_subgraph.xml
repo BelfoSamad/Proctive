@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/todo_subgraph"
+    app:startDestination="@id/todoFragment">
+
+    <fragment
+        android:id="@+id/todoFragment"
+        android:name="net.roeia.proctive.ui.views.fragments.todo.TodoFragment"
+        android:label="fragment_todo"
+        tools:layout="@layout/fragment_todo" >
+        <action
+            android:id="@+id/todo_tracking"
+            app:destination="@id/todoTrackingFragment" />
+        <action
+            android:id="@+id/manage_todo"
+            app:destination="@id/manageTodoFragment" />
+        <action
+            android:id="@+id/navigate_todo"
+            app:destination="@id/todoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/todoTrackingFragment"
+        android:name="net.roeia.proctive.ui.views.fragments.todo.TodoTrackingFragment"
+        android:label="fragment_todo_tracking"
+        tools:layout="@layout/fragment_todo_tracking" />
+    <fragment
+        android:id="@+id/manageTodoFragment"
+        android:name="net.roeia.proctive.ui.views.fragments.todo.ManageTodoFragment"
+        android:label="fragment_manage_todo"
+        tools:layout="@layout/fragment_manage_todo" />
+</navigation>

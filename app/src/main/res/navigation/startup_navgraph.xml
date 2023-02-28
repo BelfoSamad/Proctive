@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/startup_navgraph"
+    app:startDestination="@id/onBoardingFragment">
+
+    <fragment
+        android:id="@+id/onBoardingFragment"
+        android:name="net.roeia.proctive.ui.views.fragments.startup.OnBoardingFragment"
+        android:label="fragment_onboarding"
+        tools:layout="@layout/fragment_onboarding" >
+        <action
+            android:id="@+id/start_register"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/start_login"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="net.roeia.proctive.ui.views.fragments.startup.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/start_landing"
+            app:destination="@id/landingFragment" />
+        <action
+            android:id="@+id/go_login"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="net.roeia.proctive.ui.views.fragments.startup.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/go_register"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/basicInfoFragment"
+        android:name="net.roeia.proctive.ui.views.fragments.startup.BasicInfoFragment"
+        android:label="fragment_basic_info"
+        tools:layout="@layout/fragment_basic_info" />
+    <fragment
+        android:id="@+id/landingFragment"
+        android:name="net.roeia.proctive.ui.views.fragments.startup.LandingFragment"
+        android:label="fragment_landing"
+        tools:layout="@layout/fragment_landing" >
+        <action
+            android:id="@+id/start_basics"
+            app:destination="@id/basicInfoFragment" />
+    </fragment>
+</navigation>

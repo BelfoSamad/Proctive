@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="eisenhower_status">
+        <item>Do</item>
+        <item>Decide</item>
+        <item>Delegate</item>
+        <item>Delete</item>
+    </string-array>
+
+    <string-array name="kanban_status">
+        <item>ToDo</item>
+        <item>InProgress</item>
+        <item>Done</item>
+    </string-array>
+
+</resources>

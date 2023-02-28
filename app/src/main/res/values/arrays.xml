@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="task_tracking">
+        <item>Tasks</item>
+        <item>Time</item>
+    </string-array>
+</resources>

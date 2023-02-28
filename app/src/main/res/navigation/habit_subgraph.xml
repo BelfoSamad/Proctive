@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/habit_subgraph"
+    app:startDestination="@id/habitFragment">
+
+    <fragment
+        android:id="@+id/habitFragment"
+        android:name="net.roeia.proctive.ui.views.fragments.habit.HabitFragment"
+        android:label="fragment_habit"
+        tools:layout="@layout/fragment_habit" >
+        <action
+            android:id="@+id/habit_tracking"
+            app:destination="@id/habitTrackingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/habitTrackingFragment"
+        android:name="net.roeia.proctive.ui.views.fragments.habit.HabitTrackingFragment"
+        android:label="fragment_habit_tracking"
+        tools:layout="@layout/fragment_habit_tracking" />
+</navigation>
