@@ -23,6 +23,6 @@
             android:id="@+id/fragment_container_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="net.roeia.proctive.ui.views.fragments.todo.ManageTodoFragment" />
+            android:name="net.roeia.proctive.ui.views.fragments.main.HomeFragment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

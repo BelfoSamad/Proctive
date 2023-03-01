@@ -70,7 +70,7 @@ class BasicRecyclerViewAdapter<MODEL, VH : BasicRecyclerViewAdapter.BaseViewHold
     override fun getItemCount() = itemList.size
 
     override fun onBindViewHolder(holder: BaseViewHolder<MODEL>, position: Int) {
-        holder.onBindViewHolder(itemList[position], bundle, listener)
+        holder.onBindViewHolder(itemList[position], bundle, position, listener)
     }
 
     fun addItem(model: MODEL) {
@@ -83,8 +83,12 @@ class BasicRecyclerViewAdapter<MODEL, VH : BasicRecyclerViewAdapter.BaseViewHold
         notifyItemInserted(position)
     }
 
-    fun removeItem(model: MODEL) {
-        val position = itemList.indexOf(model)
+    fun setItem(model: MODEL, position: Int) {
+        itemList[position] = model
+        notifyItemChanged(position, model)
+    }
+
+    fun removeItemAt(position: Int) {
         itemList.removeAt(position)
         notifyItemRemoved(position)
     }
@@ -112,6 +116,6 @@ class BasicRecyclerViewAdapter<MODEL, VH : BasicRecyclerViewAdapter.BaseViewHold
 
     abstract class BaseViewHolder<MODEL>(b: ViewDataBinding) : RecyclerView.ViewHolder(b.root) {
         var binding = b
-        abstract fun onBindViewHolder(model: MODEL, bundle: Bundle, listener: BaseListener)
+        abstract fun onBindViewHolder(model: MODEL, bundle: Bundle, position:Int, listener: BaseListener)
     }
 }

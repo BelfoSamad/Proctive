@@ -2,9 +2,10 @@
 <com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:textAppearance="@style/ChipStatusStyle"
-    app:chipBackgroundColor="@color/black"
-    android:textColor="@color/white"
+    android:textAppearance="@style/LabelTextStyle"
+    android:textSize="14sp"
+    app:chipBackgroundColor="@color/green_700"
+    android:textColor="@color/green_300"
     android:layout_height="match_parent">
 
 </com.google.android.material.chip.Chip>

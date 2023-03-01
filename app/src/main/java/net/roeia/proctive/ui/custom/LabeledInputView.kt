@@ -1,12 +1,15 @@
 package net.roeia.proctive.ui.custom
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.text.InputType
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textview.MaterialTextView
@@ -66,6 +69,7 @@ class LabeledInputView @JvmOverloads constructor(context: Context, attrs: Attrib
         )
         input.hint = hint
         input.boxBackgroundColor = inputBackgroundColor
+        addInput.backgroundTintList = AppCompatResources.getColorStateList(context, inputBackgroundColor)
         when (inputType) {
             0 -> input.editText?.inputType = InputType.TYPE_CLASS_TEXT
             1 -> input.editText?.inputType = InputType.TYPE_CLASS_NUMBER

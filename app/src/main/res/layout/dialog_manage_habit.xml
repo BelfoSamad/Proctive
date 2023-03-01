@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="16dp"
+    app:cardBackgroundColor="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <net.roeia.proctive.ui.custom.LabeledInputView
+            android:id="@+id/habit_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/section_margin"
+            android:layout_marginEnd="@dimen/section_margin"
+            android:layout_marginStart="@dimen/section_margin"
+            app:hint="New Habit"
+            app:inputBackgroundColor="@color/cardWhiteColor"
+            app:inputType="text"
+            app:labelIcon="@drawable/edit"
+            app:labelText="Name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/week_days_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/calendar"
+            android:text="Week Days"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/section_margin"
+            app:layout_constraintStart_toStartOf="@id/habit_name"
+            app:layout_constraintTop_toBottomOf="@id/habit_name" />
+
+        <CheckBox
+            android:id="@+id/habit_all_days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/week_days_label"
+            app:layout_constraintBottom_toBottomOf="@id/week_days_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/section_margin"
+            android:text="Every Day"/>
+
+        <net.roeia.proctive.ui.custom.OptionsView
+            android:id="@+id/week_days"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/week_days_label"
+            android:layout_marginTop="@dimen/content_margin"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/time_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/date"
+            android:text="Time"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/section_margin"
+            app:layout_constraintStart_toStartOf="@id/habit_name"
+            app:layout_constraintTop_toBottomOf="@id/week_days" />
+
+        <TimePicker
+            android:id="@+id/habit_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:timePickerMode="spinner"
+            app:layout_constraintTop_toBottomOf="@id/time_label"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/done_habit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/section_margin"
+            android:text="Done"
+            android:layout_marginTop="@dimen/section_margin"
+            android:layout_marginBottom="@dimen/section_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/habit_time"
+            app:layout_goneMarginEnd="16dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

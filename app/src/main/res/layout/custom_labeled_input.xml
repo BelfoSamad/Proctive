@@ -1,65 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/input_container"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/input_label"
+        style="@style/LabelTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        style="@style/LabelStyle"
-        android:text="Name" />
+        android:text="Name"
+        android:textColor="@color/black" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            app:boxCornerRadiusBottomEnd="12dp"
-            app:boxCornerRadiusBottomStart="12dp"
-            app:boxCornerRadiusTopEnd="12dp"
-            app:errorTextColor="@color/black"
-            android:layout_marginTop="4dp"
-            app:errorIconTint="@color/black"
-            app:errorTextAppearance="@style/ChipStatusStyle"
+            android:hint="Name"
+            android:textColorHint="@color/black"
+            app:boxBackgroundColor="@color/orange_500"
+            app:boxCornerRadiusBottomEnd="32dp"
+            app:boxCornerRadiusBottomStart="32dp"
+            app:boxCornerRadiusTopEnd="32dp"
+            app:boxCornerRadiusTopStart="32dp"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
-            android:textColorHint="@color/black"
-            app:boxCornerRadiusTopStart="12dp"
-            app:boxBackgroundColor="#eebf3d"
-            android:layout_height="wrap_content"
-            android:hint="Name">
+            app:errorIconTint="@color/black"
+            app:errorTextColor="@color/black">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@null"
                 android:paddingStart="16dp"
-                android:textAppearance="@style/PrimaryTextStyle"
+                android:textAppearance="@style/RegularTextStyle"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                android:background="@null"
                 tools:ignore="RtlSymmetry" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageButton
             android:id="@+id/add_value"
+            style="@style/RoundedImageButtonStyle"
             android:layout_width="wrap_content"
-            android:visibility="gone"
-            style="@style/ImageButtonStyle"
-            android:src="@drawable/add"
+            android:padding="12dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/section_margin"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/content_margin"
+            android:src="@drawable/add" />
 
     </LinearLayout>
 

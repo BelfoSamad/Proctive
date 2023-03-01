@@ -14,11 +14,11 @@ class OptionsAdapter private constructor(
 ) {
 
     interface OnSelectedListener {
-        fun onSelected(position: Int, value: String?) {
+        fun onSelected(position: Int?, value: String?) {
             //Default
         }
 
-        fun onMultiSelected(positions: List<Int>, values: List<String>) {
+        fun onMultiSelected(positions: List<Int>?, values: List<String>?) {
             //Default
         }
     }

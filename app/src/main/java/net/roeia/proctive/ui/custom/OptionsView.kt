@@ -1,4 +1,4 @@
-package com.yesserly.resto.ui.custom
+package net.roeia.proctive.ui.custom
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -46,6 +46,8 @@ class OptionsView : HorizontalScrollView {
         this.adapter = adapter
         initUI()
     }
+
+    fun getAdapter() = adapter
 
     @SuppressLint("ResourceType")
     private fun initUI() {
@@ -124,13 +126,13 @@ class OptionsView : HorizontalScrollView {
                     }
 
                     if (values.isEmpty()) {
-                        adapter.listener?.onSelected(-1, null)
-                    } else if (values.size == 1) {
+                        adapter.listener?.onSelected(null, null)
+                        adapter.listener?.onMultiSelected(null, null)
+                    } else {
                         adapter.listener?.onSelected(
                             values.keys.elementAt(0),
                             values.values.elementAt(0)
                         )
-                    } else {
                         adapter.listener?.onMultiSelected(
                             values.keys.toList(),
                             values.values.toList()

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="habit"
+            type="net.roeia.proctive.models.entities.Habit" />
+
+        <variable
+            name="position"
+            type="Integer" />
+
+        <variable
+            name="listener"
+            type="net.roeia.proctive.ui.views.fragments.habit.HabitFragment.ViewHolder.HabitClickListener" />
+
+        <variable
+            name="isUpdate"
+            type="Boolean" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/rounded_background">
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/habit_checkbox"
+            style="@style/CheckboxStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="@dimen/section_margin"
+            android:layout_marginEnd="@dimen/section_margin"
+            android:layout_marginBottom="@dimen/section_margin"
+            android:checked="@{habit.isChecked()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/habit_name"
+            style="@style/RegularTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/content_margin"
+            android:layout_marginEnd="@dimen/content_margin"
+            android:text="@{habit.name}"
+            app:layout_constraintBottom_toBottomOf="@id/habit_checkbox"
+            app:layout_constraintEnd_toStartOf="@+id/edit_habit"
+            app:layout_constraintStart_toEndOf="@id/habit_checkbox"
+            app:layout_constraintTop_toTopOf="@id/habit_checkbox"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Publish Proctive" />
+
+        <ImageButton
+            android:id="@+id/edit_habit"
+            style="@style/SimpleImageButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:onClick="@{() -> listener.onHabitUpdate(habit, position)}"
+            android:src="@drawable/edit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/delete_habit"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/delete_habit"
+            style="@style/SimpleImageButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:onClick="@{() -> listener.onHabitDelete(habit, position)}"
+            android:src="@drawable/delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

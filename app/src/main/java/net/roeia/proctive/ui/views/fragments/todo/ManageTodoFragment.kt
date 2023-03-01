@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.HorizontalScrollView
 import android.widget.ListView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -87,21 +88,27 @@ class ManageTodoFragment : Fragment() {
         binding.type = TodoType.fromInt(pageType!!)
         when (pageType) {
             TodoType.Goal.ordinal -> {
-                binding.root.setBackgroundColor(resources.getColor(R.color.successColor, null))
+                binding.root.setBackgroundColor(resources.getColor(R.color.green_300, null))
+                binding.back.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
+                binding.doneTodo.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
+                binding.todoDueDate.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
                 binding.subtasksLabel.visibility = GONE
                 (binding.todoSubtasks as ListView).visibility = GONE
                 //TODO: Hide Goal Ref
             }
             TodoType.SubGoal.ordinal, TodoType.WeeklyGoal.ordinal -> {
-                if (pageType == TodoType.SubGoal.ordinal)
-                    binding.root.setBackgroundColor(resources.getColor(R.color.successColor, null))
-                else binding.root.setBackgroundColor(resources.getColor(R.color.primaryColor, null))
+                if (pageType == TodoType.SubGoal.ordinal) {
+                    binding.root.setBackgroundColor(resources.getColor(R.color.green_300, null))
+                    binding.back.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
+                    binding.doneTodo.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
+                    binding.todoDueDate.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
+                } else binding.root.setBackgroundColor(resources.getColor(R.color.yellow_300, null))
                 binding.subtasksLabel.visibility = GONE
                 (binding.todoSubtasks as ListView).visibility = GONE
                 //TODO: Show Goal Ref
             }
             TodoType.Task.ordinal -> {
-                binding.root.setBackgroundColor(resources.getColor(R.color.white, null))
+                binding.root.setBackgroundColor(resources.getColor(R.color.blue_300, null))
                 binding.subtasksLabel.visibility = VISIBLE
                 (binding.todoSubtasks as ListView).visibility = VISIBLE
                 //TODO: Hide Goal Ref

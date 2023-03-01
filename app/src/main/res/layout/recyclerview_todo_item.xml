@@ -7,197 +7,83 @@
         <variable
             name="todo"
             type="net.roeia.proctive.models.entities.Todo" />
-
         <variable
             name="type"
             type="net.roeia.proctive.models.enums.TodoType" />
-
         <variable
             name="listener"
             type="net.roeia.proctive.ui.views.fragments.todo.TodoFragment.ViewHolder.TodoClickListener" />
 
         <import type="net.roeia.proctive.models.enums.TodoType" />
-        <import type="androidx.core.content.ContextCompat"/>
+
+        <import type="androidx.core.content.ContextCompat" />
+
         <import type="android.view.View" />
     </data>
 
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/todo_container"
         android:layout_width="match_parent"
+        android:layout_marginBottom="8dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/section_margin"
-        app:cardBackgroundColor="@{type == TodoType.Goal || type == TodoType.SubGoal ? @color/cardSuccessColor : type == TodoType.WeeklyGoal ? @color/cardPrimaryColor : @color/cardWhiteColor}"
-        app:cardCornerRadius="@dimen/parent_margin"
-        app:cardElevation="4dp">
+        android:onClick="@{() -> listener.onTodoClicked(todo)}"
+        android:backgroundTint="@{type == TodoType.Goal || type == TodoType.SubGoal ? @color/green_500 : type == TodoType.WeeklyGoal ? @color/yellow_500 : @color/blue_500}"
+        android:background="@drawable/rounded_background">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/todo_container"
-            android:animateLayoutChanges="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/todo_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="@dimen/section_margin"
+            android:layout_marginEnd="@dimen/section_margin"
+            android:layout_marginBottom="@dimen/section_margin"
+            style="@style/CheckboxStyle"
+            android:checked="@{todo.isChecked}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/todo_checkbox"
-                android:layout_width="wrap_content"
-                android:padding="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="11dp"
-                android:checked="@{todo.isChecked}"
-                android:layout_marginTop="@dimen/section_margin"
-                android:layout_marginEnd="@dimen/section_margin"
-                android:buttonTint="@color/black"
-                android:minHeight="0dp"
-                android:minWidth="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/todo_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/content_margin"
+            android:layout_marginEnd="@dimen/content_margin"
+            android:text="@{todo.name}"
+            style="@style/RegularTextStyle"
+            app:layout_constraintBottom_toBottomOf="@id/todo_checkbox"
+            app:layout_constraintEnd_toStartOf="@id/pomodoro_count"
+            app:layout_constraintStart_toEndOf="@id/todo_checkbox"
+            app:layout_constraintTop_toTopOf="@id/todo_checkbox"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Publish Proctive" />
 
-            <TextView
-                android:id="@+id/todo_name"
-                style="@style/PrimaryTextStyle"
-                android:layout_width="0dp"
-                android:layout_marginStart="@dimen/content_margin"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/content_margin"
-                android:text="@{todo.name}"
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toTopOf="@id/todo_due_date"
-                app:layout_constraintEnd_toStartOf="@id/pomodoro_count"
-                app:layout_constraintStart_toEndOf="@id/todo_checkbox"
-                app:layout_constraintTop_toTopOf="@id/todo_checkbox"
-                app:layout_constraintVertical_chainStyle="packed"
-                tools:text="Publish Proctive" />
+        <TextView
+            android:id="@+id/pomodoro_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:gravity="center_vertical"
+            android:text="@{todo.pomodoroAverage.toString()}"
+            android:visibility="@{type == TodoType.Task ? View.VISIBLE : View.GONE}"
+            style="@style/LabelTextStyle"
+            app:layout_constraintBottom_toBottomOf="@id/pomodoro_logo"
+            app:layout_constraintEnd_toStartOf="@id/pomodoro_logo"
+            app:layout_constraintTop_toTopOf="@id/pomodoro_logo"
+            tools:text="5" />
 
-            <TextView
-                android:id="@+id/todo_due_date"
-                style="@style/ChipStatusStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="22/07/2023, 22:00"
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="@+id/todo_checkbox"
-                app:layout_constraintStart_toStartOf="@id/todo_name"
-                app:layout_constraintTop_toBottomOf="@id/todo_name" />
+        <ImageView
+            android:id="@+id/pomodoro_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/section_margin"
+            android:src="@drawable/apple"
+            android:visibility="@{type == TodoType.Task ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/pomodoro_count"
-                style="@style/LabelStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginEnd="4dp"
-                android:gravity="center_vertical"
-                android:text="@{todo.pomodoroAverage.toString()}"
-                android:textColor="@color/black"
-                android:visibility="@{type != TodoType.Task || todo.pomodoroAverage == null ? View.GONE : View.VISIBLE}"
-                app:layout_constraintBottom_toBottomOf="@id/pomodoro_logo"
-                app:layout_constraintEnd_toStartOf="@id/pomodoro_logo"
-                app:layout_constraintTop_toTopOf="@id/pomodoro_logo"
-                tools:text="5" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <ImageView
-                android:id="@+id/pomodoro_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/content_margin"
-                android:onClick="@{() -> listener.setPomodoroTodo(todo)}"
-                android:src="@drawable/apple"
-                android:visibility="@{type != TodoType.Task || todo.pomodoroAverage == null ? View.GONE : View.VISIBLE}"
-                app:layout_constraintBottom_toBottomOf="@id/todo_checkbox"
-                app:layout_constraintEnd_toStartOf="@id/collapse_todo"
-                app:layout_constraintTop_toTopOf="@id/todo_checkbox" />
-
-            <ImageButton
-                android:id="@+id/collapse_todo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/SimpleImageButtonStyle"
-                android:tag="0"
-                app:layout_constraintBottom_toBottomOf="@id/todo_checkbox"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/todo_checkbox"
-                android:layout_marginEnd="@dimen/section_margin"
-                android:src="@drawable/expand"/>
-
-            <TextView
-                android:id="@+id/todo_description"
-                style="@style/SecondaryTextStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:paddingBottom="8dp"
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toTopOf="@id/sub_tasks"
-                app:layout_constraintEnd_toEndOf="@id/collapse_todo"
-                android:layout_marginStart="@dimen/section_margin"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/todo_due_date"
-                tools:text="This is the description of the goal with the title Publish Proctive." />
-
-            <net.roeia.proctive.ui.custom.UnScrollableListView
-                android:id="@+id/sub_tasks"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:paddingBottom="16dp"
-                app:layout_constraintBottom_toTopOf="@id/divider"
-                app:layout_constraintStart_toStartOf="@id/todo_checkbox"
-                app:layout_constraintTop_toBottomOf="@id/todo_description" />
-
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:dividerColor="@{type == TodoType.Goal || type == TodoType.SubGoal ? @color/successColor : type == TodoType.WeeklyGoal ? @color/primaryColor : @color/white}"
-                app:layout_constraintTop_toBottomOf="@id/sub_tasks" />
-
-            <View
-                android:id="@+id/bottom_background"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:visibility="gone"
-                app:background="@{type == TodoType.Goal || type == TodoType.SubGoal ? @color/cardSuccessColor : type == TodoType.WeeklyGoal ? @color/cardPrimaryColor : @color/cardWhiteColor}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/divider" />
-
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/labels"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/section_margin"
-                android:layout_marginEnd="@dimen/section_margin"
-                android:padding="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/edit_task"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/divider" />
-
-            <ImageButton
-                android:id="@+id/edit_task"
-                style="@style/SimpleImageButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/section_margin"
-                android:layout_marginBottom="@dimen/section_margin"
-                android:layout_marginEnd="@dimen/content_margin"
-                android:onClick="@{() -> listener.onEditTodo(todo)}"
-                android:src="@drawable/edit"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/go_todo"
-                app:layout_constraintTop_toTopOf="@id/divider" />
-
-            <ImageButton
-                android:id="@+id/go_todo"
-                style="@style/SimpleImageButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/section_margin"
-                android:onClick="@{() -> listener.onTodoClicked(todo)}"
-                android:src="@drawable/forward"
-                android:visibility="@{type != TodoType.Goal ? View.GONE : View.VISIBLE}"
-                app:layout_constraintBottom_toBottomOf="@id/edit_task"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/edit_task"
-                app:tint="@color/black" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
 </layout>

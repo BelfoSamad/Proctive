@@ -11,10 +11,29 @@
     <color name="white">#FFFFFF</color>
     <color name="primaryColor">#F7C846</color>
     <color name="successColor">#8AE98D</color>
-    <color name="errorColor">#FC574E</color>
 
     <color name="cardWhiteColor">#E7E7E7</color>
     <color name="cardPrimaryColor">#EEBE3A</color>
     <color name="cardSuccessColor">#80DF83</color>
-    <color name="cardErrorColor">#F44C43</color>
+
+    <color name="red_300">#FC574E</color>
+    <color name="red_500">#F2534B</color>
+    <color name="red_700">#96342F</color>
+
+    <color name="paper_300">#F6ECC9</color>
+    <color name="paper_500">#E9E1BF</color>
+    <color name="paper_700">#DDD5B6</color>
+
+    <color name="yellow_300">#F7D44C</color>
+    <color name="yellow_500">#edCC4A</color>
+    <color name="yellow_700">#917D2D</color>
+    <color name="orange_300">#EB7A53</color>
+    <color name="orange_500">#E07450</color>
+    <color name="orange_700">#86452E</color>
+    <color name="blue_300">#98B7DB</color>
+    <color name="blue_500">#90afd1</color>
+    <color name="blue_700">#516275</color>
+    <color name="green_300">#A8D672</color>
+    <color name="green_500">#9fCC6C</color>
+    <color name="green_700">#58703b</color>
 </resources>

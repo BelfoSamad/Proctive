@@ -93,7 +93,7 @@ class TodoTrackingFragment : Fragment() {
                 .setOptions(resources.getStringArray(R.array.task_tracking).map { Option(it) })
                 .setType(CHIP)
                 .setOnSelectedListener(object : OptionsAdapter.OnSelectedListener {
-                    override fun onSelected(position: Int, value: String?) {
+                    override fun onSelected(position: Int?, value: String?) {
                         //viewModel.currentType = value!!
                         //viewModel.getTracks(value)
                     }

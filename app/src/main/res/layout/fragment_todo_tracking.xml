@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/orange_300"
     tools:context=".ui.views.fragments.todo.TodoTrackingFragment">
 
     <ImageButton
@@ -11,11 +12,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/parent_margin"
+        android:src="@drawable/back"
+        style="@style/RoundedImageButtonStyle"
         android:layout_marginTop="@dimen/parent_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.yesserly.resto.ui.custom.OptionsView
+    <net.roeia.proctive.ui.custom.OptionsView
         android:id="@+id/graph_options"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +31,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:cardCornerRadius="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardBackgroundColor="@color/orange_500"
+        app:cardCornerRadius="32dp"
         app:layout_constraintTop_toBottomOf="@id/graph_options">
 
         <com.github.mikephil.charting.charts.LineChart
@@ -44,8 +50,9 @@
         android:id="@+id/trends_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/section_margin"
+        android:layout_marginTop="@dimen/parent_margin"
         android:text="Trends"
+        style="@style/PageTitleTextStyle"
         app:layout_constraintStart_toStartOf="@id/back"
         app:layout_constraintTop_toBottomOf="@id/trackings_container" />
 
