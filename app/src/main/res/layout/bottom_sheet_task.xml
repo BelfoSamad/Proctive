@@ -19,15 +19,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="@dimen/section_margin"
+            android:layout_marginTop="@dimen/parent_margin"
             android:layout_marginEnd="@dimen/section_margin"
             android:layout_marginBottom="@dimen/section_margin"
             android:enabled="false"
             style="@style/CheckboxStyle"
             android:checked="true"
-            app:layout_constraintBottom_toBottomOf="@id/edit_task"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/edit_task" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/todo_name"
@@ -58,7 +57,7 @@
             app:layout_constraintBottom_toTopOf="@id/sub_tasks"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_task"
+            app:layout_constraintTop_toBottomOf="@id/todo_checkbox"
             tools:text="This is the description of the goal with the title Publish Proctive." />
 
         <net.roeia.proctive.ui.custom.UnScrollableListView
@@ -90,14 +89,12 @@
             android:layout_width="wrap_content"
             android:padding="12dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/section_margin"
             android:layout_marginEnd="@dimen/content_margin"
             android:backgroundTint="@color/green_500"
-            android:layout_marginBottom="@dimen/section_margin"
             android:src="@drawable/edit"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/delete_todo"
-            app:layout_constraintTop_toBottomOf="@id/sub_tasks" />
+            app:layout_constraintBottom_toBottomOf="@id/todo_checkbox"
+            app:layout_constraintTop_toTopOf="@id/todo_checkbox"
+            app:layout_constraintEnd_toStartOf="@id/delete_todo" />
 
         <ImageButton
             android:id="@+id/delete_todo"

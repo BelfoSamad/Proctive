@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/custom_tooltip"
+    android:backgroundTint="@color/green_300">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/sort_due"
+        style="@style/LabelTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/content_margin"
+        android:layout_marginTop="@dimen/parent_margin"
+        android:layout_marginEnd="@dimen/content_margin"
+        android:background="@drawable/rounded_background"
+        android:backgroundTint="@color/green_500"
+        android:drawableEnd="@drawable/down"
+        android:drawablePadding="8dp"
+        android:padding="12dp"
+        android:tag="1"
+        android:text="By Due"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        app:drawableTint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/position_due"
+        style="@style/LabelTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/content_margin"
+        android:layout_marginTop="@dimen/content_margin"
+        android:drawableEnd="@drawable/up"
+        android:layout_marginEnd="@dimen/content_margin"
+        android:layout_marginBottom="@dimen/section_margin"
+        android:background="@drawable/rounded_background"
+        android:backgroundTint="@color/green_500"
+        android:drawablePadding="8dp"
+        android:padding="12dp"
+        android:tag="1"
+        android:text="By Position"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        app:drawableTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sort_due" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

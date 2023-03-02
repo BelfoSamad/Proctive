@@ -111,23 +111,24 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/date"
                 android:text="Due Date"
-                app:layout_constraintBottom_toBottomOf="@id/todo_due_date"
-                app:layout_constraintStart_toStartOf="@id/back"
-                app:layout_constraintTop_toTopOf="@id/todo_due_date" />
+                android:layout_marginTop="@dimen/section_margin"
+                app:layout_constraintTop_toBottomOf="@id/todo_description"
+                app:layout_constraintStart_toStartOf="@id/back" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/todo_due_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/section_margin"
-                android:layout_marginTop="@dimen/section_margin"
+                android:layout_marginEnd="@dimen/section_margin"
                 android:tag="0"
                 android:text="Add Date, Time"
-                android:textAppearance="@style/RegularTextStyle"
-                app:chipBackgroundColor="@color/orange_500"
+                android:textAppearance="@style/LabelTextStyle"
+                app:chipBackgroundColor="@color/blue_700"
+                android:textColor="@color/blue_300"
+                android:textSize="14sp"
+                app:layout_constraintTop_toTopOf="@id/due_date_label"
                 app:layout_constraintBottom_toBottomOf="@id/due_date_label"
-                app:layout_constraintStart_toEndOf="@id/due_date_label"
-                app:layout_constraintTop_toBottomOf="@id/todo_description" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <net.roeia.proctive.ui.custom.LabeledInputView
                 android:id="@+id/subtasks_label"

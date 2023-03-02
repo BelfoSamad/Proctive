@@ -13,4 +13,8 @@
             <enum name="addable" value="3"/>
         </attr>
     </declare-styleable>
+    <declare-styleable name="OptionsView">
+        <attr name="optionBackgroundColor" format="reference" />
+        <attr name="optionForegroundColor" format="reference" />
+    </declare-styleable>
 </resources>

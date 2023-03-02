@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.TextViewCompat
@@ -20,7 +21,8 @@ import net.roeia.proctive.utils.adapters.BUTTON
 import net.roeia.proctive.utils.adapters.CHIP
 import net.roeia.proctive.utils.adapters.TEXT
 
-class OptionsView : HorizontalScrollView {
+class OptionsView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
+    HorizontalScrollView(context, attrs) {
 
     /***********************************************************************************************
      * ************************* Declarations
@@ -28,11 +30,8 @@ class OptionsView : HorizontalScrollView {
     private lateinit var adapter: OptionsAdapter
     private val container: LinearLayout
 
-    /***********************************************************************************************
-     * ************************* Constructor
-     */
-    constructor(context: Context?) : super(context)
-    constructor(context: Context?, attrs: AttributeSet?) : super(context!!, attrs)
+    private var optionsBackgroundColor: Int
+    private var optionsForegroundColor: Int
 
     /***********************************************************************************************
      * ************************* Init
@@ -40,6 +39,16 @@ class OptionsView : HorizontalScrollView {
     init {
         val rootView: View = inflate(context, R.layout.custom_options, this)
         container = rootView.findViewById(R.id.options_container)
+        context.theme.obtainStyledAttributes(attrs, R.styleable.OptionsView, 0, 0).apply {
+            try {
+                optionsBackgroundColor =
+                    getResourceId(R.styleable.OptionsView_optionBackgroundColor, -1)
+                optionsForegroundColor =
+                    getResourceId(R.styleable.OptionsView_optionForegroundColor, -1)
+            } finally {
+                recycle()
+            }
+        }
     }
 
     fun setAdapter(adapter: OptionsAdapter) {
@@ -115,6 +124,10 @@ class OptionsView : HorizontalScrollView {
                     ) as Chip
                     chip.text = option.name
                     chip.isCheckable = true
+                    if (optionsBackgroundColor != -1)
+                        chip.setChipBackgroundColorResource(optionsBackgroundColor)
+                    if (optionsForegroundColor != -1)
+                        chip.setTextColor(resources.getColor(optionsForegroundColor, null))
                     chipGroup.addView(chip)
                 }
                 chipGroup.isSingleSelection = !adapter.multiSelect!!

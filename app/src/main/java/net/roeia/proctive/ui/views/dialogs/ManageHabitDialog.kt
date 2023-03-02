@@ -2,6 +2,8 @@ package net.roeia.proctive.ui.views.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler.Callback
 import android.view.View.GONE
@@ -76,17 +78,18 @@ class ManageHabitDialog(var habit: Habit? = null, val listener: HabitListener) :
             binding.doneHabit.setOnClickListener {
                 if (habit == null)
                     habit = Habit()
-
-                if(binding.habitName.isValid())
+                if(binding.habitName.isValid()) {
                     habit?.name = binding.habitName.getValue()
-                habit?.time = "${binding.habitTime.hour}:${binding.habitTime.minute}"
-                if (binding.habitAllDays.isChecked) habit?.weekDays = null
-                else habit?.weekDays = weekDays
-                listener.onHabitAdded(habit!!)
+                    habit?.time = "${binding.habitTime.hour}:${binding.habitTime.minute}"
+                    if (binding.habitAllDays.isChecked) habit?.weekDays = null
+                    else habit?.weekDays = weekDays
+                    listener.onHabitAdded(habit!!)
+                    dismiss()
+                }
             }
 
             val dialog = builder.setView(binding.root).create()
-            //dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog
         } ?: throw IllegalStateException("Activity cannot be null")
     }

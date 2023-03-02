@@ -2,8 +2,8 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="16dp"
-    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="32dp"
+    app:cardBackgroundColor="@color/orange_300"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,11 +14,11 @@
             android:id="@+id/habit_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/section_margin"
+            android:layout_marginTop="@dimen/parent_margin"
             android:layout_marginEnd="@dimen/section_margin"
             android:layout_marginStart="@dimen/section_margin"
             app:hint="New Habit"
-            app:inputBackgroundColor="@color/cardWhiteColor"
+            app:inputBackgroundColor="@color/orange_500"
             app:inputType="text"
             app:labelIcon="@drawable/edit"
             app:labelText="Name"
@@ -32,27 +32,37 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/calendar"
             android:text="Week Days"
+            style="@style/LabelTextStyle"
             android:textColor="@color/black"
-            android:layout_marginTop="@dimen/section_margin"
+            android:layout_marginTop="@dimen/parent_margin"
             app:layout_constraintStart_toStartOf="@id/habit_name"
             app:layout_constraintTop_toBottomOf="@id/habit_name" />
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/habit_all_days"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/week_days_label"
             app:layout_constraintBottom_toBottomOf="@id/week_days_label"
             app:layout_constraintEnd_toEndOf="parent"
+            style="@style/CheckboxStyle"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:textAppearance="@style/LabelTextStyle"
+            android:button="@drawable/custom_checkbox"
             android:layout_marginEnd="@dimen/section_margin"
             android:text="Every Day"/>
 
         <net.roeia.proctive.ui.custom.OptionsView
             android:id="@+id/week_days"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_marginTop="8dp"
+            app:optionBackgroundColor="@color/orange_700"
+            app:optionForegroundColor="@color/orange_300"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/week_days_label"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/week_days_label"
-            android:layout_marginTop="@dimen/content_margin"/>
+            app:layout_constraintTop_toBottomOf="@id/habit_all_days"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/time_label"
@@ -60,6 +70,7 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/date"
             android:text="Time"
+            style="@style/LabelTextStyle"
             android:textColor="@color/black"
             android:layout_marginTop="@dimen/section_margin"
             app:layout_constraintStart_toStartOf="@id/habit_name"
@@ -70,6 +81,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:timePickerMode="spinner"
+            style="@style/LabelTextStyle"
             app:layout_constraintTop_toBottomOf="@id/time_label"/>
 
         <com.google.android.material.button.MaterialButton
@@ -78,6 +90,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/section_margin"
             android:text="Done"
+            style="@style/ButtonStyle"
+            android:backgroundTint="@color/orange_500"
             android:layout_marginTop="@dimen/section_margin"
             android:layout_marginBottom="@dimen/section_margin"
             app:layout_constraintBottom_toBottomOf="parent"

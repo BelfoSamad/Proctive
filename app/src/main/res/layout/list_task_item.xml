@@ -24,4 +24,11 @@
         android:layout_gravity="center_vertical"
         android:layout_marginStart="8dp"/>
 
+    <ImageButton
+        android:id="@+id/delete_subtask"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/SimpleImageButtonStyle"
+        android:src="@drawable/delete"/>
+
 </LinearLayout>

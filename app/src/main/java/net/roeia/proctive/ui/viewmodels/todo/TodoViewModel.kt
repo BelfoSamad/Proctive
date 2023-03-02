@@ -100,7 +100,7 @@ class TodoViewModel @Inject constructor(private val state: SavedStateHandle) : V
 
     fun fetchTodoById(todoId: Long) {
         fetchByType(TodoType.Goal)
-        //TODO (Backend): Fetch Todo by Id and include
+        //TODO (Backend): Fetch Todo by Id and return subtasks
     }
 
     fun getCurrentWeek(): String {
@@ -143,8 +143,12 @@ class TodoViewModel @Inject constructor(private val state: SavedStateHandle) : V
         //TODO: Set Todo as Checked/UnChecked
     }
 
-    fun clearUnCheckedTodos(items: List<Todo>) {
-        //TODO: Delete checked list
+    fun deleteTodo(todo: Todo) {
+        //TODO: Delete Todo
+    }
+
+    fun subtaskChecked(todoId: Long?, subtask: String, checked: Boolean) {
+        //TODO: Set SubTask Checked on todoId
     }
 
     /***********************************************************************************************

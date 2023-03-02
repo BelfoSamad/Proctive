@@ -1,23 +1,12 @@
 package net.roeia.proctive.ui.views.fragments.todo
 
-import android.animation.LayoutTransition
-import android.graphics.Color
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableStringBuilder
-import android.text.style.ClickableSpan
-import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.HorizontalScrollView
-import android.widget.ListView
-import androidx.annotation.Keep
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -25,10 +14,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
-import com.google.android.material.chip.ChipGroup.OnCheckedStateChangeListener
 import dagger.hilt.android.AndroidEntryPoint
+import it.sephiroth.android.library.xtooltip.Tooltip
 import kotlinx.coroutines.launch
 import net.roeia.proctive.R
 import net.roeia.proctive.data.Status
@@ -36,9 +23,10 @@ import net.roeia.proctive.databinding.FragmentTodoBinding
 import net.roeia.proctive.databinding.RecyclerviewTodoItemBinding
 import net.roeia.proctive.models.entities.Todo
 import net.roeia.proctive.models.enums.TodoType
+import net.roeia.proctive.ui.custom.TooltipWindow
 import net.roeia.proctive.ui.viewmodels.todo.TodoViewModel
+import net.roeia.proctive.ui.views.tabs.TodoBottomSheet
 import net.roeia.proctive.utils.adapters.BasicRecyclerViewAdapter
-import net.roeia.proctive.utils.adapters.SubTasksArrayAdapter
 
 @AndroidEntryPoint
 class TodoFragment : Fragment() {
@@ -57,39 +45,57 @@ class TodoFragment : Fragment() {
     private var pageType: Int? = null
     private val todoClickListener = object : ViewHolder.TodoClickListener {
 
+        override fun onSubTodos(todo: Todo) {
+            val bundle = Bundle()
+            bundle.putLong("todoId", todo.todoId!!)
+            bundle.putInt("PAGE_TYPE", pageType!!)
+            findNavController().navigate(R.id.navigate_todo, bundle)
+        }
+
         override fun onTodoClicked(todo: Todo) {
-            /*
-            val bundle = Bundle()
-            bundle.putLong("todoId", todo.todoId!!)
-            bundle.putInt("PAGE_TYPE", pageType!!)
-            findNavController().navigate(R.id.navigate_todo, bundle)*/
-            val todoModal = TodoBottomSheet(TodoType.fromInt(pageType!!), todo)
+            val todoModal = TodoBottomSheet(
+                TodoType.fromInt(pageType!!),
+                true,
+                todo,
+                object : TodoBottomSheet.TodoActions {
+                    override fun onReferenceClicked(todo: Todo) {
+                        TodoBottomSheet(TodoType.fromInt(pageType!!), false, todo, null).show(
+                            childFragmentManager,
+                            "TodoBottomSheetRef"
+                        )
+                    }
+
+                    override fun onEditTodo(todo: Todo) {
+                        val bundle = Bundle()
+                        bundle.putLong("todoId", todo.todoId!!)
+                        bundle.putInt("PAGE_TYPE", pageType!!)
+                        findNavController().navigate(R.id.manage_todo, bundle)
+                    }
+
+                    override fun onDeleteTodo(todo: Todo) {
+                        viewModel.deleteTodo(todo)
+                        (binding.todoList.adapter as BasicRecyclerViewAdapter<Todo, ViewHolder>).removeItem(
+                            todo
+                        )
+                    }
+
+                    override fun onSubtaskChecked(todo: Todo, subtask: String, checked: Boolean) {
+                        viewModel.subtaskChecked(todoId, subtask, checked)
+                    }
+
+                })
             todoModal.show(childFragmentManager, "TodoBottomSheet")
-        }
-
-        /*
-        override fun onReferenceClicked(todo: Todo) {
-            //TODO: Show it as Dialog instead
-        }
-
-        override fun onEditTodo(todo: Todo) {
-            val bundle = Bundle()
-            bundle.putLong("todoId", todo.todoId!!)
-            bundle.putInt("PAGE_TYPE", pageType!!)
-            findNavController().navigate(R.id.manage_todo, bundle)
         }
 
         override fun setPomodoroTodo(todo: Todo) {
             //TODO: Handle Pomodoro Widget
-        }*/
+        }
 
         override fun onTodoChecked(todo: Todo, position: Int) {
-            (binding.todoList.adapter as BasicRecyclerViewAdapter<Todo, ViewHolder>).removeItemAt(position)
             viewModel.setChecked(todo.todoId!!, true)
         }
 
         override fun onTodoUnChecked(todo: Todo, position: Int) {
-            (binding.todoList.adapter as BasicRecyclerViewAdapter<Todo, ViewHolder>).addItem(todo)
             viewModel.setChecked(todo.todoId!!, false)
         }
     }
@@ -103,7 +109,7 @@ class TodoFragment : Fragment() {
         //Get Page Type, TODO: use argument
         //pageType = requireArguments().getInt("PAGE_TYPE")
         //todoId = requireArguments().getLong("todoId")
-        pageType = 0
+        pageType = 3
 
         //Get TodoList
         lifecycleScope.launch {
@@ -135,9 +141,12 @@ class TodoFragment : Fragment() {
         when (pageType) {
             TodoType.Goal.ordinal, TodoType.SubGoal.ordinal -> {
                 binding.root.setBackgroundColor(resources.getColor(R.color.green_300, null))
-                binding.back.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
-                binding.goStats.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
-                binding.addTodo.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
+                binding.back.backgroundTintList =
+                    AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
+                binding.goStats.backgroundTintList =
+                    AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
+                binding.addTodo.backgroundTintList =
+                    AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
                 if (pageType == TodoType.Goal.ordinal)
                     binding.pageTitle.text = "My Goals"
                 else binding.pageTitle.text = "SubGoals"
@@ -150,9 +159,12 @@ class TodoFragment : Fragment() {
             }
             TodoType.WeeklyGoal.ordinal -> {
                 binding.root.setBackgroundColor(resources.getColor(R.color.yellow_300, null))
-                binding.back.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.yellow_500)
-                binding.goStats.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.yellow_500)
-                binding.addTodo.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.yellow_500)
+                binding.back.backgroundTintList =
+                    AppCompatResources.getColorStateList(requireContext(), R.color.yellow_500)
+                binding.goStats.backgroundTintList =
+                    AppCompatResources.getColorStateList(requireContext(), R.color.yellow_500)
+                binding.addTodo.backgroundTintList =
+                    AppCompatResources.getColorStateList(requireContext(), R.color.yellow_500)
                 binding.pageTitle.text = "Weekly Goals"
                 binding.backWeek.visibility = VISIBLE
                 binding.startWeek.visibility = VISIBLE
@@ -164,10 +176,14 @@ class TodoFragment : Fragment() {
             }
             TodoType.Task.ordinal -> {
                 binding.root.setBackgroundColor(resources.getColor(R.color.blue_300, null))
-                binding.back.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.blue_500)
-                binding.goStats.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.blue_500)
-                binding.addTodo.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.blue_500)
-                binding.pomodoroWidget.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.blue_500)
+                binding.back.backgroundTintList =
+                    AppCompatResources.getColorStateList(requireContext(), R.color.blue_500)
+                binding.goStats.backgroundTintList =
+                    AppCompatResources.getColorStateList(requireContext(), R.color.blue_500)
+                binding.addTodo.backgroundTintList =
+                    AppCompatResources.getColorStateList(requireContext(), R.color.blue_500)
+                binding.pomodoroWidget.backgroundTintList =
+                    AppCompatResources.getColorStateList(requireContext(), R.color.blue_500)
                 binding.pageTitle.text = "My Tasks"
                 binding.backWeek.visibility = GONE
                 binding.startWeek.visibility = GONE
@@ -246,6 +262,8 @@ class TodoFragment : Fragment() {
         //Sort
         binding.sort.setOnClickListener {
             //TODO: Open Sort Dialog
+            val tooltip = TooltipWindow(requireContext())
+            tooltip.showTooltip(binding.sort)
         }
 
         //Filter
@@ -262,11 +280,15 @@ class TodoFragment : Fragment() {
 
         interface TodoClickListener : BasicRecyclerViewAdapter.BaseListener {
 
+            fun onSubTodos(todo: Todo)
+
             fun onTodoClicked(todo: Todo)
 
             fun onTodoChecked(todo: Todo, position: Int)
 
             fun onTodoUnChecked(todo: Todo, position: Int)
+
+            fun setPomodoroTodo(todo: Todo)
 
         }
 

@@ -19,10 +19,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/startup_navgraph" />-->
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragment_container_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:name="net.roeia.proctive.ui.views.fragments.main.HomeFragment" />
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_view"
+        android:name="net.roeia.proctive.ui.views.fragments.main.PomodoroFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

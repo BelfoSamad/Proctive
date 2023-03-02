@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="journal"
+            type="net.roeia.proctive.models.entities.Journal" />
+
+        <variable
+            name="listener"
+            type="net.roeia.proctive.ui.views.fragments.main.HomeFragment.ViewHolder.JournalActions" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:background="@drawable/rounded_background"
+        android:backgroundTint="@color/paper_300">
+
+        <TextView
+            android:id="@+id/journal_title"
+            style="@style/PageTitleTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/section_margin"
+            android:layout_marginTop="@dimen/parent_margin"
+            android:layout_marginEnd="@dimen/section_margin"
+            android:text="@{journal.title}"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="My Journal Note Name" />
+
+        <!-- TODO: Set Date -->
+        <TextView
+            android:id="@+id/journal_timestamp"
+            style="@style/LabelTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Updated 2h Ago"
+            android:textColor="@color/paper_700"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/journal_title"
+            app:layout_constraintTop_toBottomOf="@id/journal_title" />
+
+        <TextView
+            android:id="@+id/journal_content"
+            style="@style/RegularTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_margin"
+            android:text="@{journal.content}"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/journal_title"
+            app:layout_constraintStart_toStartOf="@id/journal_title"
+            app:layout_constraintTop_toBottomOf="@id/journal_timestamp"
+            tools:text="This is the text of the journal, please read properly if you want to have an idea about how the description might look like" />
+
+        <ImageButton
+            android:id="@+id/lock_journal"
+            style="@style/RoundedImageButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/content_margin"
+            android:backgroundTint="@color/paper_500"
+            android:padding="8dp"
+            android:tag="0"
+            android:src="@{journal.isLocked ? @drawable/lock : @drawable/unlocked}"
+            app:layout_constraintBottom_toBottomOf="@id/go_journal"
+            app:layout_constraintEnd_toStartOf="@id/go_journal"
+            app:layout_constraintTop_toTopOf="@id/go_journal" />
+
+        <ImageButton
+            android:id="@+id/go_journal"
+            style="@style/RoundedImageButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_margin"
+            android:layout_marginEnd="@dimen/section_margin"
+            android:layout_marginBottom="@dimen/section_margin"
+            android:backgroundTint="@color/paper_500"
+            android:onClick="@{() -> listener.goJournal(journal)}"
+            android:padding="8dp"
+            android:src="@drawable/forward"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/journal_content" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

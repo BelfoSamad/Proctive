@@ -1,13 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/paper_300"
     tools:context=".ui.views.fragments.main.PomodoroFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+    <ImageButton
+        android:id="@+id/back"
+        style="@style/RoundedImageButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/section_margin"
+        android:layout_marginTop="@dimen/parent_margin"
+        android:backgroundTint="@color/black"
+        android:padding="16dp"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/paper_300" />
 
-</FrameLayout>
+    <TextView
+        style="@style/LabelTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/section_margin"
+        android:layout_marginEnd="@dimen/section_margin"
+        android:text="Currently working on:\nTask 1"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@id/back"
+        app:layout_constraintEnd_toStartOf="@id/settings"
+        app:layout_constraintStart_toEndOf="@id/back"
+        app:layout_constraintTop_toTopOf="@id/back" />
+
+    <ImageButton
+        android:id="@+id/settings"
+        style="@style/RoundedImageButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/section_margin"
+        android:backgroundTint="@color/black"
+        android:padding="16dp"
+        android:src="@drawable/settings"
+        app:layout_constraintBottom_toBottomOf="@id/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/back"
+        app:tint="@color/paper_300" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/pomodoro_timer"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="@dimen/section_margin"
+        android:text="22:00"
+        app:strokeWidth="8dp"
+        app:strokeColor="@color/paper_700"
+        android:textAppearance="@style/PageTitleTextStyle"
+        android:textColor="@color/red_300"
+        android:textSize="80sp"
+        app:backgroundTint="@color/paper_500"
+        app:cornerRadius="256dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/back" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".5" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/section_margin"
+        android:background="@drawable/rounded_background"
+        android:backgroundTint="@color/paper_500"
+        android:layout_marginBottom="@dimen/section_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/settings"
+        app:layout_constraintStart_toStartOf="@id/back"
+        app:layout_constraintTop_toBottomOf="@id/pomodoro_timer">
+
+        <ImageButton
+            android:id="@+id/back_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back"
+            style="@style/SimpleImageButtonStyle"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/parent_margin"
+            android:layout_marginStart="@dimen/section_margin"/>
+
+        <TextView
+            android:id="@+id/average_pomodoros_text"
+            style="@style/LabelTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Average Day"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@id/guideline_inside"
+            app:layout_constraintStart_toEndOf="@id/back_week"
+            app:layout_constraintTop_toTopOf="@id/back_week"
+            app:layout_constraintBottom_toTopOf="@id/average_pomodoros"/>
+
+        <TextView
+            android:id="@+id/average_pomodoros"
+            style="@style/RegularTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12 Pomodoro"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/back_week"
+            app:layout_constraintEnd_toEndOf="@+id/average_pomodoros_text"
+            app:layout_constraintStart_toStartOf="@id/average_pomodoros_text"
+            app:layout_constraintTop_toBottomOf="@id/average_pomodoros_text" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_inside"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".5" />
+
+        <TextView
+            android:id="@+id/best_day_text"
+            style="@style/LabelTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Best Day"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/forward_week"
+            app:layout_constraintStart_toEndOf="@id/guideline_inside"
+            app:layout_constraintTop_toTopOf="@id/average_pomodoros_text" />
+
+        <TextView
+            android:id="@+id/best_pomodoros"
+            style="@style/RegularTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12 Pomodoro"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/best_day_text"
+            app:layout_constraintStart_toStartOf="@id/best_day_text"
+            app:layout_constraintTop_toBottomOf="@id/best_day_text" />
+
+        <ImageButton
+            android:id="@+id/forward_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/forward"
+            style="@style/SimpleImageButtonStyle"
+            app:layout_constraintTop_toTopOf="@id/back_week"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/section_margin"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

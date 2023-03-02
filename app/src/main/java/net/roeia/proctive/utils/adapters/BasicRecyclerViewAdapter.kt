@@ -9,6 +9,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import net.roeia.proctive.models.entities.Todo
 import java.lang.reflect.InvocationTargetException
 
 class BasicRecyclerViewAdapter<MODEL, VH : BasicRecyclerViewAdapter.BaseViewHolder<MODEL>> private constructor(
@@ -16,7 +17,7 @@ class BasicRecyclerViewAdapter<MODEL, VH : BasicRecyclerViewAdapter.BaseViewHold
     private val layoutId: Int,
     private val itemList: MutableList<MODEL>,
     private val vhClass: Class<VH>,
-    private val bundle: Bundle,
+    private var bundle: Bundle,
     private val listener: BaseListener
 ) : RecyclerView.Adapter<BasicRecyclerViewAdapter.BaseViewHolder<MODEL>>() {
 
@@ -93,13 +94,25 @@ class BasicRecyclerViewAdapter<MODEL, VH : BasicRecyclerViewAdapter.BaseViewHold
         notifyItemRemoved(position)
     }
 
+    fun removeItem(todo: MODEL) {
+        val position = itemList.indexOf(todo)
+        itemList.remove(todo)
+        notifyItemRemoved(position)
+    }
+
     @SuppressLint("NotifyDataSetChanged")
-    fun clearItems(){
+    fun clearItems() {
         itemList.clear()
         notifyDataSetChanged()
     }
 
     fun getItems() = itemList
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setBundle(bundle: Bundle) {
+        this.bundle = bundle
+        notifyDataSetChanged()
+    }
 
     class Builder<Model, Vh : BaseViewHolder<Model>>(
         @LayoutRes
@@ -116,6 +129,11 @@ class BasicRecyclerViewAdapter<MODEL, VH : BasicRecyclerViewAdapter.BaseViewHold
 
     abstract class BaseViewHolder<MODEL>(b: ViewDataBinding) : RecyclerView.ViewHolder(b.root) {
         var binding = b
-        abstract fun onBindViewHolder(model: MODEL, bundle: Bundle, position:Int, listener: BaseListener)
+        abstract fun onBindViewHolder(
+            model: MODEL,
+            bundle: Bundle,
+            position: Int,
+            listener: BaseListener
+        )
     }
 }

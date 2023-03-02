@@ -1,15 +1,15 @@
-package net.roeia.proctive.ui.views.fragments.todo
+package net.roeia.proctive.ui.views.tabs
 
-import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.HorizontalScrollView
 import android.widget.ListView
@@ -22,10 +22,27 @@ import net.roeia.proctive.models.entities.Todo
 import net.roeia.proctive.models.enums.TodoType
 import net.roeia.proctive.utils.adapters.SubTasksArrayAdapter
 
-class TodoBottomSheet(private val pageType: TodoType, private val todo: Todo) :
+class TodoBottomSheet(
+    private val pageType: TodoType,
+    private val editable: Boolean,
+    private val todo: Todo,
+    private val listener: TodoActions?
+) :
     BottomSheetDialogFragment() {
     companion object {
         private const val TAG = "TodoBottomSheet"
+    }
+
+    interface TodoActions {
+
+        fun onReferenceClicked(todo: Todo)
+
+        fun onEditTodo(todo: Todo)
+
+        fun onDeleteTodo(todo: Todo)
+
+        fun onSubtaskChecked(todo: Todo, subtask: String, checked: Boolean)
+
     }
 
     /***********************************************************************************************
@@ -106,26 +123,65 @@ class TodoBottomSheet(private val pageType: TodoType, private val todo: Todo) :
                 var description = todo.description
                 if (todo.description?.last().toString() != ".") description = "$description."
                 val spannable = SpannableStringBuilder(description + " " + todo.goalRef.toString())
+
                 val clickableSpan = object : ClickableSpan() {
                     override fun onClick(view: View) {
-                        //TODO: Go to Goal Reference
+                        dismiss()
+                        listener?.onReferenceClicked(todo.refTodo!!)
+                    }
+
+                    override fun updateDrawState(ds: TextPaint) {
+                        when (pageType) {
+                            TodoType.Goal, TodoType.SubGoal -> {
+                                ds.color = resources.getColor(R.color.green_700, null)
+                            }
+                            TodoType.WeeklyGoal -> {
+                                ds.color = resources.getColor(R.color.yellow_700, null)
+                            }
+                            TodoType.Task -> {
+                                ds.color = resources.getColor(R.color.blue_700, null)
+                            }
+                        }
                     }
                 }
                 spannable.setSpan(
                     clickableSpan,
                     description!!.length + 1, // start
                     spannable.length, // end
-                    Spannable.SPAN_EXCLUSIVE_INCLUSIVE
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
+                binding.todoDescription.movementMethod = LinkMovementMethod.getInstance()
                 binding.todoDescription.text = spannable
             }
+        }
+
+        binding.deleteTodo.visibility = if (editable) VISIBLE else GONE
+        binding.editTask.visibility = if (editable) VISIBLE else GONE
+
+        binding.deleteTodo.setOnClickListener {
+            listener?.onDeleteTodo(todo)
+            dismiss()
+        }
+
+        binding.editTask.setOnClickListener {
+            listener?.onEditTodo(todo)
+            dismiss()
         }
 
         //Init ListView
         if (pageType == TodoType.Task) {
             if (todo.subTasks != null)
                 (binding.subTasks as ListView).adapter =
-                    SubTasksArrayAdapter(requireContext(), todo.subTasks!!)
+                    SubTasksArrayAdapter(
+                        requireContext(),
+                        todo.subTasks!!.toMutableMap(),
+                        true,
+                        object: SubTasksArrayAdapter.SubTaskActions {
+                            override fun onCheckSubTask(subtask: String, checked: Boolean) {
+                                listener?.onSubtaskChecked(todo, subtask, checked)
+                            }
+                        }
+                    )
             else binding.subTasks.visibility = GONE
         }
     }

@@ -108,11 +108,23 @@ class HabitFragment : Fragment() {
 
         //Update Habits
         binding.updateHabits.setOnClickListener {
+            binding.addHabit.visibility = GONE
+            binding.updateHabits.visibility = GONE
+            binding.doneHabit.visibility = VISIBLE
 
+            val bundle = Bundle()
+            bundle.putBoolean("isUpdate", true)
+            (binding.habitsList.adapter as BasicRecyclerViewAdapter<Habit, ViewHolder>).setBundle(bundle)
         }
 
         binding.doneHabit.setOnClickListener {
+            binding.addHabit.visibility = VISIBLE
+            binding.updateHabits.visibility = VISIBLE
+            binding.doneHabit.visibility = GONE
 
+            val bundle = Bundle()
+            bundle.putBoolean("isUpdate", false)
+            (binding.habitsList.adapter as BasicRecyclerViewAdapter<Habit, ViewHolder>).setBundle(bundle)
         }
 
         //Add Habit

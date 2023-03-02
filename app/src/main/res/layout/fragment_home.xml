@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,241 +7,261 @@
     android:background="@color/black"
     tools:context=".ui.views.fragments.main.HomeFragment">
 
-    <ImageButton
-        android:id="@+id/drawermenu"
-        style="@style/RoundedImageButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/parent_margin"
-        android:layout_marginTop="@dimen/parent_margin"
-        android:src="@drawable/menu"
-        android:backgroundTint="@color/paper_300"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <ImageButton
-        android:id="@+id/profile"
-        style="@style/RoundedImageButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/parent_margin"
-        android:src="@drawable/profile"
-        android:backgroundTint="@color/paper_300"
-        app:layout_constraintBottom_toBottomOf="@id/drawermenu"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/drawermenu" />
-
-    <ImageButton
-        android:id="@+id/schedule"
-        style="@style/RoundedImageButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/content_margin"
-        android:src="@drawable/calendar"
-        android:backgroundTint="@color/paper_300"
-        app:layout_constraintBottom_toBottomOf="@id/drawermenu"
-        app:layout_constraintEnd_toStartOf="@id/profile"
-        app:layout_constraintTop_toTopOf="@id/drawermenu" />
-
-    <TextView
-        android:id="@+id/page_title"
-        style="@style/PageTitleTextStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/parent_margin"
-        android:text="Welcome Back"
-        android:textColor="@color/paper_300"
-        android:textSize="64sp"
-        app:layout_constraintEnd_toEndOf="@id/profile"
-        app:layout_constraintStart_toStartOf="@id/drawermenu"
-        app:layout_constraintTop_toBottomOf="@id/drawermenu" />
-
-    <HorizontalScrollView
-        android:id="@+id/todo_container"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/parent_margin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/page_title">
-
-        <LinearLayout
+        <ImageButton
+            android:id="@+id/drawermenu"
+            style="@style/RoundedImageButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginStart="@dimen/parent_margin"
+            android:layout_marginTop="@dimen/parent_margin"
+            android:backgroundTint="@color/paper_300"
+            android:padding="16dp"
+            android:src="@drawable/menu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.chip.Chip
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/content_margin"
-                android:clickable="true"
-                style="@style/BigChipStyle"
-                android:onClick="goTodo"
-                android:tag="0"
-                android:text="My Goals"
-                android:textAppearance="@style/LabelTextStyle"
-                android:textColor="@color/green_300"
-                app:chipBackgroundColor="@color/green_700"
-                app:chipIconTint="@color/green_300"
-                app:chipIcon="@drawable/goal"
-                android:focusable="true" />
-
-            <com.google.android.material.chip.Chip
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/content_margin"
-                android:onClick="goTodo"
-                android:tag="2"
-                style="@style/BigChipStyle"
-                android:text="Weekly Goals"
-                android:textAppearance="@style/LabelTextStyle"
-                android:textColor="@color/yellow_300"
-                app:chipIconTint="@color/yellow_300"
-                app:chipBackgroundColor="@color/yellow_700"
-                app:chipIcon="@drawable/calendar" />
-
-            <com.google.android.material.chip.Chip
-                style="@style/BigChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/content_margin"
-                android:onClick="goTodo"
-                android:tag="3"
-                android:text="My Tasks"
-                android:textAppearance="@style/LabelTextStyle"
-                android:textColor="@color/blue_300"
-                app:chipIconTint="@color/blue_300"
-                app:chipBackgroundColor="@color/blue_700"
-                app:chipIcon="@drawable/list" />
-
-            <com.google.android.material.chip.Chip
-                style="@style/BigChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="goHabits"
-                android:text="My Habits"
-                android:textAppearance="@style/LabelTextStyle"
-                android:textColor="@color/orange_300"
-                app:chipIconTint="@color/orange_300"
-                app:chipBackgroundColor="@color/orange_700"
-                app:chipIcon="@drawable/list" />
-
-        </LinearLayout>
-
-    </HorizontalScrollView>
-
-    <HorizontalScrollView
-        android:id="@+id/finance_container"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/section_margin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/todo_container"
-        app:layout_constraintTop_toBottomOf="@id/todo_container">
-
-        <LinearLayout
+        <ImageButton
+            android:id="@+id/profile"
+            style="@style/RoundedImageButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginEnd="@dimen/parent_margin"
+            android:backgroundTint="@color/paper_300"
+            android:padding="16dp"
+            android:src="@drawable/profile"
+            app:layout_constraintBottom_toBottomOf="@id/drawermenu"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/drawermenu" />
 
-            <com.google.android.material.chip.Chip
-                style="@style/BigChipStyle"
+        <ImageButton
+            android:id="@+id/schedule"
+            style="@style/RoundedImageButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/content_margin"
+            android:backgroundTint="@color/paper_300"
+            android:padding="16dp"
+            android:src="@drawable/calendar"
+            app:layout_constraintBottom_toBottomOf="@id/drawermenu"
+            app:layout_constraintEnd_toStartOf="@id/profile"
+            app:layout_constraintTop_toTopOf="@id/drawermenu" />
+
+        <TextView
+            android:id="@+id/page_title"
+            style="@style/PageTitleTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/parent_margin"
+            android:text="Welcome Back"
+            android:textColor="@color/paper_300"
+            android:textSize="64sp"
+            app:layout_constraintEnd_toEndOf="@id/profile"
+            app:layout_constraintStart_toStartOf="@id/drawermenu"
+            app:layout_constraintTop_toBottomOf="@id/drawermenu" />
+
+        <HorizontalScrollView
+            android:id="@+id/todo_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/parent_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/page_title">
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/content_margin"
-                android:text="Income"
-                android:textAppearance="@style/LabelTextStyle"
-                android:textColor="@color/green_300"
-                app:chipBackgroundColor="@color/green_700"
-                app:chipIconTint="@color/green_300"
-                app:chipIcon="@drawable/income" />
+                android:orientation="horizontal">
 
-            <com.google.android.material.chip.Chip
-                style="@style/BigChipStyle"
+                <com.google.android.material.chip.Chip
+                    style="@style/BigChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/content_margin"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="goTodo"
+                    android:tag="0"
+                    android:text="My Goals"
+                    android:textAppearance="@style/LabelTextStyle"
+                    android:textColor="@color/green_300"
+                    app:chipBackgroundColor="@color/green_700"
+                    app:chipIcon="@drawable/goal"
+                    app:chipIconTint="@color/green_300" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/BigChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/content_margin"
+                    android:onClick="goTodo"
+                    android:tag="2"
+                    android:text="Weekly Goals"
+                    android:textAppearance="@style/LabelTextStyle"
+                    android:textColor="@color/yellow_300"
+                    app:chipBackgroundColor="@color/yellow_700"
+                    app:chipIcon="@drawable/calendar"
+                    app:chipIconTint="@color/yellow_300" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/BigChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/content_margin"
+                    android:onClick="goTodo"
+                    android:tag="3"
+                    android:text="My Tasks"
+                    android:textAppearance="@style/LabelTextStyle"
+                    android:textColor="@color/blue_300"
+                    app:chipBackgroundColor="@color/blue_700"
+                    app:chipIcon="@drawable/list"
+                    app:chipIconTint="@color/blue_300" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/BigChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="goHabits"
+                    android:text="My Habits"
+                    android:textAppearance="@style/LabelTextStyle"
+                    android:textColor="@color/orange_300"
+                    app:chipBackgroundColor="@color/orange_700"
+                    app:chipIcon="@drawable/list"
+                    app:chipIconTint="@color/orange_300" />
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <HorizontalScrollView
+            android:id="@+id/finance_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/section_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/todo_container"
+            app:layout_constraintTop_toBottomOf="@id/todo_container">
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/content_margin"
-                android:text="Savings"
-                android:textAppearance="@style/LabelTextStyle"
-                android:textColor="@color/orange_300"
-                app:chipBackgroundColor="@color/orange_700"
-                app:chipIconTint="@color/orange_300"
-                app:chipIcon="@drawable/bank" />
+                android:orientation="horizontal">
 
-            <com.google.android.material.chip.Chip
-                style="@style/BigChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/content_margin"
-                android:text="Debt"
-                android:textAppearance="@style/LabelTextStyle"
-                android:textColor="@color/red_300"
-                app:chipBackgroundColor="@color/red_700"
-                app:chipIconTint="@color/red_300"
-                app:chipIcon="@drawable/outcome" />
+                <com.google.android.material.chip.Chip
+                    style="@style/BigChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/content_margin"
+                    android:text="Income"
+                    android:textAppearance="@style/LabelTextStyle"
+                    android:textColor="@color/green_300"
+                    app:chipBackgroundColor="@color/green_700"
+                    app:chipIcon="@drawable/income"
+                    app:chipIconTint="@color/green_300" />
 
-            <com.google.android.material.chip.Chip
-                style="@style/BigChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/content_margin"
-                android:text="Expenses"
-                android:textAppearance="@style/LabelTextStyle"
-                android:textColor="@color/red_300"
-                app:chipBackgroundColor="@color/red_700"
-                app:chipIconTint="@color/red_300"
-                app:chipIcon="@drawable/outcome" />
+                <com.google.android.material.chip.Chip
+                    style="@style/BigChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/content_margin"
+                    android:text="Savings"
+                    android:textAppearance="@style/LabelTextStyle"
+                    android:textColor="@color/orange_300"
+                    app:chipBackgroundColor="@color/orange_700"
+                    app:chipIcon="@drawable/bank"
+                    app:chipIconTint="@color/orange_300" />
 
-            <com.google.android.material.chip.Chip
-                style="@style/BigChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pocket Money"
-                android:textAppearance="@style/LabelTextStyle"
-                android:textColor="@color/blue_300"
-                app:chipBackgroundColor="@color/blue_700"
-                app:chipIconTint="@color/blue_300"
-                app:chipIcon="@drawable/money" />
+                <com.google.android.material.chip.Chip
+                    style="@style/BigChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/content_margin"
+                    android:text="Debt"
+                    android:textAppearance="@style/LabelTextStyle"
+                    android:textColor="@color/red_300"
+                    app:chipBackgroundColor="@color/red_700"
+                    app:chipIcon="@drawable/outcome"
+                    app:chipIconTint="@color/red_300" />
 
-        </LinearLayout>
+                <com.google.android.material.chip.Chip
+                    style="@style/BigChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/content_margin"
+                    android:text="Expenses"
+                    android:textAppearance="@style/LabelTextStyle"
+                    android:textColor="@color/red_300"
+                    app:chipBackgroundColor="@color/red_700"
+                    app:chipIcon="@drawable/outcome"
+                    app:chipIconTint="@color/red_300" />
 
-    </HorizontalScrollView>
+                <com.google.android.material.chip.Chip
+                    style="@style/BigChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pocket Money"
+                    android:textAppearance="@style/LabelTextStyle"
+                    android:textColor="@color/blue_300"
+                    app:chipBackgroundColor="@color/blue_700"
+                    app:chipIcon="@drawable/money"
+                    app:chipIconTint="@color/blue_300" />
 
-    <TextView
-        android:id="@+id/journal_text"
-        style="@style/PageTitleTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Journal"
-        android:textSize="48sp"
-        android:textColor="@color/paper_300"
-        app:layout_constraintBottom_toBottomOf="@id/go_journal"
-        app:layout_constraintStart_toStartOf="@id/page_title"
-        app:layout_constraintTop_toTopOf="@id/go_journal" />
+            </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/lock_journal"
-        style="@style/RoundedImageButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/content_margin"
-        android:src="@drawable/lock"
-        android:backgroundTint="@color/red_700"
-        app:layout_constraintBottom_toBottomOf="@id/go_journal"
-        app:layout_constraintEnd_toStartOf="@id/go_journal"
-        app:layout_constraintTop_toTopOf="@id/go_journal"
-        app:tint="@color/red_300" />
+        </HorizontalScrollView>
 
-    <ImageButton
-        android:id="@+id/go_journal"
-        style="@style/RoundedImageButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="@dimen/section_margin"
-        android:src="@drawable/forward"
-        android:backgroundTint="@color/paper_300"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/finance_container" />
+        <TextView
+            android:id="@+id/journal_text"
+            style="@style/PageTitleTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Journal"
+            android:textColor="@color/paper_300"
+            android:textSize="48sp"
+            app:layout_constraintBottom_toBottomOf="@id/go_journal"
+            app:layout_constraintStart_toStartOf="@id/page_title"
+            app:layout_constraintTop_toTopOf="@id/go_journal" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageButton
+            android:id="@+id/lock_journal"
+            style="@style/RoundedImageButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/content_margin"
+            android:backgroundTint="@color/red_700"
+            android:padding="16dp"
+            android:src="@drawable/lock"
+            app:layout_constraintBottom_toBottomOf="@id/go_journal"
+            app:layout_constraintEnd_toStartOf="@id/go_journal"
+            app:layout_constraintTop_toTopOf="@id/go_journal"
+            app:tint="@color/red_300" />
+
+        <ImageButton
+            android:id="@+id/go_journal"
+            style="@style/RoundedImageButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="@dimen/section_margin"
+            android:backgroundTint="@color/paper_300"
+            android:padding="16dp"
+            android:src="@drawable/forward"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/finance_container" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/journal_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/section_margin"
+            android:layout_marginBottom="@dimen/parent_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lock_journal" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

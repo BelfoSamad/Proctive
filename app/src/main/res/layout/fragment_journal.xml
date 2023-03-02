@@ -1,13 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/paper_300"
     tools:context=".ui.views.fragments.main.JournalFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+    <ImageButton
+        android:id="@+id/back"
+        style="@style/RoundedImageButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/parent_margin"
+        android:layout_marginTop="@dimen/parent_margin"
+        android:backgroundTint="@color/paper_500"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/done_journal"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/content_margin"
+        android:text="Done"
+        android:visibility="gone"
+        app:backgroundTint="@color/paper_500"
+        app:layout_constraintBottom_toBottomOf="@id/back"
+        app:layout_constraintEnd_toStartOf="@id/delete"
+        app:layout_constraintTop_toTopOf="@id/back" />
+
+    <ImageButton
+        android:id="@+id/delete"
+        style="@style/RoundedImageButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/parent_margin"
+        android:backgroundTint="@color/paper_500"
+        android:src="@drawable/delete"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/back" />
+
+    <EditText
+        android:id="@+id/journal_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/section_margin"
+        android:hint="Add Journal Title"
+        style="@style/PageTitleTextStyle"
+        android:textSize="38sp"
+        android:background="@null"
+        android:textColorHint="@color/paper_700"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:boxBackgroundColor="@android:color/transparent"
+        android:layout_marginEnd="@dimen/parent_margin"
+        app:layout_constraintStart_toStartOf="@id/back"
+        app:layout_constraintTop_toBottomOf="@id/back"/>
+
+    <TextView
+        android:id="@+id/journal_timestamp"
+        style="@style/LabelTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Updated 2h Ago"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/journal_title"
+        app:layout_constraintTop_toBottomOf="@id/journal_title" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/journal_content"
+        style="@style/RegularTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/section_margin"
+        android:background="@null"
+        android:hint="Add Journal Content |"
+        android:textColorHint="@color/paper_700"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@id/journal_title"
+        app:layout_constraintStart_toStartOf="@id/back"
+        app:layout_constraintTop_toBottomOf="@id/journal_timestamp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

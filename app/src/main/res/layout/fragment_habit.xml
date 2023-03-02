@@ -26,6 +26,7 @@
         app:layout_constraintBottom_toBottomOf="@id/add_habit"
         app:layout_constraintEnd_toStartOf="@id/add_habit"
         android:layout_marginEnd="@dimen/content_margin"
+        android:src="@drawable/edit"
         style="@style/RoundedImageButtonStyle"/>
 
     <com.google.android.material.button.MaterialButton
@@ -33,6 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Done"
+        android:visibility="gone"
         style="@style/ButtonStyle"
         app:backgroundTint="@color/orange_500"
         app:layout_constraintTop_toTopOf="@id/add_habit"

@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import net.roeia.proctive.data.Status
 import net.roeia.proctive.models.entities.Todo
 import net.roeia.proctive.models.enums.TodoType
+import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
@@ -25,6 +26,9 @@ class ManageTodoViewModel @Inject constructor(private val state: SavedStateHandl
     /***********************************************************************************************
      * ************************* Declarations
      */
+    private val dateFormat = SimpleDateFormat("dd-MM", Locale.ROOT)
+    private val cal: Calendar = Calendar.getInstance()
+
     //UI States
     private val _uiStateTodo = MutableStateFlow(TodoUIState())
     val uiStateTodo: StateFlow<TodoUIState> = _uiStateTodo.asStateFlow()
@@ -78,11 +82,31 @@ class ManageTodoViewModel @Inject constructor(private val state: SavedStateHandl
         todoHolder.name = name
         todoHolder.description = description
         todoHolder.due = due
-        //todoHolder.subTasks = getSubtasksList()
+        todoHolder.subTasks = getSubtasksList()?.associateWith { false }
         todoHolder.labels = getLabelsList()
 
         //TODO (Backend): Save Todo
         todoUpdatedLiveData.value = true
+    }
+
+    fun getCurrentWeek(weekDate: Date?): String {
+        //TODO (Backend): Set first day based on user's preference (Default: Sun)
+        if (weekDate != null)
+            cal.time = weekDate
+        cal.set(Calendar.HOUR_OF_DAY, 0)
+        cal.set(Calendar.DAY_OF_WEEK, cal.firstDayOfWeek)
+        val startWeek = dateFormat.format(cal.time)
+        state["START_WEEK"] = startWeek
+        cal.add(Calendar.DAY_OF_WEEK, 6)
+        val endWeek = dateFormat.format(cal.time)
+        state["END_WEEK"] = endWeek
+        return "$startWeek -> $endWeek"
+    }
+
+    fun removeSubtask(subtask: String) {
+        val subtasks: MutableList<String> = state.get<List<String>>("SUBTASKS")!!.toMutableList()
+        subtasks.remove(subtask)
+        state["SUBTASKS"] = subtasks
     }
 
     /***********************************************************************************************

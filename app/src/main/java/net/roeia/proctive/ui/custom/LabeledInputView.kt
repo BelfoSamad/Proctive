@@ -69,7 +69,7 @@ class LabeledInputView @JvmOverloads constructor(context: Context, attrs: Attrib
         )
         input.hint = hint
         input.boxBackgroundColor = inputBackgroundColor
-        addInput.backgroundTintList = AppCompatResources.getColorStateList(context, inputBackgroundColor)
+        //addInput.backgroundTintList = AppCompatResources.getColorStateList(context, inputBackgroundColor)
         when (inputType) {
             0 -> input.editText?.inputType = InputType.TYPE_CLASS_TEXT
             1 -> input.editText?.inputType = InputType.TYPE_CLASS_NUMBER

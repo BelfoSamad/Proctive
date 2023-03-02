@@ -27,6 +27,7 @@ import net.roeia.proctive.models.enums.TodoType
 import net.roeia.proctive.ui.custom.LabeledInputView
 import net.roeia.proctive.ui.viewmodels.todo.ManageTodoViewModel
 import net.roeia.proctive.ui.views.dialogs.DateTimePickerDialog
+import net.roeia.proctive.utils.adapters.SubTasksArrayAdapter
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -58,7 +59,7 @@ class ManageTodoFragment : Fragment() {
         //Get Page Type,
         //pageType = requireArguments().getInt("PAGE_TYPE")
         todoId = null
-        pageType = 0
+        pageType = 3
 
         //Get TodoObject
         lifecycleScope.launch {
@@ -89,9 +90,13 @@ class ManageTodoFragment : Fragment() {
         when (pageType) {
             TodoType.Goal.ordinal -> {
                 binding.root.setBackgroundColor(resources.getColor(R.color.green_300, null))
-                binding.back.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
-                binding.doneTodo.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
-                binding.todoDueDate.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
+                binding.back.backgroundTintList =
+                    AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
+                binding.doneTodo.backgroundTintList =
+                    AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
+                binding.todoDueDate.backgroundTintList =
+                    AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
+                binding.todoDueDate.setTextColor(resources.getColor(R.color.green_700, null))
                 binding.subtasksLabel.visibility = GONE
                 (binding.todoSubtasks as ListView).visibility = GONE
                 //TODO: Hide Goal Ref
@@ -99,22 +104,46 @@ class ManageTodoFragment : Fragment() {
             TodoType.SubGoal.ordinal, TodoType.WeeklyGoal.ordinal -> {
                 if (pageType == TodoType.SubGoal.ordinal) {
                     binding.root.setBackgroundColor(resources.getColor(R.color.green_300, null))
-                    binding.back.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
-                    binding.doneTodo.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
-                    binding.todoDueDate.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
-                } else binding.root.setBackgroundColor(resources.getColor(R.color.yellow_300, null))
+                    binding.back.backgroundTintList =
+                        AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
+                    binding.doneTodo.backgroundTintList =
+                        AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
+                    binding.todoDueDate.chipBackgroundColor =
+                        AppCompatResources.getColorStateList(requireContext(), R.color.green_700)
+                    binding.todoDueDate.setTextColor(resources.getColor(R.color.green_300, null))
+                } else {
+                    binding.root.setBackgroundColor(resources.getColor(R.color.yellow_300, null))
+                    binding.back.backgroundTintList =
+                        AppCompatResources.getColorStateList(requireContext(), R.color.yellow_500)
+                    binding.doneTodo.backgroundTintList =
+                        AppCompatResources.getColorStateList(requireContext(), R.color.yellow_500)
+                    binding.todoDueDate.chipBackgroundColor =
+                        AppCompatResources.getColorStateList(requireContext(), R.color.yellow_700)
+                    binding.todoDueDate.setTextColor(resources.getColor(R.color.yellow_300, null))
+                }
                 binding.subtasksLabel.visibility = GONE
                 (binding.todoSubtasks as ListView).visibility = GONE
                 //TODO: Show Goal Ref
             }
             TodoType.Task.ordinal -> {
                 binding.root.setBackgroundColor(resources.getColor(R.color.blue_300, null))
+                binding.back.backgroundTintList =
+                    AppCompatResources.getColorStateList(requireContext(), R.color.blue_500)
+                binding.doneTodo.backgroundTintList =
+                    AppCompatResources.getColorStateList(requireContext(), R.color.blue_500)
+                binding.todoDueDate.chipBackgroundColor =
+                    AppCompatResources.getColorStateList(requireContext(), R.color.blue_700)
+                binding.todoDueDate.setTextColor(resources.getColor(R.color.blue_300, null))
                 binding.subtasksLabel.visibility = VISIBLE
                 (binding.todoSubtasks as ListView).visibility = VISIBLE
                 //TODO: Hide Goal Ref
             }
         }
-        if (todoId == null) binding.deleteTodo.visibility = GONE//Delete Option
+        if (todoId == null) {
+            binding.deleteTodo.visibility = GONE //Delete Option
+            if (pageType == TodoType.WeeklyGoal.ordinal)
+                binding.todoDueDate.text = viewModel.getCurrentWeek(null)
+        }
 
         //Handle Status Changes
         handleChipChanges()
@@ -152,7 +181,9 @@ class ManageTodoFragment : Fragment() {
 
         //Set Due Date
         if (todo.due != null) {
-            binding.todoDueDate.text = dateTimeFormat.format(todo.due!!)
+            if (pageType == TodoType.WeeklyGoal.ordinal)
+                binding.todoDueDate.text = viewModel.getCurrentWeek(todo.due)
+            else binding.todoDueDate.text = dateTimeFormat.format(todo.due!!)
             binding.todoDueDate.tag = 1
         }
 
@@ -166,17 +197,21 @@ class ManageTodoFragment : Fragment() {
     }
 
     private fun handleChipChanges() {
-        //Handle Due Date
-        binding.todoDueDate.setOnClickListener {
-            val dialog = DateTimePickerDialog(
-                if (it.tag == 1) dateTimeFormat.parse((it as Chip).text.toString()) else null,
-                object : DateTimePickerDialog.DateTimePickerListener {
-                    override fun onDateTimePicked(due: String) {
-                        binding.todoDueDate.text = due
-                        binding.todoDueDate.tag = 1
-                    }
-                })
-            dialog.show(childFragmentManager, "DateTimePickerDialog")
+        if (pageType == TodoType.WeeklyGoal.ordinal) {
+            binding.todoDueDate.setOnClickListener(null)
+        } else {
+            //Handle Due Date
+            binding.todoDueDate.setOnClickListener {
+                val dialog = DateTimePickerDialog(
+                    if (it.tag == 1) dateTimeFormat.parse((it as Chip).text.toString()) else null,
+                    object : DateTimePickerDialog.DateTimePickerListener {
+                        override fun onDateTimePicked(due: String) {
+                            binding.todoDueDate.text = due
+                            binding.todoDueDate.tag = 1
+                        }
+                    })
+                dialog.show(childFragmentManager, "DateTimePickerDialog")
+            }
         }
     }
 
@@ -218,12 +253,17 @@ class ManageTodoFragment : Fragment() {
                 }
 
                 //Update ListView
-                (binding.todoSubtasks as ListView).adapter = ArrayAdapter(
-                    requireContext(),
-                    R.layout.list_simple_item,
-                    R.id.item_text,
-                    viewModel.getSubtasksList()!!
-                )
+                (binding.todoSubtasks as ListView).adapter =
+                    SubTasksArrayAdapter(
+                        requireContext(),
+                        viewModel.getSubtasksList()!!.associateWith { false }.toMutableMap(),
+                        false,
+                        object: SubTasksArrayAdapter.SubTaskActions {
+                            override fun onDeleteSubTask(subtask: String) {
+                                viewModel.removeSubtask(subtask)
+                            }
+                        }
+                    )
             }
         })
     }
@@ -246,7 +286,7 @@ class ManageTodoFragment : Fragment() {
                     pageType!!,
                     binding.todoName.getValue(),
                     if (binding.todoDescription.getValue() == "") null else binding.todoDescription.getValue(),
-                    if (binding.todoDueDate.tag == 0) null else dateTimeFormat.parse(binding.todoDueDate.text.toString())
+                    if (binding.todoDueDate.tag == 0) null else dateTimeFormat.parse(binding.todoDueDate.text.toString()),
                 )
             }
         }
