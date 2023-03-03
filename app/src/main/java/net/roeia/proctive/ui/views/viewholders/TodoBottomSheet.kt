@@ -1,4 +1,4 @@
-package net.roeia.proctive.ui.views.tabs
+package net.roeia.proctive.ui.views.viewholders
 
 import android.os.Bundle
 import android.text.Spannable
@@ -27,8 +27,7 @@ class TodoBottomSheet(
     private val editable: Boolean,
     private val todo: Todo,
     private val listener: TodoActions?
-) :
-    BottomSheetDialogFragment() {
+) : BottomSheetDialogFragment() {
     companion object {
         private const val TAG = "TodoBottomSheet"
     }
@@ -65,24 +64,21 @@ class TodoBottomSheet(
         //Background Color
         when (pageType) {
             TodoType.Goal, TodoType.SubGoal -> {
-                binding.root.backgroundTintList =
-                    AppCompatResources.getColorStateList(requireContext(), R.color.green_300)
+                binding.root.setBackgroundColor(resources.getColor(R.color.green_300, null))
                 binding.editTask.backgroundTintList =
                     AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
                 binding.deleteTodo.backgroundTintList =
                     AppCompatResources.getColorStateList(requireContext(), R.color.green_500)
             }
             TodoType.WeeklyGoal -> {
-                binding.root.backgroundTintList =
-                    AppCompatResources.getColorStateList(requireContext(), R.color.yellow_300)
+                binding.root.setBackgroundColor(resources.getColor(R.color.yellow_300, null))
                 binding.editTask.backgroundTintList =
                     AppCompatResources.getColorStateList(requireContext(), R.color.yellow_500)
                 binding.deleteTodo.backgroundTintList =
                     AppCompatResources.getColorStateList(requireContext(), R.color.yellow_500)
             }
             TodoType.Task -> {
-                binding.root.backgroundTintList =
-                    AppCompatResources.getColorStateList(requireContext(), R.color.blue_300)
+                binding.root.setBackgroundColor(resources.getColor(R.color.blue_300, null))
                 binding.editTask.backgroundTintList =
                     AppCompatResources.getColorStateList(requireContext(), R.color.blue_500)
                 binding.deleteTodo.backgroundTintList =
@@ -117,13 +113,12 @@ class TodoBottomSheet(
 
         //Set Description and Goal Reference
         if (todo.description != null) {
-            if (todo.goalRef == null)
+            if (todo.goalRef == null || pageType != TodoType.WeeklyGoal)
                 binding.todoDescription.text = todo.description
             else {
                 var description = todo.description
                 if (todo.description?.last().toString() != ".") description = "$description."
                 val spannable = SpannableStringBuilder(description + " " + todo.goalRef.toString())
-
                 val clickableSpan = object : ClickableSpan() {
                     override fun onClick(view: View) {
                         dismiss()

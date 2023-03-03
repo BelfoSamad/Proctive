@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data></data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rounded_background"
+        android:backgroundTint="@color/paper_500">
+
+        <ImageButton
+            android:id="@+id/back_week"
+            style="@style/SimpleImageButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/section_margin"
+            android:layout_marginTop="@dimen/parent_margin"
+            android:src="@drawable/back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/average_pomodoros_text"
+            style="@style/LabelTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Average Day"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/average_pomodoros"
+            app:layout_constraintEnd_toStartOf="@id/guideline_inside"
+            app:layout_constraintStart_toEndOf="@id/back_week"
+            app:layout_constraintTop_toTopOf="@id/back_week" />
+
+        <TextView
+            android:id="@+id/average_pomodoros"
+            style="@style/RegularTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12 Pomodoro"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/back_week"
+            app:layout_constraintEnd_toEndOf="@+id/average_pomodoros_text"
+            app:layout_constraintStart_toStartOf="@id/average_pomodoros_text"
+            app:layout_constraintTop_toBottomOf="@id/average_pomodoros_text" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_inside"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".5" />
+
+        <TextView
+            android:id="@+id/best_day_text"
+            style="@style/LabelTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Best Day"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/forward_week"
+            app:layout_constraintStart_toEndOf="@id/guideline_inside"
+            app:layout_constraintTop_toTopOf="@id/average_pomodoros_text" />
+
+        <TextView
+            android:id="@+id/best_pomodoros"
+            style="@style/RegularTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12 Pomodoro"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/best_day_text"
+            app:layout_constraintStart_toStartOf="@id/best_day_text"
+            app:layout_constraintTop_toBottomOf="@id/best_day_text" />
+
+        <ImageButton
+            android:id="@+id/forward_week"
+            style="@style/SimpleImageButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/section_margin"
+            android:src="@drawable/forward"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/back_week" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/average"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="@dimen/content_margin"
+            android:layout_marginBottom="16dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/average_pomodoros" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

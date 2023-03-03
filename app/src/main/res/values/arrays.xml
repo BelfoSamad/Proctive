@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="todo_title">
+        <item>Goals</item>
+        <item>SubGoals</item>
+        <item>Weekly Goals</item>
+        <item>Tasks</item>
+    </string-array>
+
     <string-array name="task_tracking">
         <item>Tasks</item>
         <item>Time</item>

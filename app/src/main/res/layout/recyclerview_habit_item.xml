@@ -15,7 +15,7 @@
 
         <variable
             name="listener"
-            type="net.roeia.proctive.ui.views.fragments.habit.HabitFragment.ViewHolder.HabitClickListener" />
+            type="net.roeia.proctive.ui.views.viewholders.HabitViewHolder.HabitClickListener" />
 
         <variable
             name="isUpdate"

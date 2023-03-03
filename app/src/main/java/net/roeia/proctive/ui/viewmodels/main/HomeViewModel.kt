@@ -39,11 +39,13 @@ class HomeViewModel @Inject constructor(private val state: SavedStateHandle) : V
                     status = Status.SUCCESS,
                     journalList = listOf(
                         Journal(
+                            journalId = 1L,
                             title = "My Journal Note Name",
                             content = "This is the text of the journal, please read properly if you want to have an idea about how the description might look like",
                             createdDate = Date()
                         ),
                         Journal(
+                            journalId = 1L,
                             title = "My Journal Note Name",
                             content = "This is the text of the journal, please read properly if you want to have an idea about. if you want to have an idea about how the description might look like",
                             createdDate = Date()

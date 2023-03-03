@@ -9,7 +9,7 @@
 
         <variable
             name="listener"
-            type="net.roeia.proctive.ui.views.fragments.main.HomeFragment.ViewHolder.JournalActions" />
+            type="net.roeia.proctive.ui.views.viewholders.JournalViewHolder.JournalActions" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -53,9 +53,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/content_margin"
-            android:text="@{journal.content}"
-            android:maxLines="3"
             android:ellipsize="end"
+            android:maxLines="3"
+            android:text="@{journal.content}"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="@id/journal_title"
             app:layout_constraintStart_toStartOf="@id/journal_title"
@@ -67,13 +67,14 @@
             style="@style/RoundedImageButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/section_margin"
             android:layout_marginEnd="@dimen/content_margin"
             android:backgroundTint="@color/paper_500"
             android:padding="8dp"
-            android:tag="0"
             android:src="@{journal.isLocked ? @drawable/lock : @drawable/unlocked}"
+            android:tag="0"
             app:layout_constraintBottom_toBottomOf="@id/go_journal"
-            app:layout_constraintEnd_toStartOf="@id/go_journal"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/go_journal" />
 
         <ImageButton

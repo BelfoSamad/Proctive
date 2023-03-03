@@ -81,7 +81,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:timePickerMode="spinner"
-            style="@style/LabelTextStyle"
             app:layout_constraintTop_toBottomOf="@id/time_label"/>
 
         <com.google.android.material.button.MaterialButton

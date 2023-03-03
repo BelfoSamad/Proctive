@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="states">
+        <attr name="backgroundType" format="enum">
+            <enum name="green" value="0"/>
+            <enum name="yellow" value="1"/>
+            <enum name="orange" value="2"/>
+            <enum name="blue" value="3"/>
+            <enum name="red" value="4"/>
+        </attr>
+    </declare-styleable>
     <declare-styleable name="LabeledInputView">
         <attr name="labelIcon" format="reference" />
         <attr name="labelText" format="string" />

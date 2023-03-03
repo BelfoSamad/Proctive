@@ -6,16 +6,66 @@
     app:startDestination="@id/homeFragment">
 
     <fragment
+        android:id="@+id/financeFragment"
+        android:name="net.roeia.proctive.ui.views.fragments.finance.FinanceFragment"
+        android:label="fragment_finance"
+        tools:layout="@layout/fragment_finance">
+        <action
+            android:id="@+id/finance_tracking"
+            app:destination="@id/financeTrackingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/financeTrackingFragment"
+        android:name="net.roeia.proctive.ui.views.fragments.finance.FinanceTrackingFragment"
+        android:label="fragment_finance_tracking"
+        tools:layout="@layout/fragment_finance_tracking" />
+    <fragment
+        android:id="@+id/habitFragment"
+        android:name="net.roeia.proctive.ui.views.fragments.habit.HabitFragment"
+        android:label="fragment_habit"
+        tools:layout="@layout/fragment_habit">
+        <action
+            android:id="@+id/habit_tracking"
+            app:destination="@id/habitTrackingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/habitTrackingFragment"
+        android:name="net.roeia.proctive.ui.views.fragments.habit.HabitTrackingFragment"
+        android:label="fragment_habit_tracking"
+        tools:layout="@layout/fragment_habit_tracking" />
+    <fragment
+        android:id="@+id/todoFragment"
+        android:name="net.roeia.proctive.ui.views.fragments.todo.TodoFragment"
+        android:label="fragment_todo"
+        tools:layout="@layout/fragment_todo">
+        <action
+            android:id="@+id/todo_tracking"
+            app:destination="@id/todoTrackingFragment" />
+        <action
+            android:id="@+id/manage_todo"
+            app:destination="@id/manageTodoFragment" />
+        <action
+            android:id="@+id/navigate_todo"
+            app:destination="@id/todoFragment" />
+        <action
+            android:id="@+id/todo_pomodoro"
+            app:destination="@id/pomodoroFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/manageTodoFragment"
+        android:name="net.roeia.proctive.ui.views.fragments.todo.ManageTodoFragment"
+        android:label="fragment_manage_todo"
+        tools:layout="@layout/fragment_manage_todo" />
+    <fragment
+        android:id="@+id/todoTrackingFragment"
+        android:name="net.roeia.proctive.ui.views.fragments.todo.TodoTrackingFragment"
+        android:label="fragment_todo_tracking"
+        tools:layout="@layout/fragment_todo_tracking" />
+    <fragment
         android:id="@+id/homeFragment"
         android:name="net.roeia.proctive.ui.views.fragments.main.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/go_schedule"
-            app:destination="@id/scheduleFragment" />
-        <action
-            android:id="@+id/go_notes"
-            app:destination="@id/notesFragment" />
         <action
             android:id="@+id/go_journal"
             app:destination="@id/journalFragment" />
@@ -27,13 +77,13 @@
             app:destination="@id/pomodoroFragment" />
         <action
             android:id="@+id/go_todo"
-            app:destination="@id/todo_subgraph" />
+            app:destination="@id/todoFragment" />
         <action
             android:id="@+id/go_habit"
-            app:destination="@id/habit_subgraph" />
+            app:destination="@id/habitFragment" />
         <action
             android:id="@+id/go_finance"
-            app:destination="@id/finance_subgraph" />
+            app:destination="@id/financeFragment" />
     </fragment>
     <fragment
         android:id="@+id/journalFragment"
@@ -41,26 +91,17 @@
         android:label="fragment_journal"
         tools:layout="@layout/fragment_journal" />
     <fragment
-        android:id="@+id/notesFragment"
-        android:name="net.roeia.proctive.ui.views.fragments.main.NotesFragment"
-        android:label="fragment_notes"
-        tools:layout="@layout/fragment_notes" />
-    <fragment
         android:id="@+id/profileFragment"
         android:name="net.roeia.proctive.ui.views.fragments.main.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
-        android:id="@+id/scheduleFragment"
-        android:name="net.roeia.proctive.ui.views.fragments.main.ScheduleFragment"
-        android:label="fragment_schedule"
-        tools:layout="@layout/fragment_schedule" />
-    <fragment
         android:id="@+id/pomodoroFragment"
         android:name="net.roeia.proctive.ui.views.fragments.main.PomodoroFragment"
         android:label="fragment_pomodoro"
-        tools:layout="@layout/fragment_pomodoro" />
-    <include app:graph="@navigation/todo_subgraph" />
-    <include app:graph="@navigation/habit_subgraph" />
-    <include app:graph="@navigation/finance_subgraph" />
+        tools:layout="@layout/fragment_pomodoro" >
+        <action
+            android:id="@+id/pomodoro_todo"
+            app:destination="@id/todoFragment" />
+    </fragment>
 </navigation>

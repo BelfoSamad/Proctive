@@ -18,7 +18,7 @@ class BasicRecyclerViewAdapter<MODEL, VH : BasicRecyclerViewAdapter.BaseViewHold
     private val itemList: MutableList<MODEL>,
     private val vhClass: Class<VH>,
     private var bundle: Bundle,
-    private val listener: BaseListener
+    private val listener: BaseListener?
 ) : RecyclerView.Adapter<BasicRecyclerViewAdapter.BaseViewHolder<MODEL>>() {
 
     private constructor(builder: Builder<MODEL, VH>) : this(
@@ -120,7 +120,7 @@ class BasicRecyclerViewAdapter<MODEL, VH : BasicRecyclerViewAdapter.BaseViewHold
         val itemList: MutableList<Model>,
         val vhClass: Class<Vh>,
         val bundle: Bundle,
-        val listener: BaseListener
+        val listener: BaseListener?
     ) {
         fun build() = BasicRecyclerViewAdapter(this)
     }
@@ -133,7 +133,7 @@ class BasicRecyclerViewAdapter<MODEL, VH : BasicRecyclerViewAdapter.BaseViewHold
             model: MODEL,
             bundle: Bundle,
             position: Int,
-            listener: BaseListener
+            listener: BaseListener?
         )
     }
 }

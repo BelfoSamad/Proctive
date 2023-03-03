@@ -41,11 +41,15 @@ class HabitViewModel @Inject constructor(private val state: SavedStateHandle) : 
                         Habit(
                             habitId = 1L,
                             name = "Morning Athkars",
+                            time = "12:00",
+                            weekDays = listOf("Sun", "Mon"),
                             isChecked = false
                         ),
                         Habit(
                             habitId = 1L,
                             name = "Evening Athkars",
+                            time = "12:00",
+                            weekDays = listOf("Sun", "Mon"),
                             isChecked = false
                         )
                     ),
@@ -53,11 +57,15 @@ class HabitViewModel @Inject constructor(private val state: SavedStateHandle) : 
                         Habit(
                             habitId = 1L,
                             name = "Morning Athkars",
+                            time = "12:00",
+                            weekDays = listOf("Sun", "Mon"),
                             isChecked = true
                         ),
                         Habit(
                             habitId = 1L,
                             name = "Evening Athkars",
+                            time = "12:00",
+                            weekDays = listOf("Sun", "Mon"),
                             isChecked = true
                         )
                     )

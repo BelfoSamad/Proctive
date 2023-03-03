@@ -25,6 +25,7 @@ import net.roeia.proctive.models.entities.Todo
 import net.roeia.proctive.ui.viewmodels.habit.HabitViewModel
 import net.roeia.proctive.ui.views.dialogs.ManageHabitDialog
 import net.roeia.proctive.ui.views.fragments.todo.TodoFragment
+import net.roeia.proctive.ui.views.viewholders.HabitViewHolder
 import net.roeia.proctive.utils.adapters.BasicRecyclerViewAdapter
 
 @AndroidEntryPoint
@@ -39,6 +40,9 @@ class HabitFragment : Fragment() {
     private val viewModel: HabitViewModel by viewModels()
     private var _binding: FragmentHabitBinding? = null
     private val binding get() = _binding!!
+
+    //Data
+    private var habitsAdapter: BasicRecyclerViewAdapter<Habit, HabitViewHolder>? = null
 
     /***********************************************************************************************
      * ************************* LifeCycle
@@ -84,20 +88,33 @@ class HabitFragment : Fragment() {
     private fun initHabitsList(habits: List<Habit>) {
         val bundle = Bundle()
         bundle.putBoolean("isUpdate", false)
-        val adapter = BasicRecyclerViewAdapter.Builder(
+        habitsAdapter = BasicRecyclerViewAdapter.Builder(
             itemList = habits.toMutableList(),
             layoutId = R.layout.recyclerview_habit_item,
-            vhClass = ViewHolder::class.java,
+            vhClass = HabitViewHolder::class.java,
             bundle = bundle,
-            listener = object: ViewHolder.HabitClickListener {
-                override fun onHabitChecked(habit: Habit, position: Int) {
+            listener = object: HabitViewHolder.HabitClickListener {
+                override fun onHabitChecked(habit: Habit, position: Int, checked: Boolean) {
+                    viewModel.setChecked(habit.habitId!!, checked)
+                }
 
+                override fun onHabitUpdate(habit: Habit, position: Int) {
+                    val dialog = ManageHabitDialog(habit, object: ManageHabitDialog.HabitListener {
+                        override fun onHabitAdded(habit: Habit) {
+                            viewModel.saveHabit(habit)
+                        }
+                    })
+                    dialog.show(childFragmentManager, "ManageHabitDialog")
+                }
+
+                override fun onHabitDelete(habit: Habit, position: Int) {
+                    viewModel.deleteHabit(habit)
                 }
             }
         ).build()
         binding.habitsList.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.habitsList.adapter = adapter
+        binding.habitsList.adapter = habitsAdapter
     }
 
     private fun initClickListeners() {
@@ -114,7 +131,7 @@ class HabitFragment : Fragment() {
 
             val bundle = Bundle()
             bundle.putBoolean("isUpdate", true)
-            (binding.habitsList.adapter as BasicRecyclerViewAdapter<Habit, ViewHolder>).setBundle(bundle)
+            habitsAdapter?.setBundle(bundle)
         }
 
         binding.doneHabit.setOnClickListener {
@@ -124,7 +141,7 @@ class HabitFragment : Fragment() {
 
             val bundle = Bundle()
             bundle.putBoolean("isUpdate", false)
-            (binding.habitsList.adapter as BasicRecyclerViewAdapter<Habit, ViewHolder>).setBundle(bundle)
+            habitsAdapter?.setBundle(bundle)
         }
 
         //Add Habit
@@ -136,45 +153,6 @@ class HabitFragment : Fragment() {
             })
             dialog.show(childFragmentManager, "ManageHabitDialog")
         }
-    }
-
-    /***********************************************************************************************
-     * ************************* RecyclerView Adapter
-     */
-    class ViewHolder constructor(private val b: RecyclerviewHabitItemBinding) :
-        BasicRecyclerViewAdapter.BaseViewHolder<Habit>(b) {
-
-        interface HabitClickListener : BasicRecyclerViewAdapter.BaseListener {
-
-            fun onHabitChecked(habit: Habit, position: Int){}
-
-            fun onHabitUnChecked(habit: Habit, position: Int){}
-
-            fun onHabitUpdate(habit: Habit, position: Int){}
-
-            fun onHabitDelete(habit: Habit, position: Int){}
-
-        }
-
-        override fun onBindViewHolder(
-            model: Habit,
-            bundle: Bundle,
-            position: Int,
-            listener: BasicRecyclerViewAdapter.BaseListener
-        ) {
-            b.habit = model
-            b.position = position
-            b.listener = listener as HabitClickListener
-            b.isUpdate = bundle.getBoolean("isUpdate")
-
-            //OnChecked Changed
-            b.habitCheckbox.addOnCheckedStateChangedListener { checkBox, _ ->
-                if (checkBox.isChecked)
-                    listener.onHabitChecked(model, position)
-                else listener.onHabitUnChecked(model, position)
-            }
-        }
-
     }
 
 }

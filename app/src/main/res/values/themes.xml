@@ -12,6 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:textColorPrimary">@color/black</item>
     </style>
 
     <style name="CheckboxStyle">
@@ -61,8 +62,5 @@
         <item name="chipMinHeight">96dp</item>
         <item name="chipMinTouchTargetSize">96dp</item>
         <item name="chipIconSize">48dp</item>
-    </style>
-    <style name="BottomBehaviourStyle" parent="Widget.Material3.BottomSheet.Modal">
-        <item name="android:background">@drawable/rounded_background</item>
     </style>
 </resources>

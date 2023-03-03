@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:color="@color/green_500" app:backgroundType="green" />
+    <item android:color="@color/blue_500" app:backgroundType="blue" />
+    <item android:color="@color/orange_500" app:backgroundType="orange" />
+    <item android:color="@color/yellow_500" app:backgroundType="yellow" />
+    <item android:color="@color/red_500" app:backgroundType="red" />
+</selector>

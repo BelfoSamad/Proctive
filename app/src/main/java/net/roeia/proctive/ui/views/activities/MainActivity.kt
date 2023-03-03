@@ -34,9 +34,12 @@ class MainActivity : AppCompatActivity() {
 
     fun goTodo(view: View) {
         val bundle = Bundle()
-        Log.d(TAG, "goTodo: " + view.tag)
         bundle.putInt("PAGE_TYPE", view.tag.toString().toInt())
         findNavController(R.id.nav_host_fragment).navigate(R.id.go_todo, bundle)
+    }
+
+    fun goHabits(view: View) {
+        findNavController(R.id.nav_host_fragment).navigate(R.id.go_habit)
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {

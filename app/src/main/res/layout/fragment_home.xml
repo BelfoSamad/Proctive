@@ -38,14 +38,14 @@
             app:layout_constraintTop_toTopOf="@id/drawermenu" />
 
         <ImageButton
-            android:id="@+id/schedule"
+            android:id="@+id/pomodoro"
             style="@style/RoundedImageButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/content_margin"
             android:backgroundTint="@color/paper_300"
             android:padding="16dp"
-            android:src="@drawable/calendar"
+            android:src="@drawable/apple"
             app:layout_constraintBottom_toBottomOf="@id/drawermenu"
             app:layout_constraintEnd_toStartOf="@id/profile"
             app:layout_constraintTop_toTopOf="@id/drawermenu" />

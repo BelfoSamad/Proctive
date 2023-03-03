@@ -1,20 +1,25 @@
 package net.roeia.proctive.ui.custom
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
+import android.content.res.TypedArray
 import android.text.InputType
 import android.util.AttributeSet
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textview.MaterialTextView
 import net.roeia.proctive.R
 
+@SuppressLint("ResourceType")
 class LabeledInputView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     LinearLayout(context, attrs) {
 
@@ -50,7 +55,7 @@ class LabeledInputView @JvmOverloads constructor(context: Context, attrs: Attrib
                 hint = getString(R.styleable.LabeledInputView_hint)
                 inputStyle = getResourceId(R.styleable.LabeledInputView_inputStyle, 0)
                 inputType = getInteger(R.styleable.LabeledInputView_inputType, -1)
-                inputBackgroundColor = getInteger(R.styleable.LabeledInputView_inputBackgroundColor, 0)
+                inputBackgroundColor = getColor(R.styleable.LabeledInputView_inputBackgroundColor, -1)
             } finally {
                 recycle()
             }
@@ -68,8 +73,6 @@ class LabeledInputView @JvmOverloads constructor(context: Context, attrs: Attrib
             null
         )
         input.hint = hint
-        input.boxBackgroundColor = inputBackgroundColor
-        //addInput.backgroundTintList = AppCompatResources.getColorStateList(context, inputBackgroundColor)
         when (inputType) {
             0 -> input.editText?.inputType = InputType.TYPE_CLASS_TEXT
             1 -> input.editText?.inputType = InputType.TYPE_CLASS_NUMBER
@@ -100,6 +103,7 @@ class LabeledInputView @JvmOverloads constructor(context: Context, attrs: Attrib
 
     fun setInputBackgroundColor(color: Int) {
         input.boxBackgroundColor = color
+        addInput.backgroundTintList = ColorStateList.valueOf(color)
         invalidate()
         requestLayout()
     }
