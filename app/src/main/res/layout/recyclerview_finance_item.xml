@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="net.roeia.proctive.models.enums.FinanceType" />
+
+        <variable
+            name="type"
+            type="net.roeia.proctive.models.enums.FinanceType" />
+        <variable
+            name="finance"
+            type="net.roeia.proctive.models.pojo.Finance" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/rounded_background"
+        android:backgroundTint="@{type == FinanceType.Income ? @color/green_500 : type == FinanceType.Savings ? @color/orange_500 : type == FinanceType.PocketMoney ? @color/blue_500 : type == FinanceType.Investments ? @color/yellow_500 : @color/red_500}">
+
+        <TextView
+            android:id="@+id/finance_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/parent_margin"
+            android:layout_marginTop="@dimen/section_margin"
+            android:layout_marginBottom="@dimen/section_margin"
+            android:text="@{finance.name}"
+            tools:text="Income 1"
+            style="@style/LabelTextStyle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/finance_sub_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/RegularTextStyle"
+            android:textSize="12sp"
+            tools:text="Created on 05/03/2023"
+            android:textColor="@{type == FinanceType.Income ? @color/green_700 : type == FinanceType.Savings ? @color/orange_700 : type == FinanceType.PocketMoney ? @color/blue_700 : type == FinanceType.Investments ? @color/yellow_700 : @color/red_700}"
+            android:text="@{finance.subName}"
+            android:layout_marginBottom="@dimen/section_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/finance_name"
+            app:layout_constraintTop_toBottomOf="@id/finance_name" />
+
+        <TextView
+            android:id="@+id/finance_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{finance.details}"
+            android:layout_marginBottom="@dimen/section_margin"
+            tools:text="10000da"
+            style="@style/LabelTextStyle"
+            android:layout_marginTop="@dimen/section_margin"
+            android:layout_marginEnd="@dimen/section_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/finance_sub_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/RegularTextStyle"
+            android:textColor="@{type == FinanceType.Income ? @color/green_700 : type == FinanceType.Savings ? @color/orange_700 : type == FinanceType.PocketMoney ? @color/blue_700 : type == FinanceType.Investments ? @color/yellow_700 : @color/red_700}"
+            android:text="@{finance.subDetails}"
+            android:textSize="12sp"
+            tools:text="Testing this"
+            app:layout_constraintEnd_toEndOf="@id/finance_details"
+            app:layout_constraintTop_toBottomOf="@id/finance_details" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

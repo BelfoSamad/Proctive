@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="net.roeia.proctive.models.enums.FinanceType" />
+        <variable
+            name="type"
+            type="net.roeia.proctive.models.enums.FinanceType" />
+    </data>
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        app:cardCornerRadius="32dp"
+        app:cardBackgroundColor="@{type == FinanceType.Expenses ? @color/red_300 : type == FinanceType.Investments ? @color/yellow_300 : @color/blue_300}"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <net.roeia.proctive.ui.custom.LabeledInputView
+                android:id="@+id/expenditure_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/parent_margin"
+                android:layout_marginEnd="@dimen/section_margin"
+                android:layout_marginStart="@dimen/section_margin"
+                app:hint="Name"
+                app:inputBackgroundColor="@{type == FinanceType.Expenses ? @color/red_500 : type == FinanceType.Investments ? @color/yellow_500 : @color/blue_500}"
+                app:inputType="text"
+                app:labelIcon="@drawable/edit"
+                app:labelText="Name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <net.roeia.proctive.ui.custom.LabeledInputView
+                android:id="@+id/expenditure_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/section_margin"
+                android:layout_marginEnd="@dimen/section_margin"
+                android:layout_marginStart="@dimen/section_margin"
+                app:hint="Amount"
+                app:inputBackgroundColor="@{type == FinanceType.Expenses ? @color/red_500 : type == FinanceType.Investments ? @color/yellow_500 : @color/blue_500}"
+                app:inputType="number"
+                app:labelIcon="@drawable/money"
+                app:labelText="Amount"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/expenditure_name"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/done_expenditure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/section_margin"
+                android:text="Add"
+                android:padding="12dp"
+                style="@style/ButtonStyle"
+                android:backgroundTint="@{type == FinanceType.Expenses ? @color/red_500 : type == FinanceType.Investments ? @color/yellow_500 : @color/blue_500}"
+                android:layout_marginTop="@dimen/section_margin"
+                android:layout_marginBottom="@dimen/section_margin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/expenditure_amount"
+                app:layout_goneMarginEnd="16dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -1,26 +1,27 @@
-package net.roeia.proctive.utils.adapters
+package net.roeia.proctive.utils
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import net.roeia.proctive.models.entities.Todo
 import java.lang.reflect.InvocationTargetException
 
-class BasicRecyclerViewAdapter<MODEL, VH : BasicRecyclerViewAdapter.BaseViewHolder<MODEL>> private constructor(
+class BasicRecyclerViewAdapter<MODEL, VH : BaseViewHolder<MODEL>> private constructor(
     @LayoutRes
     private val layoutId: Int,
     private val itemList: MutableList<MODEL>,
     private val vhClass: Class<VH>,
     private var bundle: Bundle,
-    private val listener: BaseListener?
-) : RecyclerView.Adapter<BasicRecyclerViewAdapter.BaseViewHolder<MODEL>>() {
+    private val listener: BaseViewHolder.BaseListener?
+) : RecyclerView.Adapter<BaseViewHolder<MODEL>>() {
 
+    /***********************************************************************************************
+     * ************************* Constructor
+     */
     private constructor(builder: Builder<MODEL, VH>) : this(
         builder.layoutId,
         builder.itemList,
@@ -29,15 +30,10 @@ class BasicRecyclerViewAdapter<MODEL, VH : BasicRecyclerViewAdapter.BaseViewHold
         builder.listener
     )
 
-    companion object {
-        inline fun <model, reified vh : BaseViewHolder<model>> build(
-            @LayoutRes layoutId: Int,
-            itemList: MutableList<model>,
-            bundle: Bundle,
-            listener: BaseListener
-        ) = Builder(layoutId, itemList, vh::class.java, bundle, listener).build()
-    }
 
+    /***********************************************************************************************
+     * ************************* Base Methods
+     */
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -74,6 +70,9 @@ class BasicRecyclerViewAdapter<MODEL, VH : BasicRecyclerViewAdapter.BaseViewHold
         holder.onBindViewHolder(itemList[position], bundle, position, listener)
     }
 
+    /***********************************************************************************************
+     * ************************* Methods
+     */
     fun addItem(model: MODEL) {
         itemList.add(model)
         notifyItemInserted(itemList.size - 1)
@@ -114,26 +113,17 @@ class BasicRecyclerViewAdapter<MODEL, VH : BasicRecyclerViewAdapter.BaseViewHold
         notifyDataSetChanged()
     }
 
+    /***********************************************************************************************
+     * ************************* Builder
+     */
     class Builder<Model, Vh : BaseViewHolder<Model>>(
         @LayoutRes
         val layoutId: Int,
         val itemList: MutableList<Model>,
         val vhClass: Class<Vh>,
         val bundle: Bundle,
-        val listener: BaseListener?
+        val listener: BaseViewHolder.BaseListener?
     ) {
         fun build() = BasicRecyclerViewAdapter(this)
-    }
-
-    interface BaseListener {}
-
-    abstract class BaseViewHolder<MODEL>(b: ViewDataBinding) : RecyclerView.ViewHolder(b.root) {
-        var binding = b
-        abstract fun onBindViewHolder(
-            model: MODEL,
-            bundle: Bundle,
-            position: Int,
-            listener: BaseListener?
-        )
     }
 }

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="isSavings"
+            type="Boolean" />
+    </data>
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardBackgroundColor="@{isSavings ? @color/orange_300 : @color/green_300}"
+        app:cardCornerRadius="32dp"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/to_label"
+                style="@style/LabelTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/parent_margin"
+                android:drawableStart="@drawable/calendar"
+                android:text="Transfer To"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="@dimen/section_margin"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Spinner
+                android:id="@+id/finance_tabs"
+                android:layout_width="0dp"
+                app:layout_constraintStart_toStartOf="@id/to_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/content_margin"
+                android:popupBackground="@{isSavings ? @color/orange_500 : @color/green_500}"
+                android:backgroundTint="@{isSavings ? @color/orange_500 : @color/green_500}"
+                android:background="@drawable/rounded_background"
+                android:layout_marginEnd="@dimen/section_margin"
+                app:layout_constraintTop_toBottomOf="@id/to_label"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/percentage_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/finance_tabs"
+                app:layout_constraintStart_toStartOf="@id/to_label"
+                style="@style/CheckboxStyle"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="@dimen/content_margin"
+                android:textAppearance="@style/LabelTextStyle"
+                android:button="@drawable/custom_checkbox"
+                android:layout_marginEnd="@dimen/section_margin"
+                android:text="Percentage"/>
+
+            <net.roeia.proctive.ui.custom.LabeledInputView
+                android:id="@+id/splitting_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/section_margin"
+                android:layout_marginEnd="@dimen/section_margin"
+                android:layout_marginStart="@dimen/section_margin"
+                app:hint="Amount"
+                app:inputBackgroundColor="@{isSavings ? @color/orange_500 : @color/green_500}"
+                app:inputType="number"
+                app:labelIcon="@drawable/money"
+                app:labelText="Amount"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/percentage_mode"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/done_splitting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/section_margin"
+                android:text="Add"
+                android:padding="12dp"
+                style="@style/ButtonStyle"
+                android:backgroundTint="@{isSavings ? @color/orange_500 : @color/green_500}"
+                android:layout_marginTop="@dimen/section_margin"
+                android:layout_marginBottom="@dimen/section_margin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/splitting_amount" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

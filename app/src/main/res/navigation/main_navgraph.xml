@@ -13,6 +13,9 @@
         <action
             android:id="@+id/finance_tracking"
             app:destination="@id/financeTrackingFragment" />
+        <action
+            android:id="@+id/manage_income"
+            app:destination="@id/manageIncomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/financeTrackingFragment"
@@ -104,4 +107,9 @@
             android:id="@+id/pomodoro_todo"
             app:destination="@id/todoFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/manageIncomeFragment"
+        android:name="net.roeia.proctive.ui.views.fragments.finance.ManageIncomeFragment"
+        android:label="fragment_manage_income"
+        tools:layout="@layout/fragment_manage_income" />
 </navigation>

@@ -20,8 +20,8 @@ import net.roeia.proctive.models.entities.Todo
 import net.roeia.proctive.models.enums.TodoType
 import net.roeia.proctive.ui.viewmodels.todo.TodoViewModel
 import net.roeia.proctive.ui.views.viewholders.TodoBottomSheet
-import net.roeia.proctive.ui.views.viewholders.TodoViewHolder
-import net.roeia.proctive.utils.adapters.BasicRecyclerViewAdapter
+import net.roeia.proctive.ui.views.viewholders.recyclerviews.TodoViewHolder
+import net.roeia.proctive.utils.BasicRecyclerViewAdapter
 
 @AndroidEntryPoint
 class TodoFragment : Fragment() {

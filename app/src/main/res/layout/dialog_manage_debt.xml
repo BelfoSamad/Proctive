@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="debt"
+            type="net.roeia.proctive.models.entities.Debt" />
+    </data>
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardCornerRadius="32dp"
+        app:cardBackgroundColor="@color/red_300"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <net.roeia.proctive.ui.custom.LabeledInputView
+                android:id="@+id/debtor_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/parent_margin"
+                android:layout_marginEnd="@dimen/section_margin"
+                android:layout_marginStart="@dimen/section_margin"
+                app:hint="Debtor Name"
+                app:inputBackgroundColor="@{@color/red_500}"
+                app:inputType="text"
+                app:labelIcon="@drawable/edit"
+                app:labelText="Debtor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/debt_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/debtor_name"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toStartOf="@id/debtor_name"
+                style="@style/CheckboxStyle"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textAppearance="@style/LabelTextStyle"
+                android:button="@drawable/custom_checkbox"
+                android:layout_marginEnd="@dimen/section_margin"
+                android:text="Debt to"/>
+
+            <net.roeia.proctive.ui.custom.LabeledInputView
+                android:id="@+id/debt_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/section_margin"
+                android:layout_marginEnd="@dimen/section_margin"
+                android:layout_marginStart="@dimen/section_margin"
+                app:hint="Amount"
+                app:inputBackgroundColor="@{@color/red_500}"
+                app:inputType="number"
+                app:labelIcon="@drawable/money"
+                app:labelText="Amount"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/debt_to"/>
+
+            <net.roeia.proctive.ui.custom.LabeledInputView
+                android:id="@+id/debt_paid"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/section_margin"
+                android:layout_marginEnd="@dimen/section_margin"
+                android:layout_marginStart="@dimen/section_margin"
+                app:hint="Amount Paid"
+                android:visibility="@{debt != null ? View.VISIBLE : View.GONE}"
+                app:inputBackgroundColor="@{@color/red_500}"
+                app:inputType="number"
+                app:labelIcon="@drawable/money"
+                app:labelText="Amount Paid"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/debt_amount"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/date_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/calendar"
+                android:text="Date"
+                style="@style/LabelTextStyle"
+                android:textColor="@color/black"
+                android:layout_marginTop="@dimen/section_margin"
+                app:layout_constraintStart_toStartOf="@id/debtor_name"
+                app:layout_constraintTop_toBottomOf="@id/debt_paid" />
+
+            <DatePicker
+                android:id="@+id/date_picker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:datePickerMode="spinner"
+                android:calendarViewShown="false"
+                app:layout_constraintTop_toBottomOf="@id/date_label"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/done_debt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/section_margin"
+                android:text="Add"
+                android:padding="12dp"
+                style="@style/ButtonStyle"
+                android:backgroundTint="@color/red_500"
+                android:layout_marginTop="@dimen/section_margin"
+                android:layout_marginBottom="@dimen/section_margin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/date_picker" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

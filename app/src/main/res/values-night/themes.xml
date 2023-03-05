@@ -56,4 +56,15 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textAllCaps">false</item>
     </style>
+    <style name="BigChipStyle">
+        <item name="chipEndPadding">16dp</item>
+        <item name="chipStartPadding">16dp</item>
+        <item name="chipMinHeight">96dp</item>
+        <item name="chipMinTouchTargetSize">96dp</item>
+        <item name="chipIconSize">48dp</item>
+    </style>
+    <style name="PopupStyle">
+        <item name="android:backgroundTint">@color/green_500</item>
+        <item name="android:padding">12dp</item>
+    </style>
 </resources>

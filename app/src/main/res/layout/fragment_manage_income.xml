@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="isSavings"
+            type="Boolean" />
+    </data>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@{isSavings ? @color/orange_300 : @color/green_300}"
+        tools:context=".ui.views.fragments.finance.ManageIncomeFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/back"
+                style="@style/RoundedImageButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/section_margin"
+                android:layout_marginTop="@dimen/section_margin"
+                android:backgroundTint="@{isSavings ? @color/orange_500 : @color/green_500}"
+                android:src="@drawable/back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/done_income"
+                style="@style/ButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:backgroundTint="@{isSavings ? @color/orange_500 : @color/green_500}"
+                android:text="Done"
+                app:layout_constraintBottom_toBottomOf="@id/back"
+                app:layout_constraintEnd_toStartOf="@id/delete_income"
+                app:layout_constraintTop_toTopOf="@id/back"
+                app:layout_goneMarginEnd="16dp" />
+
+            <ImageButton
+                android:id="@+id/delete_income"
+                style="@style/RoundedImageButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/section_margin"
+                android:backgroundTint="@{isSavings ? @color/orange_500 : @color/green_500}"
+                android:src="@drawable/delete"
+                app:layout_constraintBottom_toBottomOf="@id/back"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/back" />
+
+            <net.roeia.proctive.ui.custom.LabeledInputView
+                android:id="@+id/income_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/parent_margin"
+                android:layout_marginEnd="@dimen/section_margin"
+                app:hint="Income Name"
+                app:inputBackgroundColor="@{isSavings ? @color/orange_500 : @color/green_500}"
+                app:inputType="text"
+                app:labelIcon="@drawable/edit"
+                app:labelText="Name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/back"
+                app:layout_constraintTop_toBottomOf="@id/back" />
+
+            <net.roeia.proctive.ui.custom.LabeledInputView
+                android:id="@+id/income_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/section_margin"
+                android:layout_marginTop="@dimen/section_margin"
+                android:layout_marginEnd="@dimen/section_margin"
+                app:hint="Amount"
+                app:inputBackgroundColor="@{isSavings ? @color/orange_500 : @color/green_500}"
+                app:inputType="number"
+                app:labelIcon="@drawable/money"
+                app:labelText="Amount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/income_name" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/date_label"
+                style="@style/LabelTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/section_margin"
+                android:drawableStart="@drawable/calendar"
+                android:text="Repeat Start"
+                android:textColor="@color/black"
+                android:visibility="@{isSavings ? View.GONE : View.VISIBLE}"
+                app:layout_constraintStart_toStartOf="@id/back"
+                app:layout_constraintTop_toBottomOf="@id/income_amount" />
+
+            <DatePicker
+                android:id="@+id/date_picker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                android:visibility="@{isSavings ? View.GONE : View.VISIBLE}"
+                app:layout_constraintTop_toBottomOf="@id/date_label" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/interval_label"
+                style="@style/LabelTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/section_margin"
+                android:drawableStart="@drawable/repeat"
+                android:text="Repeat Every"
+                android:textColor="@color/black"
+                android:visibility="@{isSavings ? View.GONE : View.VISIBLE}"
+                app:layout_constraintStart_toStartOf="@id/back"
+                app:layout_constraintTop_toBottomOf="@id/date_picker" />
+
+            <EditText
+                android:id="@+id/interval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/content_margin"
+                android:background="@drawable/rounded_background"
+                android:backgroundTint="@{isSavings ? @color/orange_700 : @color/green_700}"
+                android:hint="30"
+                android:paddingStart="16dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                android:maxLength="3"
+                android:textAppearance="@style/LabelTextStyle"
+                android:textColor="@{isSavings ? @color/orange_300 : @color/green_300}"
+                android:visibility="@{isSavings ? View.GONE : View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="@id/interval_label"
+                app:layout_constraintStart_toEndOf="@id/interval_label"
+                app:layout_constraintTop_toTopOf="@id/interval_label" />
+
+            <Spinner
+                android:id="@+id/interval_unit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/content_margin"
+                android:padding="4dp"
+                android:popupBackground="@{isSavings ? @color/orange_500 : @color/green_500}"
+                android:backgroundTint="@{isSavings ? @color/orange_500 : @color/green_500}"
+                android:background="@drawable/rounded_background"
+                android:visibility="@{isSavings ? View.GONE : View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="@id/interval_label"
+                app:layout_constraintEnd_toEndOf="@id/delete_income"
+                app:layout_constraintStart_toEndOf="@id/interval"
+                app:layout_constraintTop_toTopOf="@id/interval_label" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/splittings_label"
+                style="@style/LabelTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/repeat"
+                android:text="Splitting"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="@id/back"
+                app:layout_constraintBottom_toBottomOf="@id/add_splitting"
+                app:layout_constraintTop_toTopOf="@id/add_splitting"/>
+
+            <ImageButton
+                android:id="@+id/add_splitting"
+                style="@style/RoundedImageButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/section_margin"
+                android:layout_marginTop="@dimen/section_margin"
+                android:backgroundTint="@{isSavings ? @color/orange_500 : @color/green_500}"
+                android:padding="12dp"
+                android:src="@drawable/add"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/interval_label" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/splitting_list"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/section_margin"
+                android:layout_marginBottom="@dimen/parent_margin"
+                app:layout_constraintEnd_toEndOf="@id/delete_income"
+                app:layout_constraintStart_toStartOf="@id/back"
+                app:layout_constraintTop_toBottomOf="@id/splittings_label" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

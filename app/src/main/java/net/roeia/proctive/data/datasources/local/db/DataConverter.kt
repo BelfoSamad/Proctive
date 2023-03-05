@@ -3,6 +3,7 @@ package net.roeia.proctive.data.datasources.local.db
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import net.roeia.proctive.models.enums.FinanceType
 import java.lang.reflect.Type
 import java.util.*
 
@@ -38,6 +39,28 @@ class DataConverter {
 
     @TypeConverter
     fun mapToString(list: Map<String, Boolean>?): String? {
+        return gson.toJson(list)
+    }
+
+    @TypeConverter
+    fun fromStringToMapPercentage(value: String?): Map<FinanceType, Float>? {
+        val listType: Type = object : TypeToken<Map<FinanceType, Float>?>() {}.type
+        return gson.fromJson(value, listType)
+    }
+
+    @TypeConverter
+    fun percentageMapToString(list: Map<FinanceType, Float>?): String? {
+        return gson.toJson(list)
+    }
+
+    @TypeConverter
+    fun fromStringToMapAmount(value: String?): Map<FinanceType, Double>? {
+        val listType: Type = object : TypeToken<Map<FinanceType, Float>?>() {}.type
+        return gson.fromJson(value, listType)
+    }
+
+    @TypeConverter
+    fun amountMapToString(list: Map<FinanceType, Double>?): String? {
         return gson.toJson(list)
     }
 }

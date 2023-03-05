@@ -18,15 +18,11 @@ import kotlinx.coroutines.launch
 import net.roeia.proctive.R
 import net.roeia.proctive.data.Status
 import net.roeia.proctive.databinding.FragmentHabitBinding
-import net.roeia.proctive.databinding.RecyclerviewHabitItemBinding
-import net.roeia.proctive.databinding.RecyclerviewTodoItemBinding
 import net.roeia.proctive.models.entities.Habit
-import net.roeia.proctive.models.entities.Todo
 import net.roeia.proctive.ui.viewmodels.habit.HabitViewModel
 import net.roeia.proctive.ui.views.dialogs.ManageHabitDialog
-import net.roeia.proctive.ui.views.fragments.todo.TodoFragment
-import net.roeia.proctive.ui.views.viewholders.HabitViewHolder
-import net.roeia.proctive.utils.adapters.BasicRecyclerViewAdapter
+import net.roeia.proctive.ui.views.viewholders.recyclerviews.HabitViewHolder
+import net.roeia.proctive.utils.BasicRecyclerViewAdapter
 
 @AndroidEntryPoint
 class HabitFragment : Fragment() {

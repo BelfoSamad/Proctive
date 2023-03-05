@@ -9,7 +9,7 @@
 
         <variable
             name="listener"
-            type="net.roeia.proctive.ui.views.viewholders.JournalViewHolder.JournalActions" />
+            type="net.roeia.proctive.ui.views.viewholders.recyclerviews.JournalViewHolder.JournalActions" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

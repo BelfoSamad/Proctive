@@ -42,6 +42,12 @@ class MainActivity : AppCompatActivity() {
         findNavController(R.id.nav_host_fragment).navigate(R.id.go_habit)
     }
 
+    fun goFinance(view: View) {
+        val bundle = Bundle()
+        bundle.putInt("PAGE_TYPE", view.tag.toString().toInt())
+        findNavController(R.id.nav_host_fragment).navigate(R.id.go_finance, bundle)
+    }
+
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_UP) {
             val v: View? = currentFocus

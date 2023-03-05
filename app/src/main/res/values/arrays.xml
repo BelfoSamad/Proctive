@@ -6,6 +6,28 @@
         <item>Weekly Goals</item>
         <item>Tasks</item>
     </string-array>
+    <string-array name="finance_title">
+        <item>Income</item>
+        <item>Savings</item>
+        <item>Debt</item>
+        <item>Expenses</item>
+        <item>Investments</item>
+        <item>Pocket Money</item>
+    </string-array>
+    <string-array name="months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
 
     <string-array name="task_tracking">
         <item>Tasks</item>

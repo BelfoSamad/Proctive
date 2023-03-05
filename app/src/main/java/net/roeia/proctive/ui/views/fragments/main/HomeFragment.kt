@@ -18,8 +18,8 @@ import net.roeia.proctive.data.Status
 import net.roeia.proctive.databinding.FragmentHomeBinding
 import net.roeia.proctive.models.entities.Journal
 import net.roeia.proctive.ui.viewmodels.main.HomeViewModel
-import net.roeia.proctive.ui.views.viewholders.JournalViewHolder
-import net.roeia.proctive.utils.adapters.BasicRecyclerViewAdapter
+import net.roeia.proctive.ui.views.viewholders.recyclerviews.JournalViewHolder
+import net.roeia.proctive.utils.BasicRecyclerViewAdapter
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {

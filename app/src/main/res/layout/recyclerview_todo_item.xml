@@ -15,7 +15,7 @@
 
         <variable
             name="listener"
-            type="net.roeia.proctive.ui.views.viewholders.TodoViewHolder.TodoClickListener" />
+            type="net.roeia.proctive.ui.views.viewholders.recyclerviews.TodoViewHolder.TodoClickListener" />
 
         <import type="net.roeia.proctive.models.enums.TodoType" />
 
