@@ -1,107 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:behavior_hideable="false"
-    app:behavior_peekHeight="0dp"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+<layout>
 
-    <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/todo_checkbox"
-        style="@style/CheckboxStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="@dimen/parent_margin"
-        android:layout_marginEnd="@dimen/section_margin"
-        android:layout_marginBottom="@dimen/section_margin"
-        android:checked="true"
-        android:enabled="false"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <TextView
-        android:id="@+id/todo_name"
-        style="@style/LabelTextStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/content_margin"
-        android:layout_marginEnd="@dimen/content_margin"
-        android:text="Publish Proctive"
-        app:layout_constraintBottom_toBottomOf="@id/todo_checkbox"
-        app:layout_constraintEnd_toStartOf="@id/edit_task"
-        app:layout_constraintStart_toEndOf="@id/todo_checkbox"
-        app:layout_constraintTop_toTopOf="@id/todo_checkbox"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:text="Publish Proctive" />
+        <import type="net.roeia.proctive.models.enums.TodoType" />
 
-    <TextView
-        android:id="@+id/todo_description"
-        style="@style/RegularTextStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/section_margin"
-        android:layout_marginTop="@dimen/section_margin"
-        android:layout_marginEnd="16dp"
-        android:paddingBottom="16dp"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/sub_tasks"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/todo_checkbox"
-        tools:text="This is the description of the goal with the title Publish Proctive." />
+        <import type="android.view.View" />
 
-    <net.roeia.proctive.ui.custom.UnScrollableListView
-        android:id="@+id/sub_tasks"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/section_margin"
-        android:paddingBottom="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/todo_checkbox"
-        app:layout_constraintTop_toBottomOf="@id/todo_description" />
+        <variable
+            name="type"
+            type="net.roeia.proctive.models.enums.TodoType" />
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/labels"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/section_margin"
-        android:layout_marginEnd="@dimen/section_margin"
-        android:layout_marginBottom="@dimen/content_margin"
-        android:padding="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sub_tasks" />
+        <variable
+            name="isEditable"
+            type="Boolean" />
 
-    <ImageButton
-        android:id="@+id/edit_task"
-        style="@style/RoundedImageButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/content_margin"
-        android:backgroundTint="@color/green_500"
-        android:padding="12dp"
-        android:src="@drawable/edit"
-        app:layout_constraintBottom_toBottomOf="@id/todo_checkbox"
-        app:layout_constraintEnd_toStartOf="@id/delete_todo"
-        app:layout_constraintTop_toTopOf="@id/todo_checkbox" />
+        <variable
+            name="listener"
+            type="net.roeia.proctive.ui.views.viewholders.bottomsheets.TodoViewHolder.TodoActions" />
 
-    <ImageButton
-        android:id="@+id/delete_todo"
-        style="@style/RoundedImageButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/section_margin"
-        android:backgroundTint="@color/green_500"
-        android:padding="12dp"
-        android:src="@drawable/delete"
-        app:layout_constraintBottom_toBottomOf="@id/edit_task"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/edit_task"
-        app:tint="@color/black" />
+        <variable
+            name="todo"
+            type="net.roeia.proctive.models.entities.todo.Todo" />
+    </data>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@{type == TodoType.Task ? @color/blue_300 : type == TodoType.WeeklyGoal ? @color/yellow_300 : @color/green_300}"
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/todo_checkbox"
+            style="@style/CheckboxStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="@dimen/parent_margin"
+            android:layout_marginEnd="@dimen/section_margin"
+            android:layout_marginBottom="@dimen/section_margin"
+            android:checked="true"
+            android:enabled="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/todo_name"
+            style="@style/LabelTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/content_margin"
+            android:layout_marginEnd="@dimen/content_margin"
+            android:text="Publish Proctive"
+            app:layout_constraintBottom_toBottomOf="@id/todo_checkbox"
+            app:layout_constraintEnd_toStartOf="@id/edit_task"
+            app:layout_constraintStart_toEndOf="@id/todo_checkbox"
+            app:layout_constraintTop_toTopOf="@id/todo_checkbox"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Publish Proctive" />
+
+        <TextView
+            android:id="@+id/todo_description"
+            style="@style/RegularTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/section_margin"
+            android:layout_marginTop="@dimen/section_margin"
+            android:layout_marginEnd="16dp"
+            android:paddingBottom="16dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/sub_tasks"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/todo_checkbox"
+            tools:text="This is the description of the goal with the title Publish Proctive." />
+
+        <net.roeia.proctive.ui.custom.UnScrollableListView
+            android:id="@+id/sub_tasks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/section_margin"
+            android:paddingBottom="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/todo_checkbox"
+            app:layout_constraintTop_toBottomOf="@id/todo_description" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/labels"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/section_margin"
+            android:layout_marginEnd="@dimen/section_margin"
+            android:layout_marginBottom="@dimen/content_margin"
+            android:padding="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sub_tasks" />
+
+        <ImageButton
+            android:id="@+id/edit_task"
+            style="@style/RoundedImageButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/content_margin"
+            android:backgroundTint="@{type == TodoType.Task ? @color/blue_500 : type == TodoType.WeeklyGoal ? @color/yellow_500 : @color/green_500}"
+            android:onClick="@{() -> listener.onEditTodo(todo)}"
+            android:padding="12dp"
+            android:src="@drawable/edit"
+            android:visibility="@{isEditable ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@id/todo_checkbox"
+            app:layout_constraintEnd_toStartOf="@id/delete_todo"
+            app:layout_constraintTop_toTopOf="@id/todo_checkbox" />
+
+        <ImageButton
+            android:id="@+id/delete_todo"
+            style="@style/RoundedImageButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/section_margin"
+            android:backgroundTint="@{type == TodoType.Task ? @color/blue_500 : type == TodoType.WeeklyGoal ? @color/yellow_500 : @color/green_500}"
+            android:onClick="@{() -> listener.onDeleteTodo(todo)}"
+            android:padding="12dp"
+            android:src="@drawable/delete"
+            android:visibility="@{isEditable ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@id/edit_task"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/edit_task"
+            app:tint="@color/black" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

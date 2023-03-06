@@ -7,7 +7,7 @@ import android.widget.ArrayAdapter
 import net.roeia.proctive.R
 import net.roeia.proctive.databinding.DialogAddSplittingBinding
 import net.roeia.proctive.models.enums.FinanceType
-import net.roeia.proctive.utils.BaseViewHolder
+import net.roeia.proctive.base.ui.BaseViewHolder
 
 class AddSplittingViewHolder constructor(val binding: DialogAddSplittingBinding) :
     BaseViewHolder<Any>(binding) {

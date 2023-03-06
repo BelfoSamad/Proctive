@@ -16,13 +16,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import net.roeia.proctive.R
+import net.roeia.proctive.base.ui.BaseDialog
 import net.roeia.proctive.data.Status
 import net.roeia.proctive.databinding.FragmentHabitBinding
-import net.roeia.proctive.models.entities.Habit
+import net.roeia.proctive.models.entities.todo.Habit
 import net.roeia.proctive.ui.viewmodels.habit.HabitViewModel
-import net.roeia.proctive.ui.views.dialogs.ManageHabitDialog
 import net.roeia.proctive.ui.views.viewholders.recyclerviews.HabitViewHolder
-import net.roeia.proctive.utils.BasicRecyclerViewAdapter
+import net.roeia.proctive.base.ui.BaseRecyclerViewAdapter
+import net.roeia.proctive.ui.views.viewholders.dialogs.ManageHabitViewHolder
 
 @AndroidEntryPoint
 class HabitFragment : Fragment() {
@@ -38,7 +39,7 @@ class HabitFragment : Fragment() {
     private val binding get() = _binding!!
 
     //Data
-    private var habitsAdapter: BasicRecyclerViewAdapter<Habit, HabitViewHolder>? = null
+    private var habitsAdapter: BaseRecyclerViewAdapter<Habit, HabitViewHolder>? = null
 
     /***********************************************************************************************
      * ************************* LifeCycle
@@ -84,7 +85,7 @@ class HabitFragment : Fragment() {
     private fun initHabitsList(habits: List<Habit>) {
         val bundle = Bundle()
         bundle.putBoolean("isUpdate", false)
-        habitsAdapter = BasicRecyclerViewAdapter.Builder(
+        habitsAdapter = BaseRecyclerViewAdapter.Builder(
             itemList = habits.toMutableList(),
             layoutId = R.layout.recyclerview_habit_item,
             vhClass = HabitViewHolder::class.java,
@@ -95,11 +96,17 @@ class HabitFragment : Fragment() {
                 }
 
                 override fun onHabitUpdate(habit: Habit, position: Int) {
-                    val dialog = ManageHabitDialog(habit, object: ManageHabitDialog.HabitListener {
-                        override fun onHabitAdded(habit: Habit) {
-                            viewModel.saveHabit(habit)
+                    val dialog = BaseDialog.Builder(
+                        layoutId = R.layout.dialog_manage_habit,
+                        item = habit,
+                        bundle = Bundle(),
+                        vhClass = ManageHabitViewHolder::class.java,
+                        listener = object: ManageHabitViewHolder.HabitListener {
+                            override fun onHabitAdded(habit: Habit) {
+                                viewModel.saveHabit(habit)
+                            }
                         }
-                    })
+                    ).build()
                     dialog.show(childFragmentManager, "ManageHabitDialog")
                 }
 
@@ -142,11 +149,17 @@ class HabitFragment : Fragment() {
 
         //Add Habit
         binding.addHabit.setOnClickListener {
-            val dialog = ManageHabitDialog(null, object: ManageHabitDialog.HabitListener {
-                override fun onHabitAdded(habit: Habit) {
-                    viewModel.saveHabit(habit)
+            val dialog = BaseDialog.Builder(
+                layoutId = R.layout.dialog_manage_habit,
+                item = null,
+                bundle = Bundle(),
+                vhClass = ManageHabitViewHolder::class.java,
+                listener = object: ManageHabitViewHolder.HabitListener {
+                    override fun onHabitAdded(habit: Habit) {
+                        viewModel.saveHabit(habit)
+                    }
                 }
-            })
+            ).build()
             dialog.show(childFragmentManager, "ManageHabitDialog")
         }
     }

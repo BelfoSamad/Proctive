@@ -7,7 +7,6 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.TextViewCompat
@@ -15,12 +14,12 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textview.MaterialTextView
-import net.roeia.proctive.utils.adapters.OptionsAdapter
+import com.yesserly.resto.models.pojo.Option
 import net.roeia.proctive.R
-import net.roeia.proctive.utils.adapters.BUTTON
-import net.roeia.proctive.utils.adapters.CHIP
-import net.roeia.proctive.utils.adapters.TEXT
 
+const val TEXT: Int = 1
+const val BUTTON: Int = 2
+const val CHIP: Int = 3
 class OptionsView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     HorizontalScrollView(context, attrs) {
 
@@ -194,6 +193,40 @@ class OptionsView @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 val chip = container.getChildAt(0) as ChipGroup
                 (chip.getChildAt(index) as Chip).isSelected = true
             }
+        }
+    }
+
+    /***********************************************************************************************
+     * ************************* Adapter
+     */
+    class OptionsAdapter private constructor(
+        val options: List<Option>?,
+        val type: Int?,
+        val multiSelect: Boolean? = false,
+        val listener: OnSelectedListener?
+    ) {
+
+        interface OnSelectedListener {
+            fun onSelected(position: Int?, value: String?) {
+                //Default
+            }
+
+            fun onMultiSelected(positions: List<Int>?, values: List<String>?) {
+                //Default
+            }
+        }
+
+        data class Builder(
+            var options: List<Option>? = null,
+            var type: Int? = null,
+            var multiSelect: Boolean? = false,
+            var listener: OnSelectedListener? = null
+        ) {
+            fun setOptions(options: List<Option>) = apply { this.options = options }
+            fun setType(type: Int) = apply { this.type = type }
+            fun setMultiSelect(multiSelect: Boolean) = apply { this.multiSelect = multiSelect }
+            fun setOnSelectedListener(listener: OnSelectedListener) = apply { this.listener = listener }
+            fun build() = OptionsAdapter(options, type, multiSelect, listener)
         }
     }
 }

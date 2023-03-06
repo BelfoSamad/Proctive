@@ -2,9 +2,9 @@ package net.roeia.proctive.ui.views.viewholders.recyclerviews
 
 import android.os.Bundle
 import net.roeia.proctive.databinding.RecyclerviewTodoItemBinding
-import net.roeia.proctive.models.entities.Todo
+import net.roeia.proctive.models.entities.todo.Todo
 import net.roeia.proctive.models.enums.TodoType
-import net.roeia.proctive.utils.BaseViewHolder
+import net.roeia.proctive.base.ui.BaseViewHolder
 
 class TodoViewHolder constructor(private val binding: RecyclerviewTodoItemBinding) :
     BaseViewHolder<Todo>(binding) {

@@ -2,9 +2,9 @@ package net.roeia.proctive.ui.views.viewholders.dialogs
 
 import android.os.Bundle
 import net.roeia.proctive.databinding.DialogManageExpenditureBinding
-import net.roeia.proctive.models.entities.Expenditure
+import net.roeia.proctive.models.entities.finance.Expenditure
 import net.roeia.proctive.models.enums.FinanceType
-import net.roeia.proctive.utils.BaseViewHolder
+import net.roeia.proctive.base.ui.BaseViewHolder
 import java.util.*
 
 class ManageExpenditureViewHolder constructor(val binding: DialogManageExpenditureBinding) :

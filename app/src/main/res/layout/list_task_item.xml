@@ -1,34 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout>
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="isChecked"
+            type="Boolean" />
+        <variable
+            name="todo"
+            type="net.roeia.proctive.models.pojo.TodoChecked" />
+        <variable
+            name="listener"
+            type="net.roeia.proctive.ui.views.viewholders.listviews.SubTasksViewHolder.SubTaskActions" />
+    </data>
 
-    <CheckBox
-        android:id="@+id/todo_check"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:buttonTint="@color/black"
-        android:minHeight="0dp"
-        android:button="@drawable/custom_checkbox"
-        android:minWidth="0dp"
-        android:layout_marginStart="@dimen/section_margin" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/todo_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        style="@style/RegularTextStyle"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="8dp"/>
+        <CheckBox
+            android:id="@+id/todo_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/black"
+            android:minHeight="0dp"
+            android:enabled="@{isChecked}"
+            android:onCheckedChanged="@{(button, checked) -> listener.onCheckSubTask(todo.todo, checked)}"
+            android:checked="@{todo.checked}"
+            android:button="@drawable/custom_checkbox"
+            android:minWidth="0dp"
+            android:layout_marginStart="@dimen/section_margin" />
 
-    <ImageButton
-        android:id="@+id/delete_subtask"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        style="@style/SimpleImageButtonStyle"
-        android:src="@drawable/delete"/>
+        <TextView
+            android:id="@+id/todo_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            style="@style/RegularTextStyle"
+            android:text="@{todo.todo}"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"/>
 
-</LinearLayout>
+        <ImageButton
+            android:id="@+id/delete_subtask"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="@{() -> listener.onDeleteSubTask(todo)}"
+            android:visibility="@{isChecked ? View.GONE : View.VISIBLE}"
+            style="@style/SimpleImageButtonStyle"
+            android:src="@drawable/delete"/>
+
+    </LinearLayout>
+</layout>

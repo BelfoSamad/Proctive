@@ -23,9 +23,6 @@
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
-            android:id="@+id/start_landing"
-            app:destination="@id/landingFragment" />
-        <action
             android:id="@+id/go_login"
             app:destination="@id/loginFragment" />
     </fragment>
@@ -37,19 +34,5 @@
         <action
             android:id="@+id/go_register"
             app:destination="@id/registerFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/basicInfoFragment"
-        android:name="net.roeia.proctive.ui.views.fragments.startup.BasicInfoFragment"
-        android:label="fragment_basic_info"
-        tools:layout="@layout/fragment_basic_info" />
-    <fragment
-        android:id="@+id/landingFragment"
-        android:name="net.roeia.proctive.ui.views.fragments.startup.LandingFragment"
-        android:label="fragment_landing"
-        tools:layout="@layout/fragment_landing" >
-        <action
-            android:id="@+id/start_basics"
-            app:destination="@id/basicInfoFragment" />
     </fragment>
 </navigation>

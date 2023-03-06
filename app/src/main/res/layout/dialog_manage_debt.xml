@@ -4,7 +4,7 @@
         <import type="android.view.View"/>
         <variable
             name="debt"
-            type="net.roeia.proctive.models.entities.Debt" />
+            type="net.roeia.proctive.models.entities.finance.Debt" />
     </data>
     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"

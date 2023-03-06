@@ -7,7 +7,7 @@
 
         <variable
             name="habit"
-            type="net.roeia.proctive.models.entities.Habit" />
+            type="net.roeia.proctive.models.entities.todo.Habit" />
 
         <variable
             name="position"

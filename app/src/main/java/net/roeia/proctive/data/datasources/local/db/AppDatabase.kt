@@ -3,7 +3,13 @@ package net.roeia.proctive.data.datasources.local.db
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import net.roeia.proctive.models.entities.*
+import net.roeia.proctive.models.entities.finance.Debt
+import net.roeia.proctive.models.entities.finance.Expenditure
+import net.roeia.proctive.models.entities.finance.Income
+import net.roeia.proctive.models.entities.finance.Transfer
+import net.roeia.proctive.models.entities.todo.Habit
+import net.roeia.proctive.models.entities.todo.Journal
+import net.roeia.proctive.models.entities.todo.Todo
 
 @Database(
     entities = [

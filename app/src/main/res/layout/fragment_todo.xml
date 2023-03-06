@@ -33,18 +33,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/go_stats"
-                style="@style/RoundedImageButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/section_margin"
-                android:src="@drawable/stats"
-                android:backgroundTint="@{type == TodoType.Task ? @color/blue_500 : type == TodoType.WeeklyGoal ? @color/yellow_500 : @color/green_500}"
-                app:layout_constraintBottom_toBottomOf="@id/back"
-                app:layout_constraintEnd_toStartOf="@id/pomodoro_widget"
-                app:layout_constraintTop_toTopOf="@id/back" />
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/pomodoro_widget"
                 style="@style/ButtonStyle"

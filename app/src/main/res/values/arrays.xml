@@ -43,4 +43,22 @@
         <item>Fri</item>
         <item>Sat</item>
     </string-array>
+
+
+    <!-- OnBoarding -->
+    <string-array name="page_titles">
+        <item>Generate AI Art</item>
+        <item>Save, Download and Share</item>
+        <item>No Authentication Required</item>
+    </string-array>
+    <string-array name="page_descriptions">
+        <item>Generate art from text in less than 10 seconds using AIArt</item>
+        <item>With AIArt, You can save your generated art for later, download them to your gallery and share them with your friends!</item>
+        <item>You don\'t need to sign up, just click on Continue and start your adventure!</item>
+    </string-array>
+    <integer-array name="page_images">
+        <item>@drawable/holder</item>
+        <item>@drawable/holder</item>
+        <item>@drawable/holder</item>
+    </integer-array>
 </resources>

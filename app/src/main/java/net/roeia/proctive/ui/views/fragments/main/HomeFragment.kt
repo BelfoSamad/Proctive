@@ -16,10 +16,10 @@ import kotlinx.coroutines.launch
 import net.roeia.proctive.R
 import net.roeia.proctive.data.Status
 import net.roeia.proctive.databinding.FragmentHomeBinding
-import net.roeia.proctive.models.entities.Journal
+import net.roeia.proctive.models.entities.todo.Journal
 import net.roeia.proctive.ui.viewmodels.main.HomeViewModel
 import net.roeia.proctive.ui.views.viewholders.recyclerviews.JournalViewHolder
-import net.roeia.proctive.utils.BasicRecyclerViewAdapter
+import net.roeia.proctive.base.ui.BaseRecyclerViewAdapter
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -35,7 +35,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     //Data
-    private var journalAdapter: BasicRecyclerViewAdapter<Journal, JournalViewHolder>? = null
+    private var journalAdapter: BaseRecyclerViewAdapter<Journal, JournalViewHolder>? = null
 
     /***********************************************************************************************
      * ************************* LifeCycle
@@ -80,7 +80,7 @@ class HomeFragment : Fragment() {
     private fun initJournalRecyclerView(journalList: List<Journal>) {
         val bundle = Bundle()
         bundle.putBoolean("isLocked", false)
-        journalAdapter = BasicRecyclerViewAdapter.Builder(
+        journalAdapter = BaseRecyclerViewAdapter.Builder(
             itemList = journalList.toMutableList(),
             layoutId = R.layout.recyclerview_journal_item,
             vhClass = JournalViewHolder::class.java,

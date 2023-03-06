@@ -32,7 +32,7 @@
             android:layout_marginEnd="@dimen/parent_margin"
             android:backgroundTint="@color/paper_300"
             android:padding="16dp"
-            android:src="@drawable/profile"
+            android:src="@drawable/trend"
             app:layout_constraintBottom_toBottomOf="@id/drawermenu"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/drawermenu" />

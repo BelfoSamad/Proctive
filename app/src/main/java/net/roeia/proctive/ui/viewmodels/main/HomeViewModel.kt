@@ -10,9 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import net.roeia.proctive.data.Status
-import net.roeia.proctive.models.entities.Journal
-import net.roeia.proctive.models.entities.Todo
-import net.roeia.proctive.ui.viewmodels.todo.TodoViewModel
+import net.roeia.proctive.models.entities.todo.Journal
 import java.util.*
 import javax.inject.Inject
 

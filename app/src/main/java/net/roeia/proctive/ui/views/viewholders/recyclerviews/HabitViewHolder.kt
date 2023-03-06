@@ -2,8 +2,8 @@ package net.roeia.proctive.ui.views.viewholders.recyclerviews
 
 import android.os.Bundle
 import net.roeia.proctive.databinding.RecyclerviewHabitItemBinding
-import net.roeia.proctive.models.entities.Habit
-import net.roeia.proctive.utils.BaseViewHolder
+import net.roeia.proctive.models.entities.todo.Habit
+import net.roeia.proctive.base.ui.BaseViewHolder
 
 class HabitViewHolder constructor(private val binding: RecyclerviewHabitItemBinding) :
     BaseViewHolder<Habit>(binding) {

@@ -37,25 +37,13 @@
             android:layout_height="wrap_content"
             style="@style/PageTitleTextStyle"
             android:text="Pocket Money"
-            android:layout_marginEnd="@dimen/section_margin"
-            android:textSize="28sp"
-            app:layout_constraintEnd_toStartOf="@id/go_stats"
+            android:layout_marginEnd="@dimen/parent_margin"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/back"
             app:layout_constraintBottom_toBottomOf="@id/back"
             app:layout_constraintStart_toEndOf="@id/back"
             android:layout_marginStart="@dimen/section_margin"/>
-
-        <ImageButton
-            android:id="@+id/go_stats"
-            style="@style/RoundedImageButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/section_margin"
-            android:backgroundTint="@{type == FinanceType.Income ? @color/green_500 : type == FinanceType.Savings ? @color/orange_500 : type == FinanceType.PocketMoney ? @color/blue_500 : type == FinanceType.Investments ? @color/yellow_500 : @color/red_500}"
-            android:src="@drawable/stats"
-            app:layout_constraintBottom_toBottomOf="@id/back"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/back" />
 
         <TextView
             android:id="@+id/remaining_money"

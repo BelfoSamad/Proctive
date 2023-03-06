@@ -14,7 +14,6 @@ import net.roeia.proctive.R
 
 
 class TooltipWindow(context: Context) {
-
     val rootView: View
     val tipWindow: PopupWindow
 
@@ -40,7 +39,6 @@ class TooltipWindow(context: Context) {
     }
 
     fun showTooltip(anchor: View) {
-
         tipWindow.height = LinearLayout.LayoutParams.WRAP_CONTENT
         tipWindow.width = LinearLayout.LayoutParams.WRAP_CONTENT
         tipWindow.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

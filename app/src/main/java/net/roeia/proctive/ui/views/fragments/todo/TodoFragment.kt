@@ -14,14 +14,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import net.roeia.proctive.R
+import net.roeia.proctive.base.ui.BaseBottomSheet
 import net.roeia.proctive.data.Status
 import net.roeia.proctive.databinding.FragmentTodoBinding
-import net.roeia.proctive.models.entities.Todo
+import net.roeia.proctive.models.entities.todo.Todo
 import net.roeia.proctive.models.enums.TodoType
 import net.roeia.proctive.ui.viewmodels.todo.TodoViewModel
-import net.roeia.proctive.ui.views.viewholders.TodoBottomSheet
 import net.roeia.proctive.ui.views.viewholders.recyclerviews.TodoViewHolder
-import net.roeia.proctive.utils.BasicRecyclerViewAdapter
+import net.roeia.proctive.base.ui.BaseRecyclerViewAdapter
 
 @AndroidEntryPoint
 class TodoFragment : Fragment() {
@@ -38,17 +38,25 @@ class TodoFragment : Fragment() {
     private val binding get() = _binding!!
 
     //Data
-    private var todoAdapter: BasicRecyclerViewAdapter<Todo, TodoViewHolder>? = null
+    private var todoAdapter: BaseRecyclerViewAdapter<Todo, TodoViewHolder>? = null
     private val todoId: Long? = null
     private var pageType: Int? = null
 
     //Listeners
-    private val todoDetailsListener = object : TodoBottomSheet.TodoActions {
+    private val todoDetailsListener = object :
+        net.roeia.proctive.ui.views.viewholders.bottomsheets.TodoViewHolder.TodoActions {
         override fun onReferenceClicked(todo: Todo) {
-            TodoBottomSheet(TodoType.fromInt(pageType!!), false, todo, null).show(
-                childFragmentManager,
-                "TodoBottomSheetRef"
-            )
+            val bundle = Bundle()
+            bundle.putBoolean("isEditable", false)
+            bundle.putInt("PAGE_TYPE", pageType!!)
+            val todoModal = BaseBottomSheet.Builder(
+                layoutId = R.layout.bottom_sheet_task,
+                listener = null,
+                vhClass = TodoViewHolder::class.java,
+                item = todo,
+                bundle = bundle
+            ).build()
+            todoModal.show(childFragmentManager, "TodoBottomSheetRef")
         }
 
         override fun onEditTodo(todo: Todo) {
@@ -77,8 +85,16 @@ class TodoFragment : Fragment() {
         }
 
         override fun onTodoClicked(todo: Todo) {
-            val todoModal =
-                TodoBottomSheet(TodoType.fromInt(pageType!!), true, todo, todoDetailsListener)
+            val bundle = Bundle()
+            bundle.putBoolean("isEditable", true)
+            bundle.putInt("PAGE_TYPE", pageType!!)
+            val todoModal = BaseBottomSheet.Builder(
+                layoutId = R.layout.bottom_sheet_task,
+                listener = todoDetailsListener,
+                vhClass = TodoViewHolder::class.java,
+                item = todo,
+                bundle = bundle
+            ).build()
             todoModal.show(childFragmentManager, "TodoBottomSheet")
         }
 
@@ -172,7 +188,7 @@ class TodoFragment : Fragment() {
     private fun initTodosRecyclerView(todoList: List<Todo>) {
         val bundle = Bundle()
         bundle.putInt("PageType", pageType!!)
-        todoAdapter = BasicRecyclerViewAdapter.Builder(
+        todoAdapter = BaseRecyclerViewAdapter.Builder(
             itemList = todoList.toMutableList(),
             layoutId = R.layout.recyclerview_todo_item,
             vhClass = TodoViewHolder::class.java,
@@ -188,11 +204,6 @@ class TodoFragment : Fragment() {
         //Back
         binding.back.setOnClickListener {
             findNavController().popBackStack()
-        }
-
-        //Stats
-        binding.goStats.setOnClickListener {
-            findNavController().navigate(R.id.todo_tracking)
         }
 
         //Add Task

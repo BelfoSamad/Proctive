@@ -1,73 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/rounded_background">
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/date_label"
-        style="@style/LabelTextStyle"
-        android:layout_width="wrap_content"
+<layout>
+    <data>
+        <variable
+            name="type"
+            type="net.roeia.proctive.models.enums.TodoType" />
+        <import type="net.roeia.proctive.models.enums.TodoType" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/parent_margin"
-        android:layout_marginTop="@dimen/parent_margin"
-        android:drawableStart="@drawable/calendar"
-        android:text="Date"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:backgroundTint="@{type == TodoType.Task ? @color/blue_300 : type == TodoType.WeeklyGoal ? @color/yellow_300 : @color/green_300}"
+        android:background="@drawable/rounded_background">
 
-    <DatePicker
-        android:id="@+id/date"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/content_margin"
-        android:layout_marginEnd="@dimen/parent_margin"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/date_label"
-        app:layout_constraintTop_toBottomOf="@id/date_label" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/date_label"
+            style="@style/LabelTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/parent_margin"
+            android:layout_marginTop="@dimen/parent_margin"
+            android:drawableStart="@drawable/calendar"
+            android:text="Date"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/time_label"
-        style="@style/LabelTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/section_margin"
-        android:drawableStart="@drawable/date"
-        android:text="Time"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@id/date_label"
-        app:layout_constraintTop_toBottomOf="@id/date" />
+        <DatePicker
+            android:id="@+id/date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_margin"
+            android:layout_marginEnd="@dimen/parent_margin"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/date_label"
+            app:layout_constraintTop_toBottomOf="@id/date_label" />
 
-    <TimePicker
-        android:id="@+id/time"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/content_margin"
-        android:layout_marginEnd="@dimen/parent_margin"
-        android:timePickerMode="spinner"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/time_label"
-        app:layout_constraintTop_toBottomOf="@id/time_label" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/time_label"
+            style="@style/LabelTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/section_margin"
+            android:drawableStart="@drawable/date"
+            android:text="Time"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@id/date_label"
+            app:layout_constraintTop_toBottomOf="@id/date" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/set"
-        style="@style/ButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="@dimen/parent_margin"
-        android:text="Set"
-        android:textColor="@color/orange_300"
-        app:backgroundTint="@color/orange_700"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="16sp"
-        android:padding="12dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/time" />
+        <TimePicker
+            android:id="@+id/time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_margin"
+            android:layout_marginEnd="@dimen/parent_margin"
+            android:timePickerMode="spinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/time_label"
+            app:layout_constraintTop_toBottomOf="@id/time_label" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/set"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/parent_margin"
+            android:text="Set"
+            android:textColor="@{type == TodoType.Task ? @color/blue_300 : type == TodoType.WeeklyGoal ? @color/yellow_300 : @color/green_300}"
+            app:backgroundTint="@{type == TodoType.Task ? @color/blue_700 : type == TodoType.WeeklyGoal ? @color/yellow_700 : @color/green_700}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="16sp"
+            android:padding="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/time" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

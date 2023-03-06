@@ -1,14 +1,18 @@
 package net.roeia.proctive.ui.views.fragments.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import net.roeia.proctive.databinding.FragmentProfileBinding
 import net.roeia.proctive.ui.viewmodels.main.ProfileViewModel
+import net.roeia.proctive.ui.views.activities.MainActivity
+import net.roeia.proctive.ui.views.activities.StartupActivity
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
@@ -34,6 +38,13 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        //Init ClickListener
+        initClickListener()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
@@ -42,5 +53,18 @@ class ProfileFragment : Fragment() {
     /***********************************************************************************************
      * ************************* Methods
      */
+    private fun initClickListener() {
+        //Back
+        binding.back.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        //Logout
+        binding.logout.setOnClickListener {
+            viewModel.logout()
+            startActivity(Intent(requireContext(), StartupActivity::class.java))
+            requireActivity().finish()
+        }
+    }
 
 }

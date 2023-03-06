@@ -4,8 +4,8 @@ import android.graphics.BlurMaskFilter
 import android.os.Bundle
 import android.view.View
 import net.roeia.proctive.databinding.RecyclerviewJournalItemBinding
-import net.roeia.proctive.models.entities.Journal
-import net.roeia.proctive.utils.BaseViewHolder
+import net.roeia.proctive.models.entities.todo.Journal
+import net.roeia.proctive.base.ui.BaseViewHolder
 
 class JournalViewHolder constructor(private val binding: RecyclerviewJournalItemBinding) :
     BaseViewHolder<Journal>(binding) {

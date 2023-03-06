@@ -16,15 +16,15 @@ import kotlinx.coroutines.launch
 import net.roeia.proctive.R
 import net.roeia.proctive.data.Status
 import net.roeia.proctive.databinding.FragmentFinanceBinding
-import net.roeia.proctive.models.entities.Expenditure
+import net.roeia.proctive.models.entities.finance.Expenditure
 import net.roeia.proctive.models.enums.FinanceType
 import net.roeia.proctive.models.pojo.Finance
 import net.roeia.proctive.ui.viewmodels.finance.FinanceViewModel
 import net.roeia.proctive.ui.views.viewholders.dialogs.ManageDebtViewHolder
 import net.roeia.proctive.ui.views.viewholders.dialogs.ManageExpenditureViewHolder
 import net.roeia.proctive.ui.views.viewholders.recyclerviews.FinanceViewHolder
-import net.roeia.proctive.utils.BaseDialog
-import net.roeia.proctive.utils.BasicRecyclerViewAdapter
+import net.roeia.proctive.base.ui.BaseDialog
+import net.roeia.proctive.base.ui.BaseRecyclerViewAdapter
 
 @AndroidEntryPoint
 class FinanceFragment : Fragment() {
@@ -40,7 +40,7 @@ class FinanceFragment : Fragment() {
     private val binding get() = _binding!!
 
     //Data
-    private var adapter: BasicRecyclerViewAdapter<Finance, FinanceViewHolder>? = null
+    private var adapter: BaseRecyclerViewAdapter<Finance, FinanceViewHolder>? = null
     private var pageType: FinanceType? = null
 
     /***********************************************************************************************
@@ -102,7 +102,7 @@ class FinanceFragment : Fragment() {
     private fun initFinanceRecyclerView(finances: List<Finance>) {
         val bundle = Bundle()
         bundle.putInt("PageType", pageType!!.ordinal)
-        adapter = BasicRecyclerViewAdapter.Builder(
+        adapter = BaseRecyclerViewAdapter.Builder(
             itemList = finances.toMutableList(),
             layoutId = R.layout.recyclerview_finance_item,
             vhClass = FinanceViewHolder::class.java,
@@ -118,11 +118,6 @@ class FinanceFragment : Fragment() {
         //Back
         binding.back.setOnClickListener {
             findNavController().popBackStack()
-        }
-
-        //Go Stats
-        binding.goStats.setOnClickListener {
-            findNavController().navigate(R.id.finance_tracking)
         }
 
         //Back/Forth Month

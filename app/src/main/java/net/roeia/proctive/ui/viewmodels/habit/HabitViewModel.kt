@@ -10,9 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import net.roeia.proctive.data.Status
-import net.roeia.proctive.models.entities.Habit
-import net.roeia.proctive.models.entities.Todo
-import net.roeia.proctive.ui.viewmodels.todo.TodoViewModel
+import net.roeia.proctive.models.entities.todo.Habit
 import javax.inject.Inject
 
 @HiltViewModel

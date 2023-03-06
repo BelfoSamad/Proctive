@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import net.roeia.proctive.data.Status
-import net.roeia.proctive.models.entities.Todo
+import net.roeia.proctive.models.entities.todo.Todo
 import net.roeia.proctive.models.enums.TodoType
 import java.text.SimpleDateFormat
 import java.util.*

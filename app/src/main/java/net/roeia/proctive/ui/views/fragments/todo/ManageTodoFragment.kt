@@ -5,12 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.HorizontalScrollView
 import android.widget.ListView
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -20,14 +18,17 @@ import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import net.roeia.proctive.R
+import net.roeia.proctive.base.ui.BaseArrayAdapter
+import net.roeia.proctive.base.ui.BaseDialog
 import net.roeia.proctive.data.Status
 import net.roeia.proctive.databinding.FragmentManageTodoBinding
-import net.roeia.proctive.models.entities.Todo
+import net.roeia.proctive.models.entities.todo.Todo
 import net.roeia.proctive.models.enums.TodoType
+import net.roeia.proctive.models.pojo.TodoChecked
 import net.roeia.proctive.ui.custom.LabeledInputView
 import net.roeia.proctive.ui.viewmodels.todo.ManageTodoViewModel
-import net.roeia.proctive.ui.views.dialogs.DateTimePickerDialog
-import net.roeia.proctive.utils.adapters.SubTasksArrayAdapter
+import net.roeia.proctive.ui.views.viewholders.dialogs.DateTimePickerViewHolder
+import net.roeia.proctive.ui.views.viewholders.listviews.SubTasksViewHolder
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -44,6 +45,8 @@ class ManageTodoFragment : Fragment() {
     private var _binding: FragmentManageTodoBinding? = null
     private val binding get() = _binding!!
 
+    //Data
+    private var adapter: BaseArrayAdapter<TodoChecked, SubTasksViewHolder>? = null
     private val dateTimeFormat = SimpleDateFormat("dd/MM/yyyy, HH:mm", Locale.ROOT)
     private var todoId: Long? = null
     private var pageType: Int? = null
@@ -91,9 +94,11 @@ class ManageTodoFragment : Fragment() {
             binding.deleteTodo.visibility = GONE //Delete Option
             if (pageType == TodoType.WeeklyGoal.ordinal)
                 binding.todoDueDate.text = viewModel.getCurrentWeek(null)
-            binding.pageTitle.text = "Edit ${resources.getStringArray(R.array.todo_title)[pageType!!]}"
+            binding.pageTitle.text =
+                "Edit ${resources.getStringArray(R.array.todo_title)[pageType!!]}"
         } else {
-            binding.pageTitle.text = "Add ${resources.getStringArray(R.array.todo_title)[pageType!!]}"
+            binding.pageTitle.text =
+                "Add ${resources.getStringArray(R.array.todo_title)[pageType!!]}"
         }
 
         //Handle Status Changes
@@ -153,15 +158,20 @@ class ManageTodoFragment : Fragment() {
         } else {
             //Handle Due Date
             binding.todoDueDate.setOnClickListener {
-                val dialog = DateTimePickerDialog(
-                    TodoType.fromInt(pageType!!),
-                    if (it.tag == 1) dateTimeFormat.parse((it as Chip).text.toString()) else null,
-                    object : DateTimePickerDialog.DateTimePickerListener {
+                val bundle = Bundle()
+                bundle.putInt("PAGE_TYPE", pageType!!)
+                val dialog = BaseDialog.Builder(
+                    item = if (it.tag == 1) dateTimeFormat.parse((it as Chip).text.toString()) else null,
+                    layoutId = R.layout.dialog_date_time_picker,
+                    vhClass = DateTimePickerViewHolder::class.java,
+                    bundle = bundle,
+                    listener = object : DateTimePickerViewHolder.DateTimePickerListener {
                         override fun onDateTimePicked(due: String) {
                             binding.todoDueDate.text = due
                             binding.todoDueDate.tag = 1
                         }
-                    })
+                    }
+                ).build()
                 dialog.show(childFragmentManager, "DateTimePickerDialog")
             }
         }
@@ -205,17 +215,21 @@ class ManageTodoFragment : Fragment() {
                 }
 
                 //Update ListView
-                (binding.todoSubtasks as ListView).adapter =
-                    SubTasksArrayAdapter(
-                        requireContext(),
-                        viewModel.getSubtasksList()!!.associateWith { false }.toMutableMap(),
-                        false,
-                        object: SubTasksArrayAdapter.SubTaskActions {
-                            override fun onDeleteSubTask(subtask: String) {
-                                viewModel.removeSubtask(subtask)
-                            }
+                val bundle = Bundle()
+                bundle.putBoolean("isChecked", false)
+                adapter = BaseArrayAdapter.Builder(
+                    itemsList = viewModel.getSubtasksList()!!.map { TodoChecked(it, false) }.toMutableList(),
+                    layoutId = R.layout.list_task_item,
+                    vhClass = SubTasksViewHolder::class.java,
+                    bundle = bundle,
+                    listener = object : SubTasksViewHolder.SubTaskActions {
+                        override fun onDeleteSubTask(subtask: TodoChecked) {
+                            viewModel.removeSubtask(subtask.todo)
+                            adapter?.removeItem(subtask)
                         }
-                    )
+                    }
+                ).build()
+                (binding.todoSubtasks as ListView).adapter = adapter
             }
         })
     }

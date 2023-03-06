@@ -7,7 +7,7 @@
 
         <variable
             name="todo"
-            type="net.roeia.proctive.models.entities.Todo" />
+            type="net.roeia.proctive.models.entities.todo.Todo" />
 
         <variable
             name="type"

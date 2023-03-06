@@ -4,29 +4,36 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.*
-import android.view.View.OnTouchListener
 import android.widget.HorizontalScrollView
 import android.widget.ListView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.res.ResourcesCompat
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.google.android.material.chip.Chip
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.android.material.textview.MaterialTextView
 import dagger.hilt.android.AndroidEntryPoint
 import net.roeia.proctive.R
+import net.roeia.proctive.base.ui.BaseArrayAdapter
 import net.roeia.proctive.databinding.BottomSheetTaskBinding
 import net.roeia.proctive.databinding.FragmentPomodoroBinding
 import net.roeia.proctive.databinding.PagePomodoroAverageBinding
-import net.roeia.proctive.models.entities.Todo
+import net.roeia.proctive.models.entities.todo.Todo
 import net.roeia.proctive.models.enums.TodoType
+import net.roeia.proctive.models.pojo.TodoChecked
 import net.roeia.proctive.ui.viewmodels.main.PomodoroViewModel
+import net.roeia.proctive.ui.views.viewholders.listviews.SubTasksViewHolder
+import net.roeia.proctive.utils.DaysAxisFormatter
 import net.roeia.proctive.utils.adapters.PagerAdapter
-import net.roeia.proctive.utils.adapters.SubTasksArrayAdapter
 import java.util.*
 
 
@@ -63,6 +70,28 @@ class PomodoroFragment : Fragment(), GestureDetector.OnGestureListener {
             holder.forwardWeek.setOnClickListener {
                 //TODO: Forward Week
             }
+
+            //Pomodoro Tracking
+            initMeasurementGraphStyling(holder.average)
+            val entries = listOf(
+                BarEntry(0f, 40f),
+                BarEntry(1f, 50f),
+                BarEntry(2f, 60f),
+                BarEntry(3f, 20f),
+                BarEntry(4f, 30f),
+            )
+            if (holder.average.data != null && holder.average.data.dataSetCount > 0) {
+                (holder.average.data.getDataSetByIndex(0) as LineDataSet).values = entries
+                holder.average.data.notifyDataChanged()
+                holder.average.notifyDataSetChanged()
+            } else {
+                val set = BarDataSet(entries, "")
+                initGraphSetStyling(set)
+                val dataSets: ArrayList<IBarDataSet> = ArrayList()
+                dataSets.add(set)
+                val data = BarData(dataSets)
+                holder.average.data = data
+            }
         }
 
         override fun bind(holder: BottomSheetTaskBinding) {
@@ -85,17 +114,22 @@ class PomodoroFragment : Fragment(), GestureDetector.OnGestureListener {
             holder.deleteTodo.visibility = View.GONE
             holder.editTask.visibility = View.GONE
             holder.todoDescription.text = todo.description
-            (holder.subTasks as ListView).adapter =
-                SubTasksArrayAdapter(
-                    requireContext(),
-                    todo.subTasks!!.toMutableMap(),
-                    true,
-                    object : SubTasksArrayAdapter.SubTaskActions {
-                        override fun onCheckSubTask(subtask: String, checked: Boolean) {
 
-                        }
+            //Update ListView
+            val bundle = Bundle()
+            bundle.putBoolean("isChecked", true)
+            val adapter = BaseArrayAdapter.Builder(
+                itemsList = todo.subTasks!!.map { TodoChecked(it.key, it.value) }.toMutableList(),
+                layoutId = R.layout.list_task_item,
+                vhClass = SubTasksViewHolder::class.java,
+                bundle = bundle,
+                listener = object : SubTasksViewHolder.SubTaskActions {
+                    override fun onCheckSubTask(subtask: String, checked: Boolean) {
+
                     }
-                )
+                }
+            ).build()
+            (holder.subTasks as ListView).adapter = adapter
 
             //Init Labels List
             for (label in todo.labels!!) {
@@ -147,6 +181,26 @@ class PomodoroFragment : Fragment(), GestureDetector.OnGestureListener {
     /***********************************************************************************************
      * ************************* Methods
      */
+    private fun initMeasurementGraphStyling(barChart: BarChart) {
+        barChart.axisRight.isEnabled = false
+        barChart.description.isEnabled = false
+        barChart.legend.isEnabled = false
+        barChart.extraLeftOffset = 4F
+        barChart.xAxis.valueFormatter = DaysAxisFormatter(resources.getStringArray(R.array.months).toList())
+        barChart.xAxis.setDrawGridLines(false)
+        barChart.xAxis.textColor = resources.getColor(R.color.black, null)
+        barChart.axisLeft.textColor = resources.getColor(R.color.black, null)
+        barChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        barChart.xAxis.typeface = ResourcesCompat.getFont(requireContext(), R.font.lufga_medium)
+        barChart.axisLeft.typeface = ResourcesCompat.getFont(requireContext(), R.font.lufga_medium)
+    }
+
+    private fun initGraphSetStyling(set: BarDataSet) {
+        set.color = resources.getColor(R.color.black, null)
+        set.valueTextColor = resources.getColor(R.color.black, null)
+        set.setDrawValues(false)
+    }
+
     private fun initViewPager() {
         binding.viewpager.adapter = PagerAdapter(bindListener)
         val titles = listOf("Tasks", "Average")

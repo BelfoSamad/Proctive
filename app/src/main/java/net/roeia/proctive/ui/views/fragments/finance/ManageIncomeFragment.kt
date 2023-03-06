@@ -15,12 +15,11 @@ import net.roeia.proctive.R
 import net.roeia.proctive.databinding.FragmentManageIncomeBinding
 import net.roeia.proctive.models.enums.FinanceType
 import net.roeia.proctive.models.pojo.Finance
+import net.roeia.proctive.ui.viewmodels.finance.ManageIncomeViewModel
 import net.roeia.proctive.ui.views.viewholders.dialogs.AddSplittingViewHolder
-import net.roeia.proctive.ui.views.viewholders.dialogs.ManageExpenditureViewHolder
 import net.roeia.proctive.ui.views.viewholders.recyclerviews.FinanceViewHolder
-import net.roeia.proctive.utils.BaseDialog
-import net.roeia.proctive.utils.BaseViewHolder
-import net.roeia.proctive.utils.BasicRecyclerViewAdapter
+import net.roeia.proctive.base.ui.BaseDialog
+import net.roeia.proctive.base.ui.BaseRecyclerViewAdapter
 
 @AndroidEntryPoint
 class ManageIncomeFragment : Fragment() {
@@ -36,7 +35,7 @@ class ManageIncomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     //Data
-    var adapter: BasicRecyclerViewAdapter<Finance, FinanceViewHolder>? = null
+    var adapter: BaseRecyclerViewAdapter<Finance, FinanceViewHolder>? = null
     var isSavings: Boolean? = null
 
     /***********************************************************************************************
@@ -91,7 +90,7 @@ class ManageIncomeFragment : Fragment() {
         if (isSavings!!)
             bundle.putInt("PageType", FinanceType.Savings.ordinal)
         else bundle.putInt("PageType", FinanceType.Income.ordinal)
-        adapter = BasicRecyclerViewAdapter.Builder(
+        adapter = BaseRecyclerViewAdapter.Builder(
             itemList = finances.toMutableList(),
             layoutId = R.layout.recyclerview_finance_item,
             vhClass = FinanceViewHolder::class.java,

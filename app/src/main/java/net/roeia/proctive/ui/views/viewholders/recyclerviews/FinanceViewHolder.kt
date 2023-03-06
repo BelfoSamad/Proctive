@@ -6,8 +6,7 @@ import androidx.constraintlayout.widget.ConstraintSet
 import net.roeia.proctive.databinding.RecyclerviewFinanceItemBinding
 import net.roeia.proctive.models.enums.FinanceType
 import net.roeia.proctive.models.pojo.Finance
-import net.roeia.proctive.utils.BaseViewHolder
-import net.roeia.proctive.utils.BasicRecyclerViewAdapter
+import net.roeia.proctive.base.ui.BaseViewHolder
 
 class FinanceViewHolder constructor(private val binding: RecyclerviewFinanceItemBinding) :
     BaseViewHolder<Finance>(binding) {

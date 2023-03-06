@@ -11,39 +11,19 @@
         android:label="fragment_finance"
         tools:layout="@layout/fragment_finance">
         <action
-            android:id="@+id/finance_tracking"
-            app:destination="@id/financeTrackingFragment" />
-        <action
             android:id="@+id/manage_income"
             app:destination="@id/manageIncomeFragment" />
     </fragment>
     <fragment
-        android:id="@+id/financeTrackingFragment"
-        android:name="net.roeia.proctive.ui.views.fragments.finance.FinanceTrackingFragment"
-        android:label="fragment_finance_tracking"
-        tools:layout="@layout/fragment_finance_tracking" />
-    <fragment
         android:id="@+id/habitFragment"
         android:name="net.roeia.proctive.ui.views.fragments.habit.HabitFragment"
         android:label="fragment_habit"
-        tools:layout="@layout/fragment_habit">
-        <action
-            android:id="@+id/habit_tracking"
-            app:destination="@id/habitTrackingFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/habitTrackingFragment"
-        android:name="net.roeia.proctive.ui.views.fragments.habit.HabitTrackingFragment"
-        android:label="fragment_habit_tracking"
-        tools:layout="@layout/fragment_habit_tracking" />
+        tools:layout="@layout/fragment_habit"/>
     <fragment
         android:id="@+id/todoFragment"
         android:name="net.roeia.proctive.ui.views.fragments.todo.TodoFragment"
         android:label="fragment_todo"
         tools:layout="@layout/fragment_todo">
-        <action
-            android:id="@+id/todo_tracking"
-            app:destination="@id/todoTrackingFragment" />
         <action
             android:id="@+id/manage_todo"
             app:destination="@id/manageTodoFragment" />
@@ -59,11 +39,6 @@
         android:name="net.roeia.proctive.ui.views.fragments.todo.ManageTodoFragment"
         android:label="fragment_manage_todo"
         tools:layout="@layout/fragment_manage_todo" />
-    <fragment
-        android:id="@+id/todoTrackingFragment"
-        android:name="net.roeia.proctive.ui.views.fragments.todo.TodoTrackingFragment"
-        android:label="fragment_todo_tracking"
-        tools:layout="@layout/fragment_todo_tracking" />
     <fragment
         android:id="@+id/homeFragment"
         android:name="net.roeia.proctive.ui.views.fragments.main.HomeFragment"

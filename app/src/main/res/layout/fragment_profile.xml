@@ -1,13 +1,287 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/paper_300"
     tools:context=".ui.views.fragments.main.ProfileFragment">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+        <ImageButton
+            android:id="@+id/back"
+            style="@style/RoundedImageButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/parent_margin"
+            android:layout_marginTop="@dimen/parent_margin"
+            android:backgroundTint="@color/paper_500"
+            android:src="@drawable/back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            style="@style/LabelTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/section_margin"
+            android:text="Profile"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toBottomOf="@id/back"
+            app:layout_constraintStart_toEndOf="@id/back"
+            app:layout_constraintTop_toTopOf="@id/back" />
+
+        <ImageButton
+            android:id="@+id/logout"
+            style="@style/RoundedImageButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/parent_margin"
+            android:backgroundTint="@color/paper_500"
+            android:src="@drawable/logout"
+            app:layout_constraintBottom_toBottomOf="@id/back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/back" />
+
+        <ImageView
+            android:id="@+id/profile_picture"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_marginTop="@dimen/parent_margin"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/paper_700"
+            app:layout_constraintEnd_toStartOf="@id/profile_username"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/back" />
+
+        <TextView
+            android:id="@+id/profile_username"
+            style="@style/LabelTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/section_margin"
+            android:text="negusamad"
+            app:layout_constraintBottom_toTopOf="@id/profile_tags"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/profile_picture"
+            app:layout_constraintTop_toTopOf="@id/profile_picture"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/profile_tags"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/parent_margin"
+            app:layout_constraintBottom_toBottomOf="@id/profile_picture"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/profile_username"
+            app:layout_constraintTop_toBottomOf="@id/profile_username">
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tasks"
+                android:textColor="@color/paper_300"
+                app:chipBackgroundColor="@color/paper_700" />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Habits"
+                android:textColor="@color/paper_300"
+                app:chipBackgroundColor="@color/paper_700" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <TextView
+            android:id="@+id/preferences_text"
+            style="@style/LabelTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/parent_margin"
+            android:text="Preferences"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@id/back"
+            app:layout_constraintTop_toBottomOf="@id/profile_picture" />
+
+        <LinearLayout
+            android:id="@+id/notifications_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_margin"
+            android:layout_marginEnd="@dimen/parent_margin"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/paper_500"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/back"
+            app:layout_constraintTop_toBottomOf="@id/preferences_text">
+
+            <TextView
+                style="@style/LabelTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/parent_margin"
+                android:layout_marginTop="@dimen/parent_margin"
+                android:layout_marginBottom="@dimen/parent_margin"
+                android:layout_weight="1"
+                android:text="Notifications"
+                android:textSize="18sp" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="@dimen/content_margin" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dark_mode_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_margin"
+            android:layout_marginEnd="@dimen/parent_margin"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/paper_500"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/back"
+            app:layout_constraintTop_toBottomOf="@id/notifications_container">
+
+            <TextView
+                style="@style/LabelTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/parent_margin"
+                android:layout_marginTop="@dimen/parent_margin"
+                android:layout_marginBottom="@dimen/parent_margin"
+                android:layout_weight="1"
+                android:text="Dark Mode"
+                android:textSize="18sp" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="@dimen/content_margin" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/import_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_margin"
+            android:layout_marginEnd="@dimen/parent_margin"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/paper_500"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/back"
+            app:layout_constraintTop_toBottomOf="@id/dark_mode_container">
+
+            <TextView
+                style="@style/LabelTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/parent_margin"
+                android:layout_marginTop="@dimen/parent_margin"
+                android:layout_marginBottom="@dimen/parent_margin"
+                android:layout_weight="1"
+                android:text="Import Data"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/export_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_margin"
+            android:layout_marginEnd="@dimen/parent_margin"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/paper_500"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/back"
+            app:layout_constraintTop_toBottomOf="@id/import_container">
+
+            <TextView
+                style="@style/LabelTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/parent_margin"
+                android:layout_marginTop="@dimen/parent_margin"
+                android:layout_marginBottom="@dimen/parent_margin"
+                android:layout_weight="1"
+                android:text="Export Data"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/others_text"
+            style="@style/LabelTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/section_margin"
+            android:text="Others"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@id/back"
+            app:layout_constraintTop_toBottomOf="@id/export_container" />
+
+        <LinearLayout
+            android:id="@+id/privacy_policy_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_margin"
+            android:layout_marginEnd="@dimen/parent_margin"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/paper_500"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/back"
+            app:layout_constraintTop_toBottomOf="@id/others_text">
+
+            <TextView
+                style="@style/LabelTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/parent_margin"
+                android:layout_marginTop="@dimen/parent_margin"
+                android:layout_marginBottom="@dimen/parent_margin"
+                android:layout_weight="1"
+                android:text="Privacy Policy"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tos_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_margin"
+            android:layout_marginEnd="@dimen/parent_margin"
+            android:layout_marginBottom="@dimen/parent_margin"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/paper_500"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/back"
+            app:layout_constraintTop_toBottomOf="@id/privacy_policy_container">
+
+            <TextView
+                style="@style/LabelTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/parent_margin"
+                android:layout_marginTop="@dimen/parent_margin"
+                android:layout_marginBottom="@dimen/parent_margin"
+                android:layout_weight="1"
+                android:text="Terms of Service"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
