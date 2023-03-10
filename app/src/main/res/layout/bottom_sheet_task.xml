@@ -17,7 +17,7 @@
 
         <variable
             name="listener"
-            type="net.roeia.proctive.ui.views.viewholders.bottomsheets.TodoViewHolder.TodoActions" />
+            type="net.roeia.proctive.ui.views.viewholders.bottomsheets.BottomTodoViewHolder.TodoActions" />
 
         <variable
             name="todo"
@@ -43,7 +43,7 @@
             android:layout_marginTop="@dimen/parent_margin"
             android:layout_marginEnd="@dimen/section_margin"
             android:layout_marginBottom="@dimen/section_margin"
-            android:checked="true"
+            android:checked="@{todo.checked}"
             android:enabled="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/content_margin"
             android:layout_marginEnd="@dimen/content_margin"
-            android:text="Publish Proctive"
+            android:text="@{todo.name}"
             app:layout_constraintBottom_toBottomOf="@id/todo_checkbox"
             app:layout_constraintEnd_toStartOf="@id/edit_task"
             app:layout_constraintStart_toEndOf="@id/todo_checkbox"

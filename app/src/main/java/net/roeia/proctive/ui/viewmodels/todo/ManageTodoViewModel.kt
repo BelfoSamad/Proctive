@@ -1,16 +1,15 @@
 package net.roeia.proctive.ui.viewmodels.todo
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import net.roeia.proctive.data.Status
+import net.roeia.proctive.data.repositories.TodoRepository
 import net.roeia.proctive.models.entities.todo.Todo
 import net.roeia.proctive.models.enums.TodoType
 import java.text.SimpleDateFormat
@@ -18,7 +17,10 @@ import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class ManageTodoViewModel @Inject constructor(private val state: SavedStateHandle) : ViewModel() {
+class ManageTodoViewModel @Inject constructor(
+    private val state: SavedStateHandle,
+    private val todoRepository: TodoRepository
+) : ViewModel() {
     companion object {
         private const val TAG = "ManageTodoViewModel"
     }
@@ -33,7 +35,8 @@ class ManageTodoViewModel @Inject constructor(private val state: SavedStateHandl
     private val _uiStateTodo = MutableStateFlow(TodoUIState())
     val uiStateTodo: StateFlow<TodoUIState> = _uiStateTodo.asStateFlow()
 
-    private var todoHolder = Todo()
+    //Data
+    private var todoHolder: Todo? = null
 
     //LiveData
     val todoUpdatedLiveData: MutableLiveData<Boolean> by lazy {
@@ -45,12 +48,14 @@ class ManageTodoViewModel @Inject constructor(private val state: SavedStateHandl
      */
     fun fetchTodoById(todoId: Long) {
         viewModelScope.launch {
-            _uiStateTodo.update {
-                //TODO: (Backend) Get Todo from Database -> Set it to holder + Get Lists separately
-                it.copy(
-                    status = Status.SUCCESS,
-                    todo = Todo()
-                )
+            todoRepository.fetchTodoById(todoId).collect { todo ->
+                todoHolder = todo
+                _uiStateTodo.update {
+                    it.copy(
+                        status = Status.SUCCESS,
+                        todo = todo
+                    )
+                }
             }
         }
     }
@@ -68,25 +73,33 @@ class ManageTodoViewModel @Inject constructor(private val state: SavedStateHandl
     fun getSubtasksList(): List<String>? = state["SUBTASKS"]
 
     fun deleteTodo(todoId: Long) {
-        //TODO (Backend): Delete Todo
-        todoUpdatedLiveData.value = true
+        viewModelScope.launch {
+            todoRepository.deleteTodo(todoId)
+            todoUpdatedLiveData.value = true
+        }
     }
 
     fun saveTodo(
         type: Int,
+        todoId: Long?,
         name: String,
         description: String?,
         due: Date?
     ) {
-        todoHolder.type = TodoType.fromInt(type)
-        todoHolder.name = name
-        todoHolder.description = description
-        todoHolder.due = due
-        todoHolder.subTasks = getSubtasksList()?.associateWith { false }
-        todoHolder.labels = getLabelsList()
+        if(todoHolder == null)
+            todoHolder = Todo()
+        todoHolder?.parentTodoId = todoId
+        todoHolder?.type = TodoType.fromInt(type)
+        todoHolder?.name = name
+        todoHolder?.description = description
+        todoHolder?.due = due
+        todoHolder?.subTasks = getSubtasksList()?.associateWith { false }?.toMutableMap()
+        todoHolder?.labels = getLabelsList()
 
-        //TODO (Backend): Save Todo
-        todoUpdatedLiveData.value = true
+        viewModelScope.launch {
+            todoRepository.saveTodo(todoHolder!!)
+            todoUpdatedLiveData.value = true
+        }
     }
 
     fun getCurrentWeek(weekDate: Date?): String {

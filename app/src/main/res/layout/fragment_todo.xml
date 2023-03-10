@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+
         <import type="android.view.View" />
+
         <import type="net.roeia.proctive.models.enums.TodoType" />
+
         <variable
             name="type"
             type="net.roeia.proctive.models.enums.TodoType" />
     </data>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -19,7 +24,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/todo_page_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <ImageButton
                 android:id="@+id/back"
@@ -45,7 +50,7 @@
                 app:icon="@drawable/apple"
                 app:iconTint="@color/black"
                 app:layout_constraintBottom_toBottomOf="@id/back"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/filter"
                 app:layout_constraintTop_toTopOf="@id/back" />
 
             <TextView
@@ -54,9 +59,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:layout_marginEnd="@dimen/section_margin"
+                android:layout_marginEnd="@dimen/content_margin"
                 android:text="My Goals"
-                app:layout_constraintEnd_toStartOf="@+id/filter"
+                app:layout_constraintEnd_toStartOf="@id/filter"
                 app:layout_constraintStart_toStartOf="@id/back"
                 app:layout_constraintTop_toBottomOf="@id/back" />
 
@@ -75,10 +80,10 @@
                 style="@style/SimpleImageButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/content_margin"
+                android:layout_marginEnd="@dimen/parent_margin"
                 android:src="@drawable/sort"
                 app:layout_constraintBottom_toBottomOf="@id/page_title"
-                app:layout_constraintEnd_toStartOf="@id/add_todo"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/page_title" />
 
             <ImageButton
@@ -89,9 +94,9 @@
                 android:layout_marginEnd="@dimen/section_margin"
                 android:backgroundTint="@{type == TodoType.Task ? @color/blue_500 : type == TodoType.WeeklyGoal ? @color/yellow_500 : @color/green_500}"
                 android:src="@drawable/add"
-                app:layout_constraintBottom_toBottomOf="@id/page_title"
+                app:layout_constraintBottom_toBottomOf="@id/back"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/page_title" />
+                app:layout_constraintTop_toTopOf="@id/back" />
 
             <ImageButton
                 android:id="@+id/back_week"
@@ -99,8 +104,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/parent_margin"
-                android:visibility="@{type == TodoType.WeeklyGoal ? View.VISIBLE : View.GONE}"
                 android:src="@drawable/back"
+                android:visibility="@{type == TodoType.WeeklyGoal ? View.VISIBLE : View.GONE}"
                 app:layout_constraintStart_toStartOf="@id/page_title"
                 app:layout_constraintTop_toBottomOf="@id/page_title" />
 
@@ -153,10 +158,23 @@
                 app:layout_constraintEnd_toEndOf="@id/add_todo"
                 app:layout_constraintTop_toTopOf="@id/back_week" />
 
+            <TextView
+                android:id="@+id/error_text"
+                style="@style/LabelTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No todo found"
+                android:textColor="@{type == TodoType.Task ? @color/blue_700 : type == TodoType.WeeklyGoal ? @color/yellow_700 : @color/green_700}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/page_title" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/todo_list"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginTop="@dimen/parent_margin"
                 android:layout_marginBottom="@dimen/parent_margin"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -19,7 +19,7 @@ import net.roeia.proctive.models.enums.TodoType
 import net.roeia.proctive.models.pojo.TodoChecked
 import net.roeia.proctive.ui.views.viewholders.listviews.SubTasksViewHolder
 
-class TodoViewHolder constructor(private val binding: BottomSheetTaskBinding) :
+class BottomTodoViewHolder constructor(private val binding: BottomSheetTaskBinding) :
     BaseViewHolder<Todo>(binding) {
 
     interface TodoActions : BaseListener {

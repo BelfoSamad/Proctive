@@ -4,17 +4,18 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import net.roeia.proctive.data.Status
+import net.roeia.proctive.data.repositories.TodoRepository
 import net.roeia.proctive.models.entities.todo.Habit
 import javax.inject.Inject
 
 @HiltViewModel
-class HabitViewModel @Inject constructor(private val state: SavedStateHandle) : ViewModel() {
+class HabitViewModel @Inject constructor(
+    private val state: SavedStateHandle,
+    private val todoRepository: TodoRepository
+) : ViewModel() {
     companion object {
         private const val TAG = "HabitViewModel"
     }
@@ -29,45 +30,15 @@ class HabitViewModel @Inject constructor(private val state: SavedStateHandle) : 
     /***********************************************************************************************
      * ************************* Methods
      */
-    fun fetchHabits(){
-        //TODO: Get Habits List based on day (Checked and UnChecked) + Sort it based on position
+    fun fetchHabits() {
         viewModelScope.launch {
-            _uiStateHabits.update {
-                it.copy(
-                    status = Status.SUCCESS,
-                    habitsList = listOf(
-                        Habit(
-                            habitId = 1L,
-                            name = "Morning Athkars",
-                            time = "12:00",
-                            weekDays = listOf("Sun", "Mon"),
-                            isChecked = false
-                        ),
-                        Habit(
-                            habitId = 1L,
-                            name = "Evening Athkars",
-                            time = "12:00",
-                            weekDays = listOf("Sun", "Mon"),
-                            isChecked = false
-                        )
-                    ),
-                    checkedHabitsList = listOf(
-                        Habit(
-                            habitId = 1L,
-                            name = "Morning Athkars",
-                            time = "12:00",
-                            weekDays = listOf("Sun", "Mon"),
-                            isChecked = true
-                        ),
-                        Habit(
-                            habitId = 1L,
-                            name = "Evening Athkars",
-                            time = "12:00",
-                            weekDays = listOf("Sun", "Mon"),
-                            isChecked = true
-                        )
+            todoRepository.fetchHabits().collect { habits ->
+                _uiStateHabits.update {
+                    it.copy(
+                        status = Status.SUCCESS,
+                        habitsList = habits
                     )
-                )
+                }
             }
         }
     }
@@ -81,7 +52,9 @@ class HabitViewModel @Inject constructor(private val state: SavedStateHandle) : 
     }
 
     fun deleteHabit(habit: Habit) {
-        //TODO: Delete Habit
+        viewModelScope.launch {
+            todoRepository.deleteHabit(habit.habitId!!)
+        }
     }
 
     /***********************************************************************************************

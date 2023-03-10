@@ -21,7 +21,7 @@ data class Todo(
     var goalRef: Long? = null,
     var due: Date? = null,
     var pomodoroAverage: Int? = null,
-    var subTasks: Map<String, Boolean>? = null,
+    var subTasks: MutableMap<String, Boolean>? = null,
     @Exclude @Ignore var refTodo: Todo? = null,
     @Exclude @Ignore var subGoals: List<Todo>? = null
 )

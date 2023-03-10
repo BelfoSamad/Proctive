@@ -41,7 +41,7 @@ class BaseBottomSheet<MODEL, VH : BaseViewHolder<MODEL>> private constructor(
         savedInstanceState: Bundle?
     ): View {
         val binding = DataBindingUtil.inflate<ViewDataBinding>(
-            LayoutInflater.from(container?.context),
+            LayoutInflater.from(inflater.context),
             layoutId,
             container,
             false

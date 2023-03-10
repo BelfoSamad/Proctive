@@ -4,7 +4,11 @@
         <variable
             name="type"
             type="net.roeia.proctive.models.enums.TodoType" />
+        <variable
+            name="justDate"
+            type="Boolean" />
         <import type="net.roeia.proctive.models.enums.TodoType" />
+        <import type="android.view.View" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -46,6 +50,7 @@
             android:layout_marginTop="@dimen/section_margin"
             android:drawableStart="@drawable/date"
             android:text="Time"
+            android:visibility="@{justDate ? View.GONE : View.VISIBLE}"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="@id/date_label"
             app:layout_constraintTop_toBottomOf="@id/date" />
@@ -56,11 +61,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/content_margin"
             android:layout_marginEnd="@dimen/parent_margin"
+            android:visibility="@{justDate ? View.GONE : View.VISIBLE}"
             android:timePickerMode="spinner"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/time_label"
             app:layout_constraintTop_toBottomOf="@id/time_label" />
 
+        <!--
+            app:backgroundTint="@{type == TodoType.Task ? @color/blue_700 : type == TodoType.WeeklyGoal ? @color/yellow_700 : @color/green_700}" -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/set"
             style="@style/ButtonStyle"
@@ -70,7 +78,6 @@
             android:layout_marginBottom="@dimen/parent_margin"
             android:text="Set"
             android:textColor="@{type == TodoType.Task ? @color/blue_300 : type == TodoType.WeeklyGoal ? @color/yellow_300 : @color/green_300}"
-            app:backgroundTint="@{type == TodoType.Task ? @color/blue_700 : type == TodoType.WeeklyGoal ? @color/yellow_700 : @color/green_700}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:textSize="16sp"

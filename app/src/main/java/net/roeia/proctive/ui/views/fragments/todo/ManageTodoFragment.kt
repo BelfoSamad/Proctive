@@ -1,6 +1,7 @@
 package net.roeia.proctive.ui.views.fragments.todo
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -47,9 +48,13 @@ class ManageTodoFragment : Fragment() {
 
     //Data
     private var adapter: BaseArrayAdapter<TodoChecked, SubTasksViewHolder>? = null
+    private var dialog: BaseDialog<Date, DateTimePickerViewHolder>? = null
     private val dateTimeFormat = SimpleDateFormat("dd/MM/yyyy, HH:mm", Locale.ROOT)
+    private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.ROOT)
     private var todoId: Long? = null
+    private var goalId: Long? = null
     private var pageType: Int? = null
+    private var midWeek: Long? = null
 
     /***********************************************************************************************
      * ************************* LifeCycle
@@ -57,12 +62,11 @@ class ManageTodoFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //Get TodoId TODO: use argument
-        //todoId = requireArguments().getLong("todoId")
-        //Get Page Type,
+        //Get Arguments
         pageType = requireArguments().getInt("PAGE_TYPE")
-        todoId = null
-        //pageType = 3
+        goalId = requireArguments().getLong("goalId", -1)
+        todoId = requireArguments().getLong("todoId", -1)
+        midWeek = requireArguments().getLong("midWeek", -1)
 
         //Get TodoObject
         lifecycleScope.launch {
@@ -73,7 +77,7 @@ class ManageTodoFragment : Fragment() {
                 }
             }
         }
-        if (todoId != null)
+        if (todoId != (-1).toLong())
             viewModel.fetchTodoById(todoId!!)
     }
 
@@ -91,7 +95,6 @@ class ManageTodoFragment : Fragment() {
         //Reform Page
         binding.type = TodoType.fromInt(pageType!!)
         if (todoId == null) {
-            binding.deleteTodo.visibility = GONE //Delete Option
             if (pageType == TodoType.WeeklyGoal.ordinal)
                 binding.todoDueDate.text = viewModel.getCurrentWeek(null)
             binding.pageTitle.text =
@@ -127,6 +130,8 @@ class ManageTodoFragment : Fragment() {
     private fun initTodo(todo: Todo) {
         binding.todoName.setValue(todo.name!!)
         binding.todoDescription.setValue(todo.description!!)
+        if (TodoType.fromInt(pageType!!) == TodoType.WeeklyGoal)
+            midWeek = todo.due?.time
 
         //set Labels
         for (label in todo.labels!!) {
@@ -144,23 +149,26 @@ class ManageTodoFragment : Fragment() {
         }
 
         //Set Subtasks
+        /* TODO: Fix Subtasks List
         (binding.todoSubtasks as ListView).adapter = ArrayAdapter(
             requireContext(),
             R.layout.list_simple_item,
             R.id.item_text,
-            todo.subTasks?.keys?.toList()!!
-        )
+            tod.subTasks?.keys?.toList()!!
+        )*/
     }
 
     private fun handleChipChanges() {
         if (pageType == TodoType.WeeklyGoal.ordinal) {
-            binding.todoDueDate.setOnClickListener(null)
+            binding.todoDueDate.visibility = GONE
+            binding.dueDateLabel.visibility = GONE
         } else {
             //Handle Due Date
             binding.todoDueDate.setOnClickListener {
                 val bundle = Bundle()
                 bundle.putInt("PAGE_TYPE", pageType!!)
-                val dialog = BaseDialog.Builder(
+                bundle.putBoolean("justDate", TodoType.fromInt(pageType!!) != TodoType.Task)
+                dialog = BaseDialog.Builder(
                     item = if (it.tag == 1) dateTimeFormat.parse((it as Chip).text.toString()) else null,
                     layoutId = R.layout.dialog_date_time_picker,
                     vhClass = DateTimePickerViewHolder::class.java,
@@ -169,10 +177,11 @@ class ManageTodoFragment : Fragment() {
                         override fun onDateTimePicked(due: String) {
                             binding.todoDueDate.text = due
                             binding.todoDueDate.tag = 1
+                            dialog?.dismiss()
                         }
                     }
                 ).build()
-                dialog.show(childFragmentManager, "DateTimePickerDialog")
+                dialog?.show(childFragmentManager, "DateTimePickerDialog")
             }
         }
     }
@@ -196,6 +205,20 @@ class ManageTodoFragment : Fragment() {
                     R.layout.single_chip_option,
                     null
                 ) as Chip
+                when (TodoType.fromInt(pageType!!)) {
+                    TodoType.Goal, TodoType.SubGoal -> {
+                        chip.setTextColor(binding.root.resources.getColor(R.color.green_300, null))
+                        chip.setChipBackgroundColorResource(R.color.green_700)
+                    }
+                    TodoType.WeeklyGoal -> {
+                        chip.setTextColor(binding.root.resources.getColor(R.color.yellow_300, null))
+                        chip.setChipBackgroundColorResource(R.color.yellow_700)
+                    }
+                    TodoType.Task -> {
+                        chip.setTextColor(binding.root.resources.getColor(R.color.blue_300, null))
+                        chip.setChipBackgroundColorResource(R.color.blue_700)
+                    }
+                }
                 chip.text = value
                 binding.labels.addView(chip)
             }
@@ -218,7 +241,8 @@ class ManageTodoFragment : Fragment() {
                 val bundle = Bundle()
                 bundle.putBoolean("isChecked", false)
                 adapter = BaseArrayAdapter.Builder(
-                    itemsList = viewModel.getSubtasksList()!!.map { TodoChecked(it, false) }.toMutableList(),
+                    itemsList = viewModel.getSubtasksList()!!.map { TodoChecked(it, false) }
+                        .toMutableList(),
                     layoutId = R.layout.list_task_item,
                     vhClass = SubTasksViewHolder::class.java,
                     bundle = bundle,
@@ -240,19 +264,25 @@ class ManageTodoFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        //Delete
-        binding.deleteTodo.setOnClickListener {
-            viewModel.deleteTodo(todoId!!)
-        }
-
         //Done (Add/Edit)
         binding.doneTodo.setOnClickListener {
             if (binding.todoName.isValid()) {
                 viewModel.saveTodo(
                     pageType!!,
+                    if (goalId!! == (-1).toLong()) null else goalId,//TODO: Editing subgoal
                     binding.todoName.getValue(),
                     if (binding.todoDescription.getValue() == "") null else binding.todoDescription.getValue(),
-                    if (binding.todoDueDate.tag == 0) null else dateTimeFormat.parse(binding.todoDueDate.text.toString()),
+                    when(TodoType.fromInt(pageType!!)) {
+                        TodoType.Task -> {
+                            if (binding.todoDueDate.tag == 0) null else dateTimeFormat.parse(binding.todoDueDate.text.toString())
+                        }
+                        TodoType.Goal, TodoType.SubGoal -> {
+                            if (binding.todoDueDate.tag == 0) null else dateFormat.parse(binding.todoDueDate.text.toString())
+                        }
+                        TodoType.WeeklyGoal -> {
+                            Date(midWeek!!)
+                        }
+                    }
                 )
             }
         }

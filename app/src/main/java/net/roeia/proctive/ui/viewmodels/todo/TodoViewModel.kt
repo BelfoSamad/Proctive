@@ -1,15 +1,14 @@
 package net.roeia.proctive.ui.viewmodels.todo
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import net.roeia.proctive.data.Status
+import net.roeia.proctive.data.repositories.TodoRepository
 import net.roeia.proctive.models.entities.todo.Todo
 import net.roeia.proctive.models.enums.TodoType
 import java.text.SimpleDateFormat
@@ -17,7 +16,10 @@ import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class TodoViewModel @Inject constructor(private val state: SavedStateHandle) : ViewModel() {
+class TodoViewModel @Inject constructor(
+    private val state: SavedStateHandle,
+    private val todoRepository: TodoRepository
+) : ViewModel() {
     companion object {
         private const val TAG = "TodoViewModel"
     }
@@ -25,7 +27,7 @@ class TodoViewModel @Inject constructor(private val state: SavedStateHandle) : V
     /***********************************************************************************************
      * ************************* Declarations
      */
-    private val dateFormat = SimpleDateFormat("dd-MM", Locale.ROOT)
+    private val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
     private val cal: Calendar = Calendar.getInstance()
 
     //UI States
@@ -35,72 +37,47 @@ class TodoViewModel @Inject constructor(private val state: SavedStateHandle) : V
     /***********************************************************************************************
      * ************************* Methods
      */
-    fun fetchByType(pageType: TodoType) {
+    fun fetchByType(todoType: TodoType) {
         viewModelScope.launch {
-            //TODO (Backend): Get List of Todo based of type -> Split it based on checked
-            _uiStateTodos.update {
-                it.copy(
-                    status = Status.SUCCESS,
-                    todoList = listOf(
-                        Todo(
-                            todoId = 1L,
-                            name = "Publish Proctive",
-                            labels = listOf("Android", "Application"),
-                            description = "This is the description of the goal with the title Publish Proctive.",
-                            type = TodoType.Goal,
-                            isChecked = false,
-                            due = Date(),
-                            pomodoroAverage = 5,
-                            subTasks = mapOf("Finish UI" to true, "Finish Backend" to false, "Publishing Preparations" to true),
-                            goalRef = 112133443L
-                        ),
-                        Todo(
-                            todoId = 1L,
-                            name = "Publish Rehlla",
-                            labels = listOf("Android", "Application"),
-                            description = "This is the description of the goal with the title Publish Rehlla.",
-                            type = TodoType.Goal,
-                            isChecked = false,
-                            due = Date(),
-                            pomodoroAverage = 5,
-                            subTasks = mapOf("Finish UI" to true, "Finish Backend" to false, "Publishing Preparations" to false),
-                            goalRef = 112133443L
-                        )
-                    ),
-                    checkedTodoList = listOf(
-                        Todo(
-                            todoId = 1L,
-                            name = "Publish Proctive",
-                            labels = listOf("Android", "Application"),
-                            description = "This is the description of the goal with the title Publish Proctive.",
-                            type = TodoType.Goal,
-                            isChecked = false,
-                            due = Date(),
-                            pomodoroAverage = 5,
-                            subTasks = mapOf("Finish UI" to true, "Finish Backend" to false, "Publishing Preparations" to false),
-                            goalRef = 112133443L
-                        ),
-                        Todo(
-                            todoId = 1L,
-                            name = "Publish Rehlla",
-                            labels = listOf("Android", "Application"),
-                            description = "This is the description of the goal with the title Publish Rehlla.",
-                            type = TodoType.Goal,
-                            isChecked = false,
-                            due = Date(),
-                            pomodoroAverage = 5,
-                            subTasks = mapOf("Finish UI" to true, "Finish Backend" to false, "Publishing Preparations" to false),
-                            goalRef = 112133443L
-                        )
+            todoRepository.fetchTodos(todoType).collect { todos ->
+                _uiStateTodos.update {
+                    it.copy(
+                        status = Status.SUCCESS,
+                        todoList = todos
                     )
-                )
+                }
+            }
+        }
+    }
+
+    private fun fetchByWeek(startWeek: String, endWeek: String) {
+        Log.d(TAG, "fetchByWeek: $startWeek")
+        Log.d(TAG, "fetchByWeek: $endWeek")
+        viewModelScope.launch {
+            todoRepository.fetchTodosByWeek(dateFormat.parse(startWeek), dateFormat.parse(endWeek)).collect { todos ->
+                Log.d(TAG, "fetchByWeek: Pushing")
+                _uiStateTodos.update {
+                    it.copy(
+                        status = Status.SUCCESS,
+                        todoList = todos
+                    )
+                }
             }
         }
     }
 
     fun fetchTodoById(todoId: Long) {
-        fetchByType(TodoType.Goal)
-        //TODO (Backend): Fetch Todo by Id and return subtasks
+        viewModelScope.launch {
+            todoRepository.fetchTodoById(todoId).collect { todo ->
+                _uiStateTodos.update {
+                    it.copy(
+                        status = Status.SUCCESS,
+                        todo = todo,
+                        todoList = todo.subGoals
+                    )
+                }
+            }
+        }
     }
 
     fun getCurrentWeek(): String {
@@ -109,21 +86,28 @@ class TodoViewModel @Inject constructor(private val state: SavedStateHandle) : V
         cal.set(Calendar.DAY_OF_WEEK, cal.firstDayOfWeek)
         val startWeek = dateFormat.format(cal.time)
         state["START_WEEK"] = startWeek
-        cal.add(Calendar.DAY_OF_WEEK, 6)
+        cal.add(Calendar.DAY_OF_WEEK, 3)
+        state["MID_WEEK"] = cal.time.time
+        cal.add(Calendar.DAY_OF_WEEK, 3)
         val endWeek = dateFormat.format(cal.time)
         state["END_WEEK"] = endWeek
+        fetchByWeek(startWeek, endWeek)
         return "$startWeek,$endWeek"
     }
 
     fun getLastWeek(): String {
         cal.time = dateFormat.parse(state["START_WEEK"]!!)!!
         cal.add(Calendar.DAY_OF_WEEK, -7)
+        Log.d(TAG, "getLastWeek: ${cal.time}")
         val startWeek = dateFormat.format(cal.time)
         state["START_WEEK"] = startWeek
+        cal.add(Calendar.DAY_OF_WEEK, 3)
+        state["MID_WEEK"] = cal.time.time
         cal.time = dateFormat.parse(state["END_WEEK"]!!)!!
         cal.add(Calendar.DAY_OF_WEEK, -7)
         val endWeek = dateFormat.format(cal.time)
         state["END_WEEK"] = endWeek
+        fetchByWeek(startWeek, endWeek)
         return "$startWeek,$endWeek"
     }
 
@@ -132,31 +116,42 @@ class TodoViewModel @Inject constructor(private val state: SavedStateHandle) : V
         cal.add(Calendar.DAY_OF_WEEK, 7)
         val startWeek = dateFormat.format(cal.time)
         state["START_WEEK"] = startWeek
+        cal.add(Calendar.DAY_OF_WEEK, 3)
+        state["MID_WEEK"] = cal.time.time
         cal.time = dateFormat.parse(state["END_WEEK"]!!)!!
         cal.add(Calendar.DAY_OF_WEEK, 7)
         val endWeek = dateFormat.format(cal.time)
         state["END_WEEK"] = endWeek
+        fetchByWeek(startWeek, endWeek)
         return "$startWeek,$endWeek"
     }
 
-    fun setChecked(todoId: Long, checked: Boolean) {
-        //TODO: Set Todo as Checked/UnChecked
+    fun setChecked(todo: Todo, checked: Boolean) {
+        viewModelScope.launch {
+            todoRepository.setCheckStatus(todo, checked)
+        }
     }
 
     fun deleteTodo(todo: Todo) {
-        //TODO: Delete Todo
+        viewModelScope.launch {
+            todoRepository.deleteTodo(todo.todoId!!)
+        }
     }
 
-    fun subtaskChecked(todoId: Long?, subtask: String, checked: Boolean) {
-        //TODO: Set SubTask Checked on todoId
+    fun subtaskChecked(todo: Todo, subtask: String, checked: Boolean) {
+        viewModelScope.launch {
+            todoRepository.setSubTaskCheckStatus(todo, subtask, checked)
+        }
     }
+
+    fun getMidWeek(): Long? = state["MID_WEEK"]
 
     /***********************************************************************************************
      * ************************* UI States
      */
     data class TodosUIState(
         val status: Status = Status.LOADING,
+        val todo: Todo? = null,
         val todoList: List<Todo>? = null,
-        val checkedTodoList: List<Todo>? = null,
     )
 }

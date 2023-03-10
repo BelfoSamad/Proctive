@@ -4,10 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="type"
             type="net.roeia.proctive.models.enums.TodoType" />
+
         <import type="net.roeia.proctive.models.enums.TodoType" />
     </data>
 
@@ -36,25 +39,15 @@
             <TextView
                 android:id="@+id/page_title"
                 style="@style/PageTitleTextStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/content_margin"
+                android:layout_marginEnd="@dimen/content_margin"
                 android:text="Add Goal"
                 android:textSize="28sp"
                 app:layout_constraintBottom_toBottomOf="@id/back"
+                app:layout_constraintEnd_toStartOf="@+id/done_todo"
                 app:layout_constraintStart_toEndOf="@id/back"
-                app:layout_constraintTop_toTopOf="@id/back" />
-
-            <ImageButton
-                android:id="@+id/delete_todo"
-                style="@style/RoundedImageButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/section_margin"
-                android:src="@drawable/delete"
-                android:backgroundTint="@{type == TodoType.Task ? @color/blue_500 : type == TodoType.WeeklyGoal ? @color/yellow_500 : @color/green_500}"
-                app:layout_constraintBottom_toBottomOf="@id/back"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/back" />
 
             <net.roeia.proctive.ui.custom.LabeledInputView
@@ -90,7 +83,7 @@
                 android:id="@+id/labels"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="@id/delete_todo"
+                app:layout_constraintEnd_toEndOf="@id/done_todo"
                 app:layout_constraintStart_toStartOf="@id/back"
                 app:layout_constraintTop_toBottomOf="@id/todo_label" />
 
@@ -139,6 +132,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/section_margin"
+                android:visibility="@{type == TodoType.Task ? View.VISIBLE : View.GONE}"
                 app:hint="Subtasks"
                 app:inputBackgroundColor="@{type == TodoType.Goal || type == TodoType.SubGoal ? @color/green_500 : type == TodoType.WeeklyGoal ? @color/yellow_500 : @color/blue_500}"
                 app:inputType="addable"
@@ -154,7 +148,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/content_margin"
                 android:visibility="@{type == TodoType.Task ? View.VISIBLE : View.GONE}"
-                app:layout_constraintEnd_toEndOf="@id/delete_todo"
+                app:layout_constraintEnd_toEndOf="@id/done_todo"
                 app:layout_constraintStart_toStartOf="@id/back"
                 app:layout_constraintTop_toBottomOf="@id/subtasks_label" />
 
@@ -165,11 +159,11 @@
                 style="@style/ButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="Done"
+                android:layout_marginEnd="@dimen/section_margin"
                 android:backgroundTint="@{type == TodoType.Task ? @color/blue_500 : type == TodoType.WeeklyGoal ? @color/yellow_500 : @color/green_500}"
+                android:text="Done"
                 app:layout_constraintBottom_toBottomOf="@id/back"
-                app:layout_constraintEnd_toStartOf="@id/delete_todo"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/back"
                 app:layout_goneMarginEnd="16dp" />
 

@@ -22,13 +22,19 @@ class DateTimePickerViewHolder constructor(val binding: DialogDateTimePickerBind
         position: Int,
         listener: BaseListener?
     ) {
+        val justDate = bundle.getBoolean("justDate")
+        binding.justDate = justDate
         binding.type = TodoType.fromInt(bundle.getInt("PAGE_TYPE"))
 
         //Set Date
         if (model != null) {
             val cal = Calendar.getInstance()
             cal.time = model
-            binding.date.updateDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH))
+            binding.date.updateDate(
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)
+            )
             binding.time.hour = cal.get(Calendar.HOUR)
             binding.time.minute = cal.get(Calendar.MINUTE)
         }
@@ -36,8 +42,11 @@ class DateTimePickerViewHolder constructor(val binding: DialogDateTimePickerBind
         //Init ClickListener
         binding.set.setOnClickListener {
             (listener as DateTimePickerListener).onDateTimePicked(
-                "${binding.date.dayOfMonth}/${binding.date.month}/${binding.date.year}," +
-                        " ${binding.time.hour}:${binding.time.minute}"
+                if (justDate)
+                    "${binding.date.dayOfMonth}/${binding.date.month + 1}/${binding.date.year}"
+                else
+                    "${binding.date.dayOfMonth}/${binding.date.month + 1}/${binding.date.year}," +
+                            " ${binding.time.hour}:${binding.time.minute}"
             )
         }
     }

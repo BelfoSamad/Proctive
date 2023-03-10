@@ -1,6 +1,7 @@
 package net.roeia.proctive.ui.views.viewholders.recyclerviews
 
 import android.os.Bundle
+import android.util.Log
 import net.roeia.proctive.databinding.RecyclerviewTodoItemBinding
 import net.roeia.proctive.models.entities.todo.Todo
 import net.roeia.proctive.models.enums.TodoType
@@ -29,6 +30,7 @@ class TodoViewHolder constructor(private val binding: RecyclerviewTodoItemBindin
         position: Int,
         listener: BaseListener?
     ) {
+        Log.d("Abdessamad", "onBindViewHolder: " + TodoType.fromInt(bundle.getInt("PageType")))
         binding.type = TodoType.fromInt(bundle.getInt("PageType"))
         binding.todo = model
         binding.listener = listener as TodoClickListener

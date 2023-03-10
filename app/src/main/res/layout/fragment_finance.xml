@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -13,10 +14,9 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@{type == FinanceType.Income ? @color/green_300 : type == FinanceType.Savings ? @color/orange_300 : type == FinanceType.PocketMoney ? @color/blue_300 : type == FinanceType.Investments ? @color/yellow_300 : @color/red_300}"
+        android:background="@color/black"
         tools:context=".ui.views.fragments.finance.FinanceFragment">
 
         <ImageButton
@@ -26,24 +26,26 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/section_margin"
             android:layout_marginTop="@dimen/parent_margin"
-            android:backgroundTint="@{type == FinanceType.Income ? @color/green_500 : type == FinanceType.Savings ? @color/orange_500 : type == FinanceType.PocketMoney ? @color/blue_500 : type == FinanceType.Investments ? @color/yellow_500 : @color/red_500}"
+            android:backgroundTint="@{type == FinanceType.Income ? @color/green_700 : type == FinanceType.Savings ? @color/orange_700 : type == FinanceType.PocketMoney ? @color/blue_700 : type == FinanceType.Investments ? @color/yellow_700 : @color/red_700}"
             android:src="@drawable/back"
+            android:tint="@{type == FinanceType.Income ? @color/green_300 : type == FinanceType.Savings ? @color/orange_300 : type == FinanceType.PocketMoney ? @color/blue_300 : type == FinanceType.Investments ? @color/yellow_300 : @color/red_300}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/page_title"
+            style="@style/PageTitleTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            style="@style/PageTitleTextStyle"
-            android:text="Pocket Money"
+            android:layout_marginStart="@dimen/section_margin"
             android:layout_marginEnd="@dimen/parent_margin"
-            android:textSize="32sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/back"
+            android:text="Pocket Money"
+            android:textColor="@color/white"
+            android:textSize="38sp"
             app:layout_constraintBottom_toBottomOf="@id/back"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/back"
-            android:layout_marginStart="@dimen/section_margin"/>
+            app:layout_constraintTop_toTopOf="@id/back" />
 
         <TextView
             android:id="@+id/remaining_money"
@@ -53,6 +55,7 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="@dimen/section_margin"
             android:text="1000da"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toStartOf="@+id/add_finance"
             app:layout_constraintStart_toStartOf="@id/back"
             app:layout_constraintTop_toBottomOf="@id/back" />
@@ -63,8 +66,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/section_margin"
-            android:backgroundTint="@{type == FinanceType.Income ? @color/green_500 : type == FinanceType.Savings ? @color/orange_500 : type == FinanceType.PocketMoney ? @color/blue_500 : type == FinanceType.Investments ? @color/yellow_500 : @color/red_500}"
+            android:backgroundTint="@{type == FinanceType.Income ? @color/green_700 : type == FinanceType.Savings ? @color/orange_700 : type == FinanceType.PocketMoney ? @color/blue_700 : type == FinanceType.Investments ? @color/yellow_700 : @color/red_700}"
             android:src="@drawable/add"
+            android:tint="@{type == FinanceType.Income ? @color/green_300 : type == FinanceType.Savings ? @color/orange_300 : type == FinanceType.PocketMoney ? @color/blue_300 : type == FinanceType.Investments ? @color/yellow_300 : @color/red_300}"
             app:layout_constraintBottom_toBottomOf="@id/remaining_money"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/remaining_money" />
@@ -78,13 +82,15 @@
             android:src="@drawable/back"
             android:visibility="@{type == FinanceType.Expenses || type == FinanceType.PocketMoney || type == FinanceType.Investments ? View.VISIBLE : View.GONE}"
             app:layout_constraintStart_toStartOf="@id/remaining_money"
-            app:layout_constraintTop_toBottomOf="@id/remaining_money" />
+            app:layout_constraintTop_toBottomOf="@id/remaining_money"
+            app:tint="@color/paper_300" />
 
         <TextView
             android:id="@+id/month"
+            style="@style/LabelTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/LabelTextStyle"
+            android:textColor="@color/paper_300"
             android:visibility="@{type == FinanceType.Expenses || type == FinanceType.PocketMoney || type == FinanceType.Investments ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/back_month"
             app:layout_constraintEnd_toStartOf="@id/forward_month"
@@ -100,7 +106,8 @@
             android:visibility="@{type == FinanceType.Expenses || type == FinanceType.PocketMoney || type == FinanceType.Investments ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/back_month"
             app:layout_constraintEnd_toEndOf="@id/add_finance"
-            app:layout_constraintTop_toTopOf="@id/back_month" />
+            app:layout_constraintTop_toTopOf="@id/back_month"
+            app:tint="@color/paper_300" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/finance_list"

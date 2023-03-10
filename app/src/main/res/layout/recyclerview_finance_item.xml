@@ -17,9 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/rounded_background"
-        android:backgroundTint="@{type == FinanceType.Income ? @color/green_500 : type == FinanceType.Savings ? @color/orange_500 : type == FinanceType.PocketMoney ? @color/blue_500 : type == FinanceType.Investments ? @color/yellow_500 : @color/red_500}">
+        android:layout_marginBottom="8dp">
 
         <TextView
             android:id="@+id/finance_name"
@@ -30,6 +28,7 @@
             android:layout_marginBottom="@dimen/section_margin"
             android:text="@{finance.name}"
             tools:text="Income 1"
+            android:textColor="@{type == FinanceType.Income ? @color/green_300 : type == FinanceType.Savings ? @color/orange_300 : type == FinanceType.PocketMoney ? @color/blue_300 : type == FinanceType.Investments ? @color/yellow_300 : @color/red_300}"
             style="@style/LabelTextStyle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,7 +40,7 @@
             style="@style/RegularTextStyle"
             android:textSize="12sp"
             tools:text="Created on 05/03/2023"
-            android:textColor="@{type == FinanceType.Income ? @color/green_700 : type == FinanceType.Savings ? @color/orange_700 : type == FinanceType.PocketMoney ? @color/blue_700 : type == FinanceType.Investments ? @color/yellow_700 : @color/red_700}"
+            android:textColor="@{type == FinanceType.Income ? @color/green_300 : type == FinanceType.Savings ? @color/orange_300 : type == FinanceType.PocketMoney ? @color/blue_300 : type == FinanceType.Investments ? @color/yellow_300 : @color/red_300}"
             android:text="@{finance.subName}"
             android:layout_marginBottom="@dimen/section_margin"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -55,6 +54,7 @@
             android:text="@{finance.details}"
             android:layout_marginBottom="@dimen/section_margin"
             tools:text="10000da"
+            android:textColor="@{type == FinanceType.Income ? @color/green_300 : type == FinanceType.Savings ? @color/orange_300 : type == FinanceType.PocketMoney ? @color/blue_300 : type == FinanceType.Investments ? @color/yellow_300 : @color/red_300}"
             style="@style/LabelTextStyle"
             android:layout_marginTop="@dimen/section_margin"
             android:layout_marginEnd="@dimen/section_margin"
@@ -66,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/RegularTextStyle"
-            android:textColor="@{type == FinanceType.Income ? @color/green_700 : type == FinanceType.Savings ? @color/orange_700 : type == FinanceType.PocketMoney ? @color/blue_700 : type == FinanceType.Investments ? @color/yellow_700 : @color/red_700}"
+            android:textColor="@{type == FinanceType.Income ? @color/green_300 : type == FinanceType.Savings ? @color/orange_300 : type == FinanceType.PocketMoney ? @color/blue_300 : type == FinanceType.Investments ? @color/yellow_300 : @color/red_300}"
             android:text="@{finance.subDetails}"
             android:textSize="12sp"
             tools:text="Testing this"
